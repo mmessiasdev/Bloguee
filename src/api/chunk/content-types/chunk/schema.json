@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "chunks",
+  "info": {
+    "singularName": "chunk",
+    "pluralName": "chunks",
+    "displayName": "chunk",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "posters": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::poster.poster",
+      "mappedBy": "chunk"
+    }
+  }
+}
