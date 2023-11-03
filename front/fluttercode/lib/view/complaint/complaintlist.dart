@@ -10,6 +10,8 @@ import '../../model/complaint.dart';
 
 import 'package:http/http.dart' as http;
 
+import '../account/account_screen.dart';
+
 class ComplaintList extends StatefulWidget {
   const ComplaintList({Key? key}) : super(key: key);
 
@@ -45,7 +47,14 @@ class _ComplaintListState extends State<ComplaintList> {
       color: lightColor,
       child: Column(
         children: [
-          const MainHeader(),
+          MainHeader(          onClick: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AccountScreen(),
+              ),
+            ),
+          },),
           Expanded(
             child: RefreshIndicator(
               backgroundColor: TerciaryColor,

@@ -2,6 +2,7 @@ import 'package:fluttercode/component/colors.dart';
 import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/component/texts.dart';
 import 'package:fluttercode/model/post.dart';
+import 'package:fluttercode/view/account/account_screen.dart';
 import 'package:fluttercode/view/blog/components/postcontainer.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -43,7 +44,14 @@ class _BlogPageState extends State<BlogPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const MainHeader(),
+        MainHeader(          onClick: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AccountScreen(),
+              ),
+            ),
+          },),
         Expanded(
           child: RefreshIndicator(
             backgroundColor: TerciaryColor,

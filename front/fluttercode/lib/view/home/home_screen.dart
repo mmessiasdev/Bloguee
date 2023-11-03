@@ -52,62 +52,16 @@ class _HomeScreenState extends State<HomeScreen> {
     return SafeArea(
         child: Column(
       children: [
-        SizedBox(
-            width: MediaQuery.of(context).size.width,
-            child: Align(
-              alignment: Alignment.topRight,
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SizedBox(
-                  height: 60,
-                  child: GestureDetector(
-                    child: Container(
-                      width: 100,
-                      height: 25,
-                      color: Color.fromARGB(255, 119, 119, 119),
-                      child: Center(
-                        child: Text(
-                          fullName == "null" ? "Login" : fullName,
-                          style: const TextStyle(
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500,
-                            color: Color.fromRGBO(255, 255, 255, 1),
-                          ),
-                        ),
-                      ),
-                    ),
-                    // child: CircleAvatar(
-                    //   backgroundColor: TerciaryColor,
-                    //   child: Icon(
-                    //     Icons.person,
-                    //     color: Colors.white,
-                    //     size: 30,
-                    //   ),
-                    // ),
-                    // onTap: () {
-                    //   getLocalList();
-                    //   print(getLocalList());
-                    // },
-                    onTap: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => AccountScreen(),
-                      ),
-                    ),
-                  ),
-                ),
+        MainHeader(
+          title: fullName == "null" ? "Login" : fullName,
+          onClick: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AccountScreen(),
               ),
-            )),
-        Text(
-          fullName == "null" ? "Faça Login" : fullName,
-          // authController.user.value == null
-          //     ? "Faça Login"
-          //     : authController.user.value!.fullName!,
-          style: const TextStyle(
-            fontSize: 15,
-            fontWeight: FontWeight.w500,
-            color: Color.fromRGBO(146, 146, 146, 1),
-          ),
+            ),
+          },
         ),
       ],
     ));

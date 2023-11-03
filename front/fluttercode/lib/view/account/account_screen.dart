@@ -46,7 +46,16 @@ class _AccountScreenState extends State<AccountScreen> {
     return SizedBox(
       child: ListView(
         children: [
-          const MainHeader(),
+          MainHeader(
+            onClick: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AccountScreen(),
+                ),
+              ),
+            },
+          ),
           Container(
             color: BackgroundOffColor,
             child: Padding(

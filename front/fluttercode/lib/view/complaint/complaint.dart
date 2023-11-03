@@ -6,6 +6,7 @@ import 'package:fluttercode/controller/controllers.dart';
 import 'package:flutter/material.dart';
 
 import '../../component/buttomdefault.dart';
+import '../account/account_screen.dart';
 import 'complaintlist.dart';
 
 class ComplaintScreen extends StatefulWidget {
@@ -50,7 +51,14 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
       backgroundColor: Colors.black,
       body: Column(
         children: [
-          MainHeader(),
+          MainHeader(          onClick: () => {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AccountScreen(),
+              ),
+            ),
+          },),
           Expanded(
             child: Container(
               color: TerciaryColorOff,
