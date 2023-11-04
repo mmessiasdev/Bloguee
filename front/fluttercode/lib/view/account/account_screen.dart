@@ -47,15 +47,13 @@ class _AccountScreenState extends State<AccountScreen> {
       child: ListView(
         children: [
           MainHeader(
-            onClick: () => {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => AccountScreen(),
-                ),
-              ),
-            },
-          ),
+            title: "Registrar",
+              onClick: () => (Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AccountScreen(),
+                    ),
+                  ))),
           Container(
             color: BackgroundOffColor,
             child: Padding(
@@ -93,23 +91,18 @@ class _AccountScreenState extends State<AccountScreen> {
                     ],
                   ),
                   GestureDetector(
-                    child: Icon(Icons.arrow_back_ios),
-                    onTap: () {
-                      Navigator.pop(
-                        context,
-                        // MaterialPageRoute(
-                        //   builder: (context) => const SignInScreen(),
-                        // ),
-                      );
-                    },
-                  ),
+                      child: Icon(Icons.arrow_back_ios),
+                      onTap: () => (Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AccountScreen(),
+                            ),
+                          ))),
                 ],
               ),
             ),
           ),
           const SizedBox(height: 50),
-          // buildAccountCard(title: "Sobre Nós", onClick: () {}),
-          // buildAccountCard(title: "Termos e serviços", onClick: () {}),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
             child: Column(

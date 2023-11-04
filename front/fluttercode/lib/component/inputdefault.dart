@@ -80,7 +80,7 @@ class _InputTextFieldState extends State<InputTextField> {
           onEditingComplete: widget.onEditComplete,
           obscureText: _isVisible,
           style:
-              GoogleFonts.aleo(fontSize: 11, color: Color.fromRGBO(0, 0, 0, 1)),
+              GoogleFonts.montserrat(fontSize: 18, color: Color.fromRGBO(0, 0, 0, 1)),
           textAlign: widget.textAlign,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: InputDecoration(
@@ -95,12 +95,12 @@ class _InputTextFieldState extends State<InputTextField> {
                     child: _isVisible
                         ? const Icon(
                             Icons.visibility_off,
-                            size: 18,
+                            size: 14,
                             color: Colors.grey,
                           )
                         : const Icon(
                             Icons.visibility,
-                            size: 18,
+                            size: 14,
                             color: Colors.grey,
                           ),
                     onTap: () => setState(() {

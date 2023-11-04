@@ -1,14 +1,15 @@
 import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercode/component/colors.dart';
+import 'package:fluttercode/component/texts.dart';
 import 'package:get/get.dart';
 import 'package:fluttercode/controller/controllers.dart';
 
 class MainHeader extends StatelessWidget {
-  MainHeader({Key? key, this.title, required this.onClick}) : super(key: key);
-  String? title;
-  Function onClick;
-  
+  MainHeader({Key? key, required this.title, required this.onClick})
+      : super(key: key);
+  String title;
+  final Function onClick;
 
   @override
   Widget build(BuildContext context) {
@@ -25,23 +26,16 @@ class MainHeader extends StatelessWidget {
           ),
           GestureDetector(
               child: Container(
-                width: 100,
+                width: 130,
                 height: double.infinity,
                 color: PrimaryColor,
                 child: Center(
-                  child: Text(
-                    title!,
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                      color: Color.fromRGBO(255, 255, 255, 1),
-                    ),
-                  ),
-                ),
+                    child: SecundaryText(
+                        text: title,
+                        color: Colors.black,
+                        align: TextAlign.center)),
               ),
-              onTap: () => {
-                onClick!()
-              }),
+              onTap: () => onClick()),
         ],
       ),
     );

@@ -47,14 +47,17 @@ class _ComplaintListState extends State<ComplaintList> {
       color: lightColor,
       child: Column(
         children: [
-          MainHeader(          onClick: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AccountScreen(),
+          MainHeader(
+            title: "Text",
+            onClick: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AccountScreen(),
+                ),
               ),
-            ),
-          },),
+            },
+          ),
           Expanded(
             child: RefreshIndicator(
               backgroundColor: TerciaryColor,

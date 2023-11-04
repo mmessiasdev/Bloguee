@@ -51,14 +51,17 @@ class _ComplaintScreenState extends State<ComplaintScreen> {
       backgroundColor: Colors.black,
       body: Column(
         children: [
-          MainHeader(          onClick: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AccountScreen(),
+          MainHeader(
+            title: "Text",
+            onClick: () => {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => AccountScreen(),
+                ),
               ),
-            ),
-          },),
+            },
+          ),
           Expanded(
             child: Container(
               color: TerciaryColorOff,

@@ -40,7 +40,7 @@ class SecundaryText extends StatelessWidget {
         style: GoogleFonts.montserrat(
           fontSize: 20,
           textStyle: TextStyle(
-            fontWeight: FontWeight.w300,
+            fontWeight: FontWeight.w500,
             color: color,
             decoration: TextDecoration.none,
           ),
@@ -65,8 +65,8 @@ class ButtomText extends StatelessWidget {
         style: GoogleFonts.montserrat(
           fontSize: 20,
           textStyle: TextStyle(
-            fontWeight: FontWeight.w300,
-            color: const Color.fromARGB(255, 104, 104, 104),
+            fontWeight: FontWeight.w500,
+            color: Color.fromARGB(255, 0, 0, 0),
             decoration: TextDecoration.none,
           ),
         ),
@@ -90,7 +90,7 @@ class ButtomSecundary extends StatelessWidget {
         style: GoogleFonts.montserrat(
           fontSize: 20,
           textStyle: TextStyle(
-            color: Color.fromRGBO(19, 68, 90, 1),
+            color: Color.fromRGBO(0, 0, 0, 1),
             decoration: TextDecoration.none,
           ),
         ),

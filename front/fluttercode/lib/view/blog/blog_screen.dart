@@ -44,14 +44,14 @@ class _BlogPageState extends State<BlogPage> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        MainHeader(          onClick: () => {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AccountScreen(),
-              ),
-            ),
-          },),
+        MainHeader(
+            title: "Text",
+            onClick: () => (Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AccountScreen(),
+                  ),
+                ))),
         Expanded(
           child: RefreshIndicator(
             backgroundColor: TerciaryColor,
