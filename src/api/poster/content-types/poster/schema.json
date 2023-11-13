@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -17,12 +17,6 @@
     },
     "desc": {
       "type": "string"
-    },
-    "chunk": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::chunk.chunk",
-      "inversedBy": "posters"
     },
     "user": {
       "type": "relation",
