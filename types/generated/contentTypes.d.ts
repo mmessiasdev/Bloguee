@@ -695,6 +695,11 @@ export interface ApiChunkChunk extends Schema.CollectionType {
       'oneToMany',
       'api::profile.profile'
     >;
+    posters: Attribute.Relation<
+      'api::chunk.chunk',
+      'oneToMany',
+      'api::poster.poster'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -730,6 +735,11 @@ export interface ApiPosterPoster extends Schema.CollectionType {
       'api::poster.poster',
       'oneToOne',
       'plugin::users-permissions.user'
+    >;
+    chunk: Attribute.Relation<
+      'api::poster.poster',
+      'manyToOne',
+      'api::chunk.chunk'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -772,6 +782,7 @@ export interface ApiProfileProfile extends Schema.CollectionType {
       'manyToOne',
       'api::chunk.chunk'
     >;
+    email: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<

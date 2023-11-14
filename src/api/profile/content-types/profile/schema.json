@@ -28,6 +28,9 @@
       "relation": "manyToOne",
       "target": "api::chunk.chunk",
       "inversedBy": "profiles"
+    },
+    "email": {
+      "type": "string"
     }
   }
 }
