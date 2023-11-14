@@ -80,7 +80,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         padding: const EdgeInsets.only(top: 20),
                         child: PrimaryText(
                             text: 'Login',
-                            color: Colors.black,
+                            color: nightColor,
                             align: TextAlign.start),
                       ),
                       Padding(
@@ -148,28 +148,25 @@ class _SignInScreenState extends State<SignInScreen> {
                       // ),
                       Padding(
                         padding: const EdgeInsets.only(top: 30),
-                        child: SizedBox(
-                          height: 100,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const Text("É um novo usário? "),
-                              InkWell(
-                                  onTap: () {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SignUpScreen()));
-                                  },
-                                  child: const Text(
-                                    "Crie uma conta.",
-                                    style: TextStyle(
-                                      color: Color.fromRGBO(19, 68, 90, 1),
-                                    ),
-                                  ))
-                            ],
-                          ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const Text("É um novo usário? "),
+                            InkWell(
+                                onTap: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const SignUpScreen()));
+                                },
+                                child: const Text(
+                                  "Crie uma conta.",
+                                  style: TextStyle(
+                                    color: Color.fromRGBO(19, 68, 90, 1),
+                                  ),
+                                ))
+                          ],
                         ),
                       ),
                       const SizedBox(height: 10)

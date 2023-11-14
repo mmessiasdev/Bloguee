@@ -1,9 +1,12 @@
+import 'package:fluttercode/component/buttomdefault.dart';
 import 'package:fluttercode/controller/map.dart';
 import 'package:fluttercode/model/locals.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:fluttercode/view/account/auth/sign_in_screen.dart';
+import 'package:fluttercode/view/account/auth/sign_up_screen.dart';
+import 'package:fluttercode/view/search/searchposter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -62,16 +65,51 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ))),
         fullName == "null"
-            ? SizedBox(
-              height: 200,
-              child: Center(
-                  child: SecundaryText(
-                      text: "Bem vindo ao Bloguee ;) \n Faça Login!",
-                      color: Colors.black,
-                      align: TextAlign.start),
+            ? Center(
+                child: Column(
+                  children: [
+                    PrimaryText(
+                        text: 'Bloguee',
+                        color: nightColor,
+                        align: TextAlign.center),
+                    GestureDetector(
+                      onTap: () {
+                        showSearch(context: context, delegate: SearchPosters());
+                      },
+                      child: Container(
+                        color: PrimaryColor,
+                        width: MediaQuery.of(context).size.width * .8,
+                        height: 48,
+                      ),
+                    )
+                  ],
                 ),
-            )
-            : Text("Authentiqued")
+              )
+            : Padding(
+                padding: const EdgeInsets.only(left: 40, right: 40, top: 75),
+                child: Column(
+                  children: [
+                    Center(
+                      child: SecundaryText(
+                          text: "Bem vindo ao Bloguee ;) \n Faça Login!",
+                          color: Colors.black,
+                          align: TextAlign.start),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 30),
+                      child: InputTextButton(
+                        title: "Login",
+                        onClick: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignInScreen()));
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+              )
       ],
     ));
   }

@@ -10,3 +10,4 @@ final Color TerciaryColorOff = Color(0xBFBFBF);
 final Color OffColor = Color.fromRGBO(146, 146, 146, 1);
 final Color BackgroundOffColor = Color.fromRGBO(240, 185, 195, 0.3);
 final Color lightColor = Colors.white;
+final Color nightColor = const Color.fromARGB(255, 0, 0, 0);
