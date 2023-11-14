@@ -13,11 +13,11 @@ class LocalAuthService {
 
   Future storeEmail(
       {required String email,
-      required String full,
+      required String lname,
       required String id}) async {
     await _storage.write(key: "id", value: id);
     await _storage.write(key: "email", value: email);
-    await _storage.write(key: "full", value: full);
+    await _storage.write(key: "lname", value: lname);
   }
 
   Future<String?> getEmail(String unicKey) async {
@@ -29,7 +29,7 @@ class LocalAuthService {
   }
 
   Future<String?> getFull(String unicKey) async {
-    return await _storage.read(key: "full");
+    return await _storage.read(key: "lname");
   }
 
   Future<void> clear() async {

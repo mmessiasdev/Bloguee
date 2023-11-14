@@ -8,6 +8,7 @@ import 'package:fluttercode/route/app_route.dart';
 import 'package:fluttercode/route/app_page.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 // import 'package:firebase_core/firebase_core.dart';
 
 import 'model/user.dart';
@@ -21,7 +22,6 @@ Future main() async {
         Brightness.dark, // ícones da barra inferior
   ));
 
-
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   var box = await Hive.openBox('userToken');
@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return  GetMaterialApp(
+    return GetMaterialApp(
       getPages: AppPage.list,
       initialRoute: AppRoute.dashboard,
       debugShowCheckedModeBanner: false,

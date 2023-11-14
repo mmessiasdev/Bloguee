@@ -6,6 +6,7 @@ import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:fluttercode/view/account/auth/sign_in_screen.dart';
 import 'package:fluttercode/view/account/auth/sign_up_screen.dart';
+import 'package:fluttercode/view/poster/posterscreen.dart';
 import 'package:fluttercode/view/search/searchposter.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -58,34 +59,21 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         MainHeader(
             title: fullName == "null" ? "Login" : fullName,
-            onClick: () => (Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => SignInScreen(),
-                  ),
-                ))),
+            onClick: () => fullName == "null"
+                ? (Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SignInScreen(),
+                    ),
+                  ))
+                : (Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => PosterScreen(),
+                    ),
+                  ))),
         fullName == "null"
-            ? Center(
-                child: Column(
-                  children: [
-                    PrimaryText(
-                        text: 'Bloguee',
-                        color: nightColor,
-                        align: TextAlign.center),
-                    GestureDetector(
-                      onTap: () {
-                        showSearch(context: context, delegate: SearchPosters());
-                      },
-                      child: Container(
-                        color: PrimaryColor,
-                        width: MediaQuery.of(context).size.width * .8,
-                        height: 48,
-                      ),
-                    )
-                  ],
-                ),
-              )
-            : Padding(
+            ? Padding(
                 padding: const EdgeInsets.only(left: 40, right: 40, top: 75),
                 child: Column(
                   children: [
@@ -107,6 +95,44 @@ class _HomeScreenState extends State<HomeScreen> {
                         },
                       ),
                     ),
+                  ],
+                ),
+              )
+            : Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    PrimaryText(
+                      text: "HE Net",
+                      color: SecudaryColor,
+                      align: TextAlign.center,
+                    ),
+                    SizedBox(
+                      height: 25,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showSearch(context: context, delegate: SearchPosters());
+                      },
+                      child: Container(
+                        color: PrimaryColor,
+                        width: MediaQuery.of(context).size.width * .8,
+                        height: 50,
+                        child: Center(
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 25),
+                            child: SizedBox(
+                              width: double.infinity,
+                              child: SubText(
+                                  text: "Qual sua dúvida?",
+                                  color: SecudaryColor,
+                                  align: TextAlign.start),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
                   ],
                 ),
               )

@@ -6,7 +6,6 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import '../../const.dart';
 
-
 class RemoteAuthService {
   var client = http.Client();
   final storage = FlutterSecureStorage();
@@ -25,10 +24,10 @@ class RemoteAuthService {
   }
 
   Future<dynamic> createProfile({
-    required String fullName,
+    required String lname,
     required String token,
   }) async {
-    var body = {"fullName": fullName};
+    var body = {"fullName": lname};
     var response = await client.post(
       Uri.parse('${dotenv.get('BASEURL').toString()}/api/profile/me'),
       headers: {
@@ -46,7 +45,7 @@ class RemoteAuthService {
   }) async {
     var body = {"identifier": email, "password": password};
     var response = await client.post(
-      Uri.parse('${dotenv.get('BASEURL').toString()}/api/auth/local'),
+      Uri.parse('http://localhost:1337/api/auth/local'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(body),
     );
@@ -57,7 +56,7 @@ class RemoteAuthService {
     required String token,
   }) async {
     var response = await client.get(
-      Uri.parse('${dotenv.get('BASEURL').toString()}/api/profile/me'),
+      Uri.parse('http://localhost:1337/api/profile/me'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -65,8 +64,6 @@ class RemoteAuthService {
     );
     return response;
   }
-
-  
 
   Future addPost({
     required String content,
@@ -90,11 +87,7 @@ class RemoteAuthService {
     required String desc,
     required String token,
   }) async {
-    final body = {
-      "type": type,
-      "nivel": nivel,
-      "desc": desc
-    };
+    final body = {"type": type, "nivel": nivel, "desc": desc};
     var response = await client.post(
       Uri.parse('${dotenv.get('BASEURL').toString()}/api/complaint/me'),
       headers: {

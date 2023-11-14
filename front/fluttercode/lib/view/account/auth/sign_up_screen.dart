@@ -19,14 +19,14 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController fullNameController = TextEditingController();
+  TextEditingController lnameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmController = TextEditingController();
 
   @override
   void dispose() {
-    fullNameController.dispose();
+    lnameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     confirmController.dispose();
@@ -65,7 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: InputTextField(
                             title: 'Nome Completo',
                             // icon: Icon(Icons.person),
-                            textEditingController: fullNameController,
+                            textEditingController: lnameController,
                             validation: (String? value) {
                               if (value == null || value.isEmpty) {
                                 return "Esse campo não pode ficar vazio.";
@@ -157,7 +157,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onClick: () {
                             if (_formKey.currentState!.validate()) {
                               authController.signUp(
-                                fullName: fullNameController.text,
+                                lname: lnameController.text,
                                 email: emailController.text,
                                 password: passwordController.text,
                               );

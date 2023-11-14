@@ -17,7 +17,7 @@ class AuthController extends GetxController {
   }
 
   void signUp(
-      {required String fullName,
+      {required String lname,
       required String email,
       required String password}) async {
     try {
@@ -32,7 +32,7 @@ class AuthController extends GetxController {
       if (result.statusCode == 200) {
         String token = json.decode(result.body)['jwt'];
         var userResult = await RemoteAuthService()
-            .createProfile(fullName: fullName, token: token);
+            .createProfile(lname: lname, token: token);
         if (userResult.statusCode == 200) {
           user.value = userFromJson(userResult.body);
           EasyLoading.showSuccess("Conta criada. Confirme suas informações.");
@@ -66,14 +66,14 @@ class AuthController extends GetxController {
         var userResult = await RemoteAuthService().getProfile(token: token);
         if (userResult.statusCode == 200) {
           var email = jsonDecode(userResult.body)['email'];
-          var fullName = jsonDecode(userResult.body)['fullName'];
+          var lname = jsonDecode(userResult.body)['lname'];
           var id = jsonDecode(userResult.body)['id'].toString();
           user.value = userFromJson(userResult.body);
           await LocalAuthService().storeToken(token);
           await LocalAuthService()
-              .storeEmail(email: email, full: fullName, id: id);
+              .storeEmail(email: email, lname: lname, id: id);
           var stringEmail = await LocalAuthService().getEmail("email");
-          EasyLoading.showSuccess("Bem vindo ao fluttercode");
+          EasyLoading.showSuccess("Bem vindo ao Bloguee");
           Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
         } else {
           EasyLoading.showError(

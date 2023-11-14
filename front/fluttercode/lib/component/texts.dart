@@ -12,7 +12,7 @@ class PrimaryText extends StatelessWidget {
     return SizedBox(
       child: Text(
         text,
-        textAlign: TextAlign.center,
+        textAlign: align,
         style: GoogleFonts.montserrat(
           fontSize: 48,
           textStyle: TextStyle(
@@ -36,7 +36,7 @@ class SecundaryText extends StatelessWidget {
     return SizedBox(
       child: Text(
         text,
-        textAlign: TextAlign.center,
+        textAlign: align,
         style: GoogleFonts.montserrat(
           fontSize: 20,
           textStyle: TextStyle(
@@ -110,13 +110,12 @@ class SubText extends StatelessWidget {
     return SizedBox(
       child: Text(
         text,
-        textAlign: TextAlign.center,
+        textAlign: align,
         style: GoogleFonts.montserrat(
           fontSize: 20,
           textStyle: TextStyle(
             color: color,
             decoration: TextDecoration.none,
-            
           ),
         ),
       ),
@@ -153,6 +152,5 @@ class SubTextSized extends StatelessWidget {
         ),
       ),
     );
-    ;
   }
 }
