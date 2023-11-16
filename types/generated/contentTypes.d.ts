@@ -731,16 +731,17 @@ export interface ApiPosterPoster extends Schema.CollectionType {
   attributes: {
     title: Attribute.String;
     desc: Attribute.String;
-    user: Attribute.Relation<
+    profile: Attribute.Relation<
       'api::poster.poster',
-      'oneToOne',
-      'plugin::users-permissions.user'
+      'manyToOne',
+      'api::profile.profile'
     >;
     chunk: Attribute.Relation<
       'api::poster.poster',
       'manyToOne',
       'api::chunk.chunk'
     >;
+    content: Attribute.RichText;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -783,6 +784,11 @@ export interface ApiProfileProfile extends Schema.CollectionType {
       'api::chunk.chunk'
     >;
     email: Attribute.String;
+    posters: Attribute.Relation<
+      'api::profile.profile',
+      'oneToMany',
+      'api::poster.poster'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
