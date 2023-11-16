@@ -12,14 +12,7 @@ class PosterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListView(
       children: [
-        MainHeader(
-          title: "Voltar",
-          onClick: () => Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => HomeScreen(),
-              )),
-        ),
+        MainHeader(title: "Voltar", onClick: () => Navigator.pop(context)),
         Padding(
           padding: const EdgeInsets.only(left: 40, right: 40, top: 25),
           child: Column(

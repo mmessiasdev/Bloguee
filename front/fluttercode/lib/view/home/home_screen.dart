@@ -77,18 +77,19 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: const EdgeInsets.only(left: 40, right: 40, top: 75),
                 child: Column(
                   children: [
-                    Center(
-                      child: SecundaryText(
-                          text: "Bem vindo ao Bloguee ;) \n Faça Login!",
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrimaryText(
+                          text: "Bem vindo ao Bloguee! \nFaça Login ; )",
                           color: Colors.black,
                           align: TextAlign.start),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 30),
+                      padding: const EdgeInsets.only(top: 50),
                       child: InputTextButton(
                         title: "Login",
                         onClick: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => const SignInScreen()));

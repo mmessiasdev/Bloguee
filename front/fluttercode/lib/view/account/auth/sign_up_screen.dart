@@ -5,7 +5,6 @@ import 'package:fluttercode/component/texts.dart';
 import 'package:fluttercode/controller/controllers.dart';
 import 'package:fluttercode/extention/string_extention.dart';
 
-import '../../../component/buttomborder.dart';
 import '../../../component/buttomdefault.dart';
 import '../../../component/inputdefault.dart';
 import 'sign_in_screen.dart';
@@ -53,9 +52,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: PrimaryText(
-                            text: 'Criar Conta',
-                            color: nightColor,
-                            align: TextAlign.start),
+                          text: 'Criar Conta',
+                          color: nightColor,
+                          align: TextAlign.start,
+                        ),
                       ),
                       const SizedBox(height: 20),
                       Padding(

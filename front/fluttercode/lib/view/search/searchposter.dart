@@ -3,6 +3,9 @@ import 'dart:convert';
 // import 'package:Movietips/View/Components/General/MovieList.dart';
 // import 'package:Movietips/View/OnTapScreen.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttercode/component/colors.dart';
+import 'package:fluttercode/component/texts.dart';
+import 'package:fluttercode/model/posters.dart';
 import 'package:fluttercode/view/poster/posterscreen.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
@@ -11,8 +14,6 @@ import 'package:http/http.dart' as http;
 class SearchPosters extends SearchDelegate<String> {
   @override
   String get searchFieldLabel => 'Qual sua dúvida?';
-
-  get containsi => String;
 
   // ------------------------ //
   @override
@@ -48,7 +49,7 @@ class SearchPosters extends SearchDelegate<String> {
       return Container();
     }
     return FutureBuilder<List>(
-      future: fetch(query),
+      future: suggestions(),
       builder: (context, snapshot) {
         if (!snapshot.hasData) {
           return Center(
@@ -106,25 +107,113 @@ class SearchPosters extends SearchDelegate<String> {
   @override
   Widget buildSuggestions(BuildContext context) {
     // TODO: implement buildSuggestions
-    return Container();
-    // return ListView(
-    //   children: [
-    //     MovieList(title: "Populares", genero: "top_rated"),
-    //     Category(title: "Categoría", genero: "upcoming")
-    //   ],
-    // );
+    if(query.isEmpty){
+      return Container();
+    }
+    return FutureBuilder<List<Attributes>>(
+        future: suggestions(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return ListView.builder(
+                itemCount: snapshot.data!.length,
+                itemBuilder: (context, index) {
+                  var render = snapshot.data![index];
+                  return Padding(
+                    padding: const EdgeInsets.all(12),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: PrimaryColor,
+                      ),
+                      child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 20),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SecundaryText(
+                                text: render.title.toString(),
+                                align: TextAlign.start,
+                                color: nightColor,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(top: 10),
+                                child: SubText(
+                                  text: render.desc.toString(),
+                                  align: TextAlign.start,
+                                  color: SecudaryColor,
+                                ),
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: Padding(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: SubText(
+                                    text: render.updatedAt
+                                        .toString()
+                                        .replaceAll("-", "/")
+                                        .substring(0, 10),
+                                    align: TextAlign.end,
+                                    color: nightColor,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )),
+                    ),
+                  );
+                });
+          } else if (snapshot.hasError) {
+            return Center(
+                child: SubText(
+              text: 'Erro ao pesquisar poster',
+              color: PrimaryColor,
+              align: TextAlign.center,
+            ));
+          }
+          return Expanded(
+            child: Center(
+              child: CircularProgressIndicator(
+                color: PrimaryColor,
+              ),
+            ),
+          );
+        });
   }
-  // ------------------------ //
 
-  // ------------------------ //
-  // ------- Fetch Movie Query API ID ------- //
-  Future<List> fetch(String query) async {
+  // Future<List> suggestions() async {
+  //   var url = Uri.parse(
+  //     'localhost:1337/api/posters?filters[title][containsi]=$query');
+  //   var response = await http.get(url);
+  //   var jsonResponse = jsonDecode(response.body);
+  //   var itemCount = jsonResponse['attributes'];
+  //   return itemCount;
+  // }
+
+  Future<List<Attributes>> suggestions() async {
+    // TODO: implement getPostsList
+    List<Attributes> listItens = [];
     var url = Uri.parse(
-        'localhost:1337/api/posters?filters[title][$containsi]=$query');
+        'http://localhost:1337/api/posters?filters[title][\$containsi]=$query');
     var response = await http.get(url);
-    var jsonResponse = jsonDecode(response.body);
-    var itemCount = jsonResponse['results'];
-    return itemCount;
+    var body = jsonDecode(response.body);
+    print(body);
+    // parse
+    var itemCount = body["data"];
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(Attributes.fromJson(itemCount[i]));
+    }
+    return listItens;
   }
+
+  // ------- Fetch Movie Query API ID ------- //
+  // Future<List> fetch(String query) async {
+  //   var url = Uri.parse(
+  //       'localhost:1337/api/posters?filters[title][containsi]=$query');
+  //   var response = await http.get(url);
+  //   var jsonResponse = jsonDecode(response.body);
+  //   var itemCount = jsonResponse['data']['attributes'];
+  //   return itemCount;
+  // }
   // ------------------------ //
 }
