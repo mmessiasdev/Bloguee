@@ -69,7 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 : (Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => PosterScreen(),
+                      builder: (context) => PosterScreen(
+                        id: 2,
+                      ),
                     ),
                   ))),
         fullName == "null"

@@ -141,8 +141,8 @@ class SubTextSized extends StatelessWidget {
     return SizedBox(
       child: Text(
         text,
-        textAlign: TextAlign.center,
-        style: GoogleFonts.asap(
+        textAlign: align,
+        style: GoogleFonts.montserrat(
           fontSize: size,
           textStyle: TextStyle(
             color: color,
