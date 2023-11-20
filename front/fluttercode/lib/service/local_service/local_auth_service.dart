@@ -28,7 +28,7 @@ class LocalAuthService {
     return await _storage.read(key: "id");
   }
 
-  Future<String?> getFull(String unicKey) async {
+  Future<String?> getLname(String unicKey) async {
     return await _storage.read(key: "lname");
   }
 

@@ -27,7 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Attributes? data;
 
   var email;
-  var fullName;
+  var lname;
   var id;
   var token;
 
@@ -38,13 +38,13 @@ class _HomeScreenState extends State<HomeScreen> {
 
   void getString() async {
     var strEmail = await LocalAuthService().getEmail("email");
-    var strFull = await LocalAuthService().getFull("full");
+    var strFull = await LocalAuthService().getLname("lname");
     var strId = await LocalAuthService().getId("id");
     var strToken = await LocalAuthService().getSecureToken("token");
 
     setState(() {
       email = strEmail.toString();
-      fullName = strFull.toString();
+      lname = strFull.toString();
       id = strId.toString();
       token = strToken.toString();
     });
@@ -58,8 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
       children: [
         MainHeader(
-            title: fullName == "null" ? "Login" : fullName,
-            onClick: () => fullName == "null"
+            title: lname == "null" ? "Login" : lname,
+            onClick: () => lname == "null"
                 ? (Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -70,75 +70,43 @@ class _HomeScreenState extends State<HomeScreen> {
                     context,
                     MaterialPageRoute(
                       builder: (context) => PosterScreen(
-                        id: 2,
+                        id: '2',
                       ),
                     ),
                   ))),
-        fullName == "null"
-            ? Padding(
-                padding: const EdgeInsets.only(left: 40, right: 40, top: 75),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      width: double.infinity,
-                      child: PrimaryText(
-                          text: "Bem vindo ao Bloguee! \nFaça Login ; )",
-                          color: Colors.black,
-                          align: TextAlign.start),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(top: 50),
-                      child: InputTextButton(
-                        title: "Login",
-                        onClick: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const SignInScreen()));
-                        },
+        Expanded(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  showSearch(context: context, delegate: SearchPosters());
+                },
+                child: Container(
+                  width: MediaQuery.of(context).size.width * .8,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: PrimaryColor,
+                  ),
+                  height: 50,
+                  child: Center(
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 25),
+                      child: SizedBox(
+                        width: double.infinity,
+                        child: SubText(
+                            text: "Qual sua dúvida?",
+                            color: SecudaryColor,
+                            align: TextAlign.start),
                       ),
                     ),
-                  ],
+                  ),
                 ),
               )
-            : Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    PrimaryText(
-                      text: "HE Net",
-                      color: SecudaryColor,
-                      align: TextAlign.center,
-                    ),
-                    SizedBox(
-                      height: 25,
-                    ),
-                    GestureDetector(
-                      onTap: () {
-                        showSearch(context: context, delegate: SearchPosters());
-                      },
-                      child: Container(
-                        color: PrimaryColor,
-                        width: MediaQuery.of(context).size.width * .8,
-                        height: 50,
-                        child: Center(
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 25),
-                            child: SizedBox(
-                              width: double.infinity,
-                              child: SubText(
-                                  text: "Qual sua dúvida?",
-                                  color: SecudaryColor,
-                                  align: TextAlign.start),
-                            ),
-                          ),
-                        ),
-                      ),
-                    )
-                  ],
-                ),
-              )
+            ],
+          ),
+        )
       ],
     ));
   }

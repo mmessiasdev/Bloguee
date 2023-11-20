@@ -9,7 +9,7 @@ import 'package:fluttercode/component/texts.dart';
 
 class PosterScreen extends StatelessWidget {
   PosterScreen({super.key, required this.id});
-  int id;
+  String id;
 
   Future<Map> poster() async {
     var url = Uri.parse('http://localhost:1337/api/posters/$id?populate=*');
@@ -32,19 +32,12 @@ class PosterScreen extends StatelessWidget {
                     children: [
                       Padding(
                         padding:
-                            const EdgeInsets.only(left: 40, right: 40, top: 25),
+                            const EdgeInsets.only(left: 30, right: 30, top: 25),
                         child: Column(
                           children: [
                             PrimaryText(
                                 text: render["data"]["attributes"]["title"],
                                 color: nightColor,
-                                align: TextAlign.start),
-                            SizedBox(
-                              height: 25,
-                            ),
-                            SubText(
-                                text: render["data"]["attributes"]["desc"],
-                                color: SecudaryColor,
                                 align: TextAlign.start),
                             SizedBox(
                               height: 25,
@@ -61,6 +54,13 @@ class PosterScreen extends StatelessWidget {
                             SizedBox(
                               height: 50,
                             ),
+                            SubText(
+                                text: render["data"]["attributes"]["desc"],
+                                color: SecudaryColor,
+                                align: TextAlign.justify),
+                            SizedBox(
+                              height: 100,
+                            ),
                           ],
                         ),
                       ),
@@ -68,24 +68,12 @@ class PosterScreen extends StatelessWidget {
                         color: PrimaryColor,
                         child: Padding(
                           padding: const EdgeInsets.only(
-                              left: 40, right: 40, top: 25, bottom: 25),
-                          child: MarkdownBody(
-                            data: render["data"]["attributes"]["content"],
-                            styleSheet: MarkdownStyleSheet.fromTheme(ThemeData(
-                              fontFamily: 'Montserrat',
-                                backgroundColor: lightColor,
-                                primarySwatch: Colors.grey,
-                                textTheme: TextTheme(
-                                    bodyText2: TextStyle(fontSize: 20.0)))),
-
-                            // child: SubTextSized(
-                            //   text: render["data"]["attributes"]["content"],
-                            //   color: nightColor,
-                            //   align: TextAlign.start,
-                            //   fontweight: FontWeight.w600,
-                            //   size: 15,
-                            // ),
-                          ),
+                              left: 30, right: 30, top: 50, bottom: 50),
+                          child: SubText(
+                            text: render["data"]["attributes"]["content"],
+                            align: TextAlign.justify,
+                            color: nightColor,
+                          )
                         ),
                       ),
                     ],
@@ -101,7 +89,8 @@ class PosterScreen extends StatelessWidget {
                   )),
                 );
               }
-              return Expanded(
+              return SizedBox(
+                height: 200,
                 child: Center(
                   child: CircularProgressIndicator(
                     color: PrimaryColor,

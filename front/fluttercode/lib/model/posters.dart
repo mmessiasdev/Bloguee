@@ -50,14 +50,16 @@ class Data {
 }
 
 class Attributes {
+  int? id;
   String? title;
   String? desc;
   String? createdAt;
   String? updatedAt;
 
-  Attributes({this.title, this.desc, this.createdAt, this.updatedAt});
+  Attributes({this.id, this.title, this.desc, this.createdAt, this.updatedAt});
 
   Attributes.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
     title = json['attributes']['title'];
     desc = json['attributes']['desc'];
     createdAt = json['attributes']['createdAt'];
@@ -66,6 +68,7 @@ class Attributes {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
     data['title'] = this.title;
     data['desc'] = this.desc;
     data['createdAt'] = this.createdAt;

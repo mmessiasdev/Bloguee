@@ -29,7 +29,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
   void getString() async {
     var strEmail = await LocalAuthService().getEmail("email");
-    var strFull = await LocalAuthService().getFull("full");
+    var strFull = await LocalAuthService().getLname("lname");
     var strId = await LocalAuthService().getId("id");
     var strToken = await LocalAuthService().getSecureToken("token");
 
