@@ -71,7 +71,7 @@ class PosterScreen extends StatelessWidget {
                               left: 30, right: 30, top: 50, bottom: 50),
                           child: SubText(
                             text: render["data"]["attributes"]["content"],
-                            align: TextAlign.justify,
+                            align: TextAlign.start,
                             color: nightColor,
                           )
                         ),

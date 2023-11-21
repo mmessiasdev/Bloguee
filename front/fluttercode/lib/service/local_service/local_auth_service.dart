@@ -14,8 +14,8 @@ class LocalAuthService {
   Future storeEmail(
       {required String email,
       required String lname,
-      required String id}) async {
-    await _storage.write(key: "id", value: id);
+      required int id}) async {
+    await _storage.write(key: "id", value: id.toString());
     await _storage.write(key: "email", value: email);
     await _storage.write(key: "lname", value: lname);
   }

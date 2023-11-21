@@ -8,7 +8,7 @@
     "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
   "pluginOptions": {},
   "attributes": {
@@ -18,10 +18,20 @@
     "desc": {
       "type": "string"
     },
-    "user": {
+    "profile": {
       "type": "relation",
-      "relation": "oneToOne",
-      "target": "plugin::users-permissions.user"
+      "relation": "manyToOne",
+      "target": "api::profile.profile",
+      "inversedBy": "posters"
+    },
+    "chunk": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::chunk.chunk",
+      "inversedBy": "posters"
+    },
+    "content": {
+      "type": "richtext"
     }
   }
 }

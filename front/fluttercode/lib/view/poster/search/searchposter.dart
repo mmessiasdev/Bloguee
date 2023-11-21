@@ -10,7 +10,7 @@ class SearchPosters extends SearchDelegate<String> {
   Future<List<Attributes>> suggestions() async {
     List<Attributes> listItens = [];
     var url = Uri.parse(
-        'http://localhost:1337/api/posters?filters[title][\$containsi]=$query');
+        'http://localhost:1337/api/posters?populate=*?filters[title][\$containsi]=$query&populate=*');
     var response = await http.get(url);
     var body = jsonDecode(response.body);
     var itemCount = body["data"];
@@ -18,19 +18,6 @@ class SearchPosters extends SearchDelegate<String> {
       listItens.add(Attributes.fromJson(itemCount[i]));
     }
     return listItens;
-  }
-
-  Future<List<Data>> sugId() async {
-    List<Data> listId = [];
-    var url = Uri.parse(
-        'http://localhost:1337/api/posters?filters[title][\$containsi]=$query');
-    var response = await http.get(url);
-    var body = jsonDecode(response.body);
-    var itemCount = body["data"];
-    for (var i = 0; i < itemCount.length; i++) {
-      listId.add(Data.fromJson(itemCount[i]));
-    }
-    return listId;
   }
 
   @override

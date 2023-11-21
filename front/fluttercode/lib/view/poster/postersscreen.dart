@@ -15,10 +15,10 @@ class PostersScreen extends StatelessWidget {
 
   Future<List<Attributes>> posters() async {
     List<Attributes> listItens = [];
-    var url = Uri.parse('http://localhost:1337/api/posters');
+    var url = Uri.parse('http://localhost:1337/api/posters?populate=*');
     var response = await http.get(url);
     var body = jsonDecode(response.body);
-    var itemCount = body["data"];
+    var itemCount = body["data"]; 
     for (var i = 0; i < itemCount.length; i++) {
       listItens.add(Attributes.fromJson(itemCount[i]));
     }
@@ -27,33 +27,36 @@ class PostersScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: [
-        MainHeader(
-            title: 'Criar',
-            onClick: () {
-              (Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => HomeScreen(),
-                ),
-              ));
-            }),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-          child: SizedBox(
+    return SizedBox(
+      child: ListView(
+        children: [
+          MainHeader(
+              title: 'Criar',
+              onClick: () {
+                (Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => HomeScreen(),
+                  ),
+                ));
+              }),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               children: [
-                Center(
-                  child: PrimaryText(
-                    text: 'Ultimos Posters',
-                    color: nightColor,
-                    align: TextAlign.center,
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 20),
+                  child: Center(
+                    child: PrimaryText(
+                      text: 'Ultimos Posters',
+                      color: nightColor,
+                      align: TextAlign.center,
+                    ),
                   ),
                 ),
-                SizedBox(height: 75),
                 SizedBox(
-                  child: FutureBuilder(
+                  height: 400,
+                  child: FutureBuilder<List<Attributes>>(
                       future: posters(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
@@ -61,53 +64,64 @@ class PostersScreen extends StatelessWidget {
                               itemCount: snapshot.data!.length,
                               itemBuilder: (context, index) {
                                 var render = snapshot.data![index];
-
                                 return Padding(
                                   padding: const EdgeInsets.all(12),
                                   child: GestureDetector(
                                     child: Container(
                                       decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
+                                        borderRadius: BorderRadius.circular(20),
                                         color: PrimaryColor,
                                       ),
                                       child: Padding(
                                           padding: const EdgeInsets.symmetric(
                                               vertical: 20, horizontal: 20),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              SecundaryText(
-                                                text: render.title.toString(),
-                                                align: TextAlign.start,
-                                                color: nightColor,
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    top: 10),
-                                                child: SubText(
-                                                  text: render.desc.toString(),
-                                                  align: TextAlign.start,
-                                                  color: SecudaryColor,
+                                          child: Expanded(
+                                            child: Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Padding(
+                                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                                  child: SecundaryText(
+                                                      text: render.plname
+                                                          .toString(),
+                                                      color: SecudaryColor,
+                                                      align: TextAlign.start),
                                                 ),
-                                              ),
-                                              SizedBox(
-                                                width: double.infinity,
-                                                child: Padding(
+                                                SecundaryText(
+                                                  text: render.title.toString(),
+                                                  align: TextAlign.start,
+                                                  color: nightColor,
+                                                ),
+                                                Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           top: 10),
                                                   child: SubText(
-                                                    text: render.updatedAt
-                                                        .toString()
-                                                        .replaceAll("-", "/")
-                                                        .substring(0, 10),
-                                                    align: TextAlign.end,
-                                                    color: nightColor,
+                                                    text:
+                                                        render.desc.toString(),
+                                                    align: TextAlign.start,
+                                                    color: SecudaryColor,
                                                   ),
                                                 ),
-                                              ),
-                                            ],
+                                                SizedBox(
+                                                  width: double.infinity,
+                                                  child: Padding(
+                                                    padding:
+                                                        const EdgeInsets.only(
+                                                            top: 10),
+                                                    child: SubText(
+                                                      text: render.updatedAt
+                                                          .toString()
+                                                          .replaceAll("-", "/")
+                                                          .substring(0, 10),
+                                                      align: TextAlign.end,
+                                                      color: nightColor,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
                                           )),
                                     ),
                                     onTap: () {
@@ -144,8 +158,8 @@ class PostersScreen extends StatelessWidget {
               ],
             ),
           ),
-        )
-      ],
+        ],
+      ),
     );
   }
 }

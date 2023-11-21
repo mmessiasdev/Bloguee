@@ -20,6 +20,12 @@
       "relation": "oneToMany",
       "target": "api::profile.profile",
       "mappedBy": "chunk"
+    },
+    "posters": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::poster.poster",
+      "mappedBy": "chunk"
     }
   }
 }

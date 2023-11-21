@@ -28,6 +28,15 @@
       "relation": "manyToOne",
       "target": "api::chunk.chunk",
       "inversedBy": "profiles"
+    },
+    "email": {
+      "type": "string"
+    },
+    "posters": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::poster.poster",
+      "mappedBy": "profile"
     }
   }
 }
