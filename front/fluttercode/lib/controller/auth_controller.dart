@@ -31,8 +31,8 @@ class AuthController extends GetxController {
       );
       if (result.statusCode == 200) {
         String token = json.decode(result.body)['jwt'];
-        var userResult = await RemoteAuthService()
-            .createProfile(lname: lname, token: token);
+        var userResult =
+            await RemoteAuthService().createProfile(lname: lname, token: token);
         if (userResult.statusCode == 200) {
           user.value = userFromJson(userResult.body);
           EasyLoading.showSuccess("Conta criada. Confirme suas informações.");
@@ -68,10 +68,12 @@ class AuthController extends GetxController {
           var email = jsonDecode(userResult.body)['email'];
           var lname = jsonDecode(userResult.body)['lname'];
           var id = jsonDecode(userResult.body)['id'];
+          var chunk = jsonDecode(userResult.body)['chunk']["id"];
+
           user.value = userFromJson(userResult.body);
           await LocalAuthService().storeToken(token);
           await LocalAuthService()
-              .storeEmail(email: email, lname: lname, id: id);
+              .storeAccount(email: email, lname: lname, id: id, chunk: chunk);
           var stringEmail = await LocalAuthService().getEmail("email");
           EasyLoading.showSuccess("Bem vindo ao Bloguee");
           Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
@@ -130,6 +132,39 @@ class AuthController extends GetxController {
         Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
       } else {
         EasyLoading.showError('Faça login para realizar uma denúncia.');
+      }
+    } catch (e) {
+      print(e);
+      EasyLoading.showError('Alguma coisa deu errado.');
+    } finally {
+      EasyLoading.dismiss();
+    }
+  }
+
+  void postering(
+      {required String title,
+      required String desc,
+      required String content,
+      required int profileId,
+      required int chunkId}) async {
+    try {
+      EasyLoading.show(
+        status: 'Loading...',
+        dismissOnTap: false,
+      );
+      var token = await LocalAuthService().getSecureToken("token");
+      var userResult = await RemoteAuthService().addPoster(
+          token: token.toString(),
+          title: title,
+          desc: desc,
+          content: content,
+          profileId: profileId,
+          chunkId: chunkId);
+      if (userResult.statusCode == 200) {
+        EasyLoading.showSuccess("Seu relato poster enviado.");
+        Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
+      } else {
+        EasyLoading.showError('Faça login para realizar um post!');
       }
     } catch (e) {
       print(e);

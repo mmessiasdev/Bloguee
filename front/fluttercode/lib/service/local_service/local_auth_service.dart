@@ -9,15 +9,18 @@ class LocalAuthService {
 
   Future<String?> getSecureToken(String token) async {
     return await _storage.read(key: "token");
-  } 
+  }
 
-  Future storeEmail(
-      {required String email,
-      required String lname,
-      required int id}) async {
+  Future storeAccount({
+    required String email,
+    required String lname,
+    required int id,
+    required int chunk,
+  }) async {
     await _storage.write(key: "id", value: id.toString());
     await _storage.write(key: "email", value: email);
     await _storage.write(key: "lname", value: lname);
+    await _storage.write(key: "chunk", value: chunk.toString());
   }
 
   Future<String?> getEmail(String unicKey) async {
@@ -30,6 +33,10 @@ class LocalAuthService {
 
   Future<String?> getLname(String unicKey) async {
     return await _storage.read(key: "lname");
+  }
+
+    Future<String?> getChunk(String unicKey) async {
+    return await _storage.read(key: "chunk");
   }
 
   Future<void> clear() async {

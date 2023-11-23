@@ -67,139 +67,150 @@ class _PostersScreenState extends State<PostersScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: ListView(
-        children: [
-          MainHeader(
-              title: 'Criar',
-              onClick: () {
-                (Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => CreatePoster(),
-                  ),
-                ));
-              }),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20),
-                  child: Center(
-                    child: PrimaryText(
-                      text: 'Ultimos Posters',
-                      color: nightColor,
-                      align: TextAlign.center,
+    return Expanded(
+      child: SizedBox(
+        child: ListView(
+          children: [
+            MainHeader(
+                title: 'Criar',
+                onClick: () {
+                  (Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreatePoster(),
+                    ),
+                  ));
+                }),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 20),
+                    child: Center(
+                      child: PrimaryText(
+                        text: 'Ultimos Posters',
+                        color: nightColor,
+                        align: TextAlign.center,
+                      ),
                     ),
                   ),
-                ),
-                FutureBuilder<List<Attributes>>(
-                    future: posters(),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                            itemCount: snapshot.data?.length,
-                            itemBuilder: (context, index) {
-                              var render = snapshot.data![index];
-                              return Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: GestureDetector(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(20),
-                                      color: PrimaryColor,
-                                    ),
-                                    child: Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            vertical: 20, horizontal: 20),
-                                        child: Expanded(
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets
-                                                    .symmetric(vertical: 10),
-                                                child: SecundaryText(
-                                                    text: render.plname
-                                                        .toString(),
-                                                    color: SecudaryColor,
-                                                    align: TextAlign.start),
-                                              ),
-                                              SecundaryText(
-                                                text: render.title.toString(),
-                                                align: TextAlign.start,
-                                                color: nightColor,
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.only(
-                                                        top: 10),
-                                                child: SubText(
-                                                  text:
-                                                      render.desc.toString(),
-                                                  align: TextAlign.start,
-                                                  color: SecudaryColor,
-                                                ),
-                                              ),
-                                              SizedBox(
-                                                width: double.infinity,
-                                                child: Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 10),
-                                                  child: SubTextSized(
-                                                    text: render.updatedAt
-                                                        .toString()
-                                                        .replaceAll("-", "/")
-                                                        .substring(0, 10),
-                                                    align: TextAlign.end,
-                                                    color: nightColor,
-                                                    size: 15,
-                                                    fontweight:
-                                                        FontWeight.w600,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .6,
+                    child: Expanded(
+                      child: FutureBuilder<List<Attributes>>(
+                          future: posters(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return ListView.builder(
+                                  itemCount: snapshot.data?.length,
+                                  itemBuilder: (context, index) {
+                                    var render = snapshot.data![index];
+                                    return Padding(
+                                      padding: const EdgeInsets.all(12),
+                                      child: GestureDetector(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            color: PrimaryColor,
                                           ),
-                                        )),
-                                  ),
-                                  onTap: () {
-                                    (Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => PosterScreen(
-                                          id: render.id.toString(),
+                                          child: Padding(
+                                              padding: const EdgeInsets.symmetric(
+                                                  vertical: 20, horizontal: 20),
+                                              child: Expanded(
+                                                child: Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Padding(
+                                                      padding: const EdgeInsets
+                                                          .symmetric(
+                                                          vertical: 10),
+                                                      child: SecundaryText(
+                                                          text: render.plname
+                                                              .toString(),
+                                                          color: SecudaryColor,
+                                                          align: TextAlign.start),
+                                                    ),
+                                                    SecundaryText(
+                                                      text:
+                                                          render.title.toString(),
+                                                      align: TextAlign.start,
+                                                      color: nightColor,
+                                                    ),
+                                                    Padding(
+                                                      padding:
+                                                          const EdgeInsets.only(
+                                                              top: 10),
+                                                      child: SubText(
+                                                        text: render.desc
+                                                            .toString(),
+                                                        align: TextAlign.start,
+                                                        color: SecudaryColor,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      width: double.infinity,
+                                                      child: Padding(
+                                                        padding:
+                                                            const EdgeInsets.only(
+                                                                top: 10),
+                                                        child: SubTextSized(
+                                                          text: render.updatedAt
+                                                              .toString()
+                                                              .replaceAll(
+                                                                  "-", "/")
+                                                              .substring(0, 10),
+                                                          align: TextAlign.end,
+                                                          color: nightColor,
+                                                          size: 15,
+                                                          fontweight:
+                                                              FontWeight.w600,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )),
                                         ),
+                                        onTap: () {
+                                          (Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => PosterScreen(
+                                                id: render.id.toString(),
+                                              ),
+                                            ),
+                                          ));
+                                        },
                                       ),
-                                    ));
-                                  },
+                                    );
+                                    ;
+                                  });
+                            } else if (snapshot.hasError) {
+                              return Center(
+                                  child: SubText(
+                                text: 'Erro ao pesquisar poster',
+                                color: PrimaryColor,
+                                align: TextAlign.center,
+                              ));
+                            }
+                            return Expanded(
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  color: PrimaryColor,
                                 ),
-                              );
-                              ;
-                            });
-                      } else if (snapshot.hasError) {
-                        return Center(
-                            child: SubText(
-                          text: 'Erro ao pesquisar poster',
-                          color: PrimaryColor,
-                          align: TextAlign.center,
-                        ));
-                      }
-                      return Expanded(
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: PrimaryColor,
-                          ),
-                        ),
-                      );
-                    })
-              ],
+                              ),
+                            );
+                          }),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

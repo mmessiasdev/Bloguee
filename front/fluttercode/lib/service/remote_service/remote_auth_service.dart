@@ -56,7 +56,7 @@ class RemoteAuthService {
     required String token,
   }) async {
     var response = await client.get(
-      Uri.parse('http://localhost:1337/api/profile/me'),
+      Uri.parse('http://localhost:1337/api/profile/me?populate=*'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -100,10 +100,22 @@ class RemoteAuthService {
   }
 
   Future addPoster({
+    required String title,
+    required String desc,
     required String content,
+    required int profileId,
+    required int chunkId,
     required String token,
   }) async {
-    final body = {"content": content};
+    final body = {
+      "data": {
+        "title": title,
+        "desc": desc,
+        "content": content,
+        "profile": profileId,
+        "chunk": chunkId
+      }
+    };
     var response = await client.post(
       Uri.parse('http://localhost:1337/api/posters'),
       headers: {
