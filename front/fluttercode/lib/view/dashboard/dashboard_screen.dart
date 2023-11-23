@@ -4,7 +4,7 @@ import 'package:fluttercode/view/blog/blog_screen.dart';
 import 'package:fluttercode/view/complaint/complaint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-import 'package:fluttercode/view/poster/postersscreen.dart';
+import 'package:fluttercode/view/posters/postersscreen.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttercode/component/colors.dart';

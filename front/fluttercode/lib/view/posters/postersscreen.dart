@@ -7,8 +7,8 @@ import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/component/texts.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:fluttercode/view/home/home_screen.dart';
-import 'package:fluttercode/view/poster/create/createposter.dart';
-import 'package:fluttercode/view/poster/posterscreen.dart';
+import 'package:fluttercode/view/posters/create/createposter.dart';
+import 'package:fluttercode/view/posters/poster/posterscreen.dart';
 import 'package:http/http.dart' as http;
 
 import '../../model/posters.dart';
@@ -94,111 +94,108 @@ class _PostersScreenState extends State<PostersScreen> {
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: 400,
-                  child: FutureBuilder<List<Attributes>>(
-                      future: posters(),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return ListView.builder(
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (context, index) {
-                                var render = snapshot.data![index];
-                                return Padding(
-                                  padding: const EdgeInsets.all(12),
-                                  child: GestureDetector(
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(20),
-                                        color: PrimaryColor,
-                                      ),
-                                      child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              vertical: 20, horizontal: 20),
-                                          child: Expanded(
-                                            child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Padding(
-                                                  padding: const EdgeInsets
-                                                      .symmetric(vertical: 10),
-                                                  child: SecundaryText(
-                                                      text: render.plname
-                                                          .toString(),
-                                                      color: SecudaryColor,
-                                                      align: TextAlign.start),
-                                                ),
-                                                SecundaryText(
-                                                  text: render.title.toString(),
+                FutureBuilder<List<Attributes>>(
+                    future: posters(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                            itemCount: snapshot.data?.length,
+                            itemBuilder: (context, index) {
+                              var render = snapshot.data![index];
+                              return Padding(
+                                padding: const EdgeInsets.all(12),
+                                child: GestureDetector(
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: PrimaryColor,
+                                    ),
+                                    child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 20, horizontal: 20),
+                                        child: Expanded(
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets
+                                                    .symmetric(vertical: 10),
+                                                child: SecundaryText(
+                                                    text: render.plname
+                                                        .toString(),
+                                                    color: SecudaryColor,
+                                                    align: TextAlign.start),
+                                              ),
+                                              SecundaryText(
+                                                text: render.title.toString(),
+                                                align: TextAlign.start,
+                                                color: nightColor,
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.only(
+                                                        top: 10),
+                                                child: SubText(
+                                                  text:
+                                                      render.desc.toString(),
                                                   align: TextAlign.start,
-                                                  color: nightColor,
+                                                  color: SecudaryColor,
                                                 ),
-                                                Padding(
+                                              ),
+                                              SizedBox(
+                                                width: double.infinity,
+                                                child: Padding(
                                                   padding:
                                                       const EdgeInsets.only(
                                                           top: 10),
-                                                  child: SubText(
-                                                    text:
-                                                        render.desc.toString(),
-                                                    align: TextAlign.start,
-                                                    color: SecudaryColor,
+                                                  child: SubTextSized(
+                                                    text: render.updatedAt
+                                                        .toString()
+                                                        .replaceAll("-", "/")
+                                                        .substring(0, 10),
+                                                    align: TextAlign.end,
+                                                    color: nightColor,
+                                                    size: 15,
+                                                    fontweight:
+                                                        FontWeight.w600,
                                                   ),
                                                 ),
-                                                SizedBox(
-                                                  width: double.infinity,
-                                                  child: Padding(
-                                                    padding:
-                                                        const EdgeInsets.only(
-                                                            top: 10),
-                                                    child: SubTextSized(
-                                                      text: render.updatedAt
-                                                          .toString()
-                                                          .replaceAll("-", "/")
-                                                          .substring(0, 10),
-                                                      align: TextAlign.end,
-                                                      color: nightColor,
-                                                      size: 15,
-                                                      fontweight:
-                                                          FontWeight.w600,
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )),
-                                    ),
-                                    onTap: () {
-                                      (Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) => PosterScreen(
-                                            id: render.id.toString(),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                                      ));
-                                    },
+                                        )),
                                   ),
-                                );
-                                ;
-                              });
-                        } else if (snapshot.hasError) {
-                          return Center(
-                              child: SubText(
-                            text: 'Erro ao pesquisar poster',
+                                  onTap: () {
+                                    (Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => PosterScreen(
+                                          id: render.id.toString(),
+                                        ),
+                                      ),
+                                    ));
+                                  },
+                                ),
+                              );
+                              ;
+                            });
+                      } else if (snapshot.hasError) {
+                        return Center(
+                            child: SubText(
+                          text: 'Erro ao pesquisar poster',
+                          color: PrimaryColor,
+                          align: TextAlign.center,
+                        ));
+                      }
+                      return Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(
                             color: PrimaryColor,
-                            align: TextAlign.center,
-                          ));
-                        }
-                        return Expanded(
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: PrimaryColor,
-                            ),
                           ),
-                        );
-                      }),
-                )
+                        ),
+                      );
+                    })
               ],
             ),
           ),

@@ -5,8 +5,8 @@ import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:fluttercode/view/account/account_screen.dart';
 import 'package:fluttercode/view/account/auth/sign_in_screen.dart';
-import 'package:fluttercode/view/poster/posterscreen.dart';
-import 'package:fluttercode/view/poster/search/searchposter.dart';
+import 'package:fluttercode/view/posters/poster/posterscreen.dart';
+import 'package:fluttercode/view/posters/search/searchposter.dart';
 import 'package:get/get.dart';
 
 import '../../component/colors.dart';

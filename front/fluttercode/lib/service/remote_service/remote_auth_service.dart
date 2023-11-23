@@ -98,4 +98,20 @@ class RemoteAuthService {
     );
     return response;
   }
+
+  Future addPoster({
+    required String content,
+    required String token,
+  }) async {
+    final body = {"content": content};
+    var response = await client.post(
+      Uri.parse('http://localhost:1337/api/posters'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+      body: jsonEncode(body),
+    );
+    return response;
+  }
 }
