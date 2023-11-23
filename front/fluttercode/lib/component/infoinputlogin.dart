@@ -18,19 +18,20 @@ class InfoInputLogin extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SubText(text: title, color: TerciaryColorOff, align: TextAlign.start),
+          SubText(text: title, color: nightColor, align: TextAlign.start),
+          SizedBox(
+            height: 5,
+          ),
           Container(
             width: MediaQuery.of(context).size.width,
-            height: 30,
-            color: Color.fromARGB(255, 215, 215, 215),
+            height: 48,
+            color: PrimaryColor,
             child: Padding(
               padding: EdgeInsets.all(8.0),
               child: Align(
                 alignment: Alignment.centerLeft,
                 child: SubText(
-                    text: info,
-                    color: TerciaryColorOff,
-                    align: TextAlign.start),
+                    text: info, color: nightColor, align: TextAlign.start),
               ),
             ),
           ),

@@ -18,12 +18,13 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   var email;
-  var fullName;
+  var lname;
   var id;
   var token;
 
   @override
   void initState() {
+    super.initState();
     getString();
   }
 
@@ -35,7 +36,7 @@ class _AccountScreenState extends State<AccountScreen> {
 
     setState(() {
       email = strEmail.toString();
-      fullName = strFull.toString();
+      lname = strFull.toString();
       id = strId.toString();
       token = strToken.toString();
     });
@@ -46,132 +47,58 @@ class _AccountScreenState extends State<AccountScreen> {
     return SizedBox(
       child: ListView(
         children: [
-          MainHeader(
-            title: "Registrar",
-              onClick: () => (Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => AccountScreen(),
-                    ),
-                  ))),
-          Container(
-            color: BackgroundOffColor,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 25,
-                        backgroundColor: Color.fromRGBO(112, 53, 64, 1),
-                        child: Icon(
-                          Icons.person,
-                          color: Colors.white,
-                          size: 25,
-                        ),
-                      ),
-                      const SizedBox(width: 10),
-                      Column(
-                        children: [
-                          Text(
-                            fullName == "null" ? "Faça Login" : fullName,
-                            // authController.user.value == null
-                            //     ? "Faça Login"
-                            //     : authController.user.value!.fullName!,
-                            style: const TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w500,
-                              color: Color.fromRGBO(146, 146, 146, 1),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                  GestureDetector(
-                      child: Icon(Icons.arrow_back_ios),
-                      onTap: () => (Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AccountScreen(),
-                            ),
-                          ))),
-                ],
-              ),
-            ),
-          ),
+          MainHeader(title: "Voltar", onClick: () => Navigator.pop(context)),
           const SizedBox(height: 50),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 10),
             child: Column(
               children: [
+                PrimaryText(
+                    text: 'Perfil', color: nightColor, align: TextAlign.center),
+                SizedBox(
+                  height: 30,
+                ),
                 InfoInputLogin(
                   title: 'Nome:',
-                  info: fullName == "null" ? "" : fullName,
-                  // 'Nome: ${authController.user.value == null ? "" : authController.user.value?.fullName}',
+                  info: lname == null ? "" : lname,
                 ),
                 InfoInputLogin(
                   title: 'Email:',
-                  info: email == "null" ? "" : email,
-                  // 'Email: ${authController.user.value == null ? "" : authController.user.value?.email}',
+                  info: email == null ? "" : email,
                 ),
                 InfoInputLogin(
                   title: 'id:',
-                  info: id == "null" ? "" : id,
-                  // 'Id: ${authController.user.value == null ? "" : authController.user.value?.id}',
+                  info: id == null ? "" : id,
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+                InputTextButton(
+                  color: FifthColor,
+                  title: token == null ? "Entrar" : "Sair da conta",
+                  onClick: () {
+                    if (token != "null") {
+                      authController.signOut();
+                      Navigator.pop(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignInScreen(),
+                        ),
+                      );
+                    } else {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignInScreen(),
+                        ),
+                      );
+                    }
+                  },
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: InputTextButton(
-              title: token == "null" ? "Entrar" : "Sair da conta",
-              onClick: () {
-                if (token != "null") {
-                  authController.signOut();
-                  Navigator.pop(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignInScreen(),
-                    ),
-                  );
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const SignInScreen(),
-                    ),
-                  );
-                }
-              },
-            ),
-          ),
         ],
-      ),
-    );
-  }
-
-  Widget buildAccountCard(
-      {required String title, required Function() onClick}) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 14),
-      child: GestureDetector(
-        onTap: () {
-          onClick();
-        },
-        child: Container(
-          height: 60,
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SubText(text: title, color: TerciaryColor, align: TextAlign.start)
-            ],
-          ),
-        ),
       ),
     );
   }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -7,14 +8,52 @@ import 'package:fluttercode/component/colors.dart';
 import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/component/texts.dart';
 
-class PosterScreen extends StatelessWidget {
+class PosterScreen extends StatefulWidget {
   PosterScreen({super.key, required this.id});
   String id;
 
+  @override
+  State<PosterScreen> createState() => _PosterScreenState();
+}
+
+class _PosterScreenState extends State<PosterScreen> {
+  var client = http.Client();
+  var email;
+  var lname;
+  var token;
+  var id;
+
+  @override
+  void initState() {
+    super.initState();
+    getString();
+  }
+
+  void getString() async {
+    var strEmail = await LocalAuthService().getEmail("email");
+    var strFull = await LocalAuthService().getLname("lname");
+    var strId = await LocalAuthService().getId("id");
+    var strToken = await LocalAuthService().getSecureToken("token");
+
+    setState(() {
+      email = strEmail.toString();
+      lname = strFull.toString();
+      id = strId.toString();
+      token = strToken.toString();
+    });
+  }
+
   Future<Map> poster() async {
-    var url = Uri.parse('http://localhost:1337/api/posters/$id?populate=*');
-    http.Response response = await http.get(url);
-    return json.decode(response.body);
+    var response = await client.get(
+      Uri.parse('http://localhost:1337/api/posters/${widget.id}?populate=*'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
+    var itens = json.decode(response.body);
+    print(itens);
+    return itens;
   }
 
   @override
@@ -65,16 +104,15 @@ class PosterScreen extends StatelessWidget {
                         ),
                       ),
                       Container(
-                        color: PrimaryColor,
+                        color: SixthColor,
                         child: Padding(
-                          padding: const EdgeInsets.only(
-                              left: 30, right: 30, top: 50, bottom: 50),
-                          child: SubText(
-                            text: render["data"]["attributes"]["content"],
-                            align: TextAlign.start,
-                            color: nightColor,
-                          )
-                        ),
+                            padding: const EdgeInsets.only(
+                                left: 30, right: 30, top: 50, bottom: 50),
+                            child: SubText(
+                              text: render["data"]["attributes"]["content"],
+                              align: TextAlign.start,
+                              color: nightColor,
+                            )),
                       ),
                     ],
                   ),

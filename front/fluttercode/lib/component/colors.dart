@@ -5,6 +5,8 @@ final Color SecudaryColor = Color(0xFFFBFBFBF);
 final Color TerciaryColor = Color(0xFFFFFFFF);
 final Color FourtyColor = Color(0xFFF57F094);
 final Color FifthColor = Color(0xFFFF05757);
+final Color SixthColor = Color.fromARGB(255, 244, 244, 244);
+
 
 final Color TerciaryColorOff = Color(0xBFBFBF);
 final Color OffColor = Color.fromRGBO(146, 146, 146, 1);

@@ -1,24 +1,64 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttercode/component/colors.dart';
 import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/component/texts.dart';
+import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:fluttercode/view/home/home_screen.dart';
+import 'package:fluttercode/view/poster/create/createposter.dart';
 import 'package:fluttercode/view/poster/posterscreen.dart';
 import 'package:http/http.dart' as http;
 
 import '../../model/posters.dart';
 
-class PostersScreen extends StatelessWidget {
+class PostersScreen extends StatefulWidget {
   const PostersScreen({super.key});
+
+  @override
+  State<PostersScreen> createState() => _PostersScreenState();
+}
+
+class _PostersScreenState extends State<PostersScreen> {
+  var client = http.Client();
+
+  var email;
+  var lname;
+  var id;
+  var token;
+
+  @override
+  void initState() {
+    super.initState();
+    getString();
+  }
+
+  void getString() async {
+    var strEmail = await LocalAuthService().getEmail("email");
+    var strFull = await LocalAuthService().getLname("lname");
+    var strId = await LocalAuthService().getId("id");
+    var strToken = await LocalAuthService().getSecureToken("token");
+
+    setState(() {
+      email = strEmail.toString();
+      lname = strFull.toString();
+      id = strId.toString();
+      token = strToken.toString();
+    });
+  }
 
   Future<List<Attributes>> posters() async {
     List<Attributes> listItens = [];
-    var url = Uri.parse('http://localhost:1337/api/posters?populate=*');
-    var response = await http.get(url);
+    var response = await client.get(
+      Uri.parse('http://localhost:1337/api/posters?populate=*'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
     var body = jsonDecode(response.body);
-    var itemCount = body["data"]; 
+    var itemCount = body["data"];
     for (var i = 0; i < itemCount.length; i++) {
       listItens.add(Attributes.fromJson(itemCount[i]));
     }
@@ -36,7 +76,7 @@ class PostersScreen extends StatelessWidget {
                 (Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomeScreen(),
+                    builder: (context) => CreatePoster(),
                   ),
                 ));
               }),
@@ -81,7 +121,8 @@ class PostersScreen extends StatelessWidget {
                                                   CrossAxisAlignment.start,
                                               children: [
                                                 Padding(
-                                                  padding: const EdgeInsets.symmetric(vertical: 10),
+                                                  padding: const EdgeInsets
+                                                      .symmetric(vertical: 10),
                                                   child: SecundaryText(
                                                       text: render.plname
                                                           .toString(),
@@ -110,13 +151,16 @@ class PostersScreen extends StatelessWidget {
                                                     padding:
                                                         const EdgeInsets.only(
                                                             top: 10),
-                                                    child: SubText(
+                                                    child: SubTextSized(
                                                       text: render.updatedAt
                                                           .toString()
                                                           .replaceAll("-", "/")
                                                           .substring(0, 10),
                                                       align: TextAlign.end,
                                                       color: nightColor,
+                                                      size: 15,
+                                                      fontweight:
+                                                          FontWeight.w600,
                                                     ),
                                                   ),
                                                 ),
