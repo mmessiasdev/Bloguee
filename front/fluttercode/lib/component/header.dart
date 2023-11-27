@@ -29,11 +29,14 @@ class MainHeader extends StatelessWidget {
                 width: 130,
                 height: double.infinity,
                 color: PrimaryColor,
-                child: Center(
-                    child: SecundaryText(
-                        text: title,
-                        color: Colors.black,
-                        align: TextAlign.center)),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                      child: SecundaryText(
+                          text: title,
+                          color: Colors.black,
+                          align: TextAlign.center)),
+                ),
               ),
               onTap: () => onClick()),
         ],

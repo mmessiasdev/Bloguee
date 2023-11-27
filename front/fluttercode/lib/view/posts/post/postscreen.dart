@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:fluttercode/component/padding.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:http/http.dart' as http;
 
@@ -52,7 +53,6 @@ class _PosterScreenState extends State<PosterScreen> {
       },
     );
     var itens = json.decode(response.body);
-    print(itens);
     return itens;
   }
 
@@ -70,14 +70,17 @@ class _PosterScreenState extends State<PosterScreen> {
                   child: Column(
                     children: [
                       Padding(
-                        padding:
-                            const EdgeInsets.only(left: 30, right: 30, top: 25),
+                        padding: defaultPadding,
                         child: Column(
                           children: [
-                            PrimaryText(
+                            SizedBox(
+                              width: double.infinity,
+                              child: PrimaryText(
                                 text: render["data"]["attributes"]["title"],
                                 color: nightColor,
-                                align: TextAlign.start),
+                                align: TextAlign.start,
+                              ),
+                            ),
                             SizedBox(
                               height: 25,
                             ),

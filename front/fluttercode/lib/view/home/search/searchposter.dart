@@ -5,7 +5,7 @@ import 'package:fluttercode/component/texts.dart';
 import 'package:fluttercode/component/thumbposter.dart';
 import 'package:fluttercode/model/posters.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
-import 'package:fluttercode/view/posters/poster/posterscreen.dart';
+import 'package:fluttercode/view/posts/post/postscreen.dart';
 import 'package:http/http.dart' as http;
 
 class RenderPoster extends StatefulWidget {

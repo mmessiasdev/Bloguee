@@ -1,10 +1,11 @@
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:fluttercode/view/account/welcomescreen.dart';
 import 'package:fluttercode/view/blog/blog_screen.dart';
+import 'package:fluttercode/view/chunk/chunkscreen.dart';
 import 'package:fluttercode/view/complaint/complaint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-import 'package:fluttercode/view/posters/postersscreen.dart';
+import 'package:fluttercode/view/posts/postsscreen.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:fluttercode/component/colors.dart';
@@ -57,7 +58,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     children: [
                       HomeScreen(),
                       PostersScreen(),
-                      ComplaintScreen(),
+                      ChunkScreen(),
                     ],
                   ),
                 ),
@@ -83,8 +84,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       BottomNavigationBarItem(
                           icon: Icon(Icons.text_format_rounded), label: 'Posters'),
                       BottomNavigationBarItem(
-                          icon: Icon(Icons.priority_high_rounded),
-                          label: 'Denúncias')
+                          icon: Icon(Icons.corporate_fare),
+                          label: 'Informações')
                     ],
                   ),
                 ),

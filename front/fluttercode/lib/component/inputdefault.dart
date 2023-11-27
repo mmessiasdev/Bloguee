@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttercode/component/colors.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class InputTextField extends StatefulWidget {
@@ -19,10 +20,14 @@ class InputTextField extends StatefulWidget {
   final double? width;
   final double? height;
   final Icon? icon;
+  final int? minLines;
+  final int? maxLines;
 
   const InputTextField(
       {Key? key,
       this.width,
+      this.minLines,
+      this.maxLines,
       this.height,
       this.validation,
       this.textEditingController,
@@ -64,12 +69,15 @@ class _InputTextFieldState extends State<InputTextField> {
           textDirection: TextDirection.ltr,
           controller: widget.textEditingController,
           initialValue: widget.initialValue,
+          minLines: widget.minLines,
+          maxLines: widget.maxLines,
           validator: widget.validation ??
               (val) {
                 return null;
               },
           keyboardType: widget.textInputType,
           inputFormatters: widget.inputFormatters,
+          cursorColor: PrimaryColor,
           textInputAction: widget.textInputAction,
           enabled: widget.enable,
           onChanged: (val) {
@@ -79,8 +87,8 @@ class _InputTextFieldState extends State<InputTextField> {
           },
           onEditingComplete: widget.onEditComplete,
           obscureText: _isVisible,
-          style:
-              GoogleFonts.montserrat(fontSize: 18, color: Color.fromRGBO(0, 0, 0, 1)),
+          style: GoogleFonts.montserrat(
+              fontSize: 18, color: Color.fromRGBO(0, 0, 0, 1)),
           textAlign: widget.textAlign,
           autovalidateMode: AutovalidateMode.onUserInteraction,
           decoration: InputDecoration(
@@ -114,19 +122,19 @@ class _InputTextFieldState extends State<InputTextField> {
                 const TextStyle(fontWeight: FontWeight.w300, fontSize: 12),
             border: const UnderlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              borderSide: BorderSide(width: 1, color: Colors.black26),
+              borderSide: BorderSide(width: 1, color: Colors.grey),
             ),
             enabledBorder: const UnderlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              borderSide: BorderSide(width: 1, color: Colors.black26),
+              borderSide: BorderSide(width: 1, color: Colors.grey),
             ),
             errorBorder: const UnderlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              borderSide: BorderSide(width: 1, color: Colors.black26),
+              borderSide: BorderSide(width: 1, color: Colors.grey),
             ),
             focusedBorder: const UnderlineInputBorder(
               borderRadius: BorderRadius.all(Radius.circular(5.0)),
-              borderSide: BorderSide(width: 1, color: Colors.black26),
+              borderSide: BorderSide(width: 1, color: Colors.grey),
             ),
           ),
         ),

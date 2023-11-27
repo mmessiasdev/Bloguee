@@ -105,6 +105,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: InputTextField(
                           title: 'Password',
                           obsecureText: true,
+                          maxLines: 1,
                           // icon: Icon(Icons.lock),
                           textEditingController: passwordController,
                           validation: (String? value) {
