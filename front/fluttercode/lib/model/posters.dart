@@ -87,7 +87,7 @@ class Attributes {
     pemail = json['attributes']['profile']['data']['attributes']['email'];
     cname = json['attributes']['chunk']['data']['attributes']['title'];
     createdAt = json['attributes']['createdAt'];
-    updatedAt = json['attributes']['updatedAt'];
+    updatedAt = json['attributes']['updatedAt'];  
   }
 
   Map<String, dynamic> toJson() {

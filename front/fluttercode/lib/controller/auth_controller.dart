@@ -68,7 +68,7 @@ class AuthController extends GetxController {
           var email = jsonDecode(userResult.body)['email'];
           var lname = jsonDecode(userResult.body)['lname'];
           var id = jsonDecode(userResult.body)['id'];
-          var chunk = jsonDecode(userResult.body)['chunk']["id"];
+          var chunk = jsonDecode(userResult.body)['chunk']['id'];
 
           user.value = userFromJson(userResult.body);
           await LocalAuthService().storeToken(token);

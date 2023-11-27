@@ -31,12 +31,12 @@ class LocalAuthService {
     return await _storage.read(key: "id");
   }
 
-  Future<String?> getLname(String unicKey) async {
-    return await _storage.read(key: "lname");
+  Future<String?> getChunkId(String unicKey) async {
+    return await _storage.read(key: "chunk");
   }
 
-    Future<String?> getChunk(String unicKey) async {
-    return await _storage.read(key: "chunk");
+  Future<String?> getLname(String unicKey) async {
+    return await _storage.read(key: "lname");
   }
 
   Future<void> clear() async {
