@@ -23,6 +23,7 @@ class _PosterScreenState extends State<PosterScreen> {
   var lname;
   var token;
   var id;
+  var chunkId;
 
   @override
   void initState() {
@@ -35,12 +36,14 @@ class _PosterScreenState extends State<PosterScreen> {
     var strFull = await LocalAuthService().getLname("lname");
     var strId = await LocalAuthService().getId("id");
     var strToken = await LocalAuthService().getSecureToken("token");
+    var strChunkId = await LocalAuthService().getChunkId("chunk");
 
     setState(() {
       email = strEmail.toString();
       lname = strFull.toString();
       id = strId.toString();
       token = strToken.toString();
+      chunkId = strChunkId.toString();
     });
   }
 
@@ -52,7 +55,9 @@ class _PosterScreenState extends State<PosterScreen> {
         "Authorization": "Bearer $token"
       },
     );
+    print("Seu id: ${widget.id}");
     var itens = json.decode(response.body);
+    print(itens);
     return itens;
   }
 

@@ -61,10 +61,10 @@ class _ChunkScreenState extends State<ChunkScreen> {
     return itens;
   }
 
-  Future<List<Attributes>> chunkProfile() async {
-    List<Attributes> listItens = [];
+  Future<List<ProfileAttributes>> chunkProfile() async {
+    List<ProfileAttributes> listItens = [];
     var response = await client.get(
-      Uri.parse('http://localhost:1337/api/chunks/$chunkId?populate=*'),
+      Uri.parse('http://localhost:1337/api/chunks/$chunkId?populate=profiles'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -74,15 +74,15 @@ class _ChunkScreenState extends State<ChunkScreen> {
     var itemCount = body["data"]["attributes"]["profiles"]["data"];
     print(itemCount);
     for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(Attributes.fromJson(itemCount[i]));
+      listItens.add(ProfileAttributes.fromJson(itemCount[i]));
     }
     return listItens;
   }
 
-  Future<List<Attributes>> chunkPosts() async {
-    List<Attributes> listItens = [];
+  Future<List<PostsAttributes>> chunkPosts() async {
+    List<PostsAttributes> listItens = [];
     var response = await client.get(
-      Uri.parse('http://localhost:1337/api/chunks/$chunkId?populate=*'),
+      Uri.parse('http://localhost:1337/api/chunks/$chunkId?populate=posters'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -92,7 +92,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
     var itemCount = body["data"]["attributes"]["posters"]["data"];
     print(itemCount);
     for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(Attributes.fromJson(itemCount[i]));
+      listItens.add(PostsAttributes.fromJson(itemCount[i]));
     }
     return listItens;
   }
@@ -160,14 +160,15 @@ class _ChunkScreenState extends State<ChunkScreen> {
                       ),
                     );
                   }),
-              FutureBuilder<List<Attributes>>(
+              FutureBuilder<List<ProfileAttributes>>(
                   future: chunkProfile(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return SizedBox(
                         width: double.infinity,
                         child: SubText(
-                            text: 'Posters: ${snapshot.data!.length.toString()}',
+                            text:
+                                'Posters: ${snapshot.data!.length.toString()}',
                             color: nightColor,
                             align: TextAlign.end),
                       );
@@ -190,7 +191,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
                       ),
                     );
                   }),
-              FutureBuilder<List<Attributes>>(
+              FutureBuilder<List<PostsAttributes>>(
                   future: chunkPosts(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
@@ -223,23 +224,50 @@ class _ChunkScreenState extends State<ChunkScreen> {
               SizedBox(
                 height: 100,
               ),
-              Column(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: SubText(
-                        text: 'Posts Fixados',
-                        color: nightColor,
-                        align: TextAlign.center),
-                  ),
-                  Posts(
-                    plname: 'Messias',
-                    title: 'Teste',
-                    desc: 'desc',
-                    updatedAt: 'updatedAt',
-                    id: 2.toString(),
-                  ),
-                ],
+              SizedBox(
+                height: 300,
+                child: FutureBuilder<List<PostsAttributes>>(
+                    future: chunkPosts(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                            itemCount: snapshot.data?.length,
+                            itemBuilder: (context, index) {
+                              var render = snapshot.data![index];
+                              if (render.chunkfixed == true) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(12),
+                                  child: Posts(
+                                    plname: 'Fixado',
+                                    title: render.title.toString(),
+                                    desc: render.desc.toString(),
+                                    updatedAt: render.updatedAt
+                                        .toString()
+                                        .replaceAll("-", "/")
+                                        .substring(0, 10),
+                                    id: render.id.toString(),
+                                  ),
+                                );
+                              } else {
+                                return SizedBox();
+                              }
+                            });
+                      } else if (snapshot.hasError) {
+                        return Center(
+                            child: SubText(
+                          text: 'Erro ao pesquisar poster',
+                          color: PrimaryColor,
+                          align: TextAlign.center,
+                        ));
+                      }
+                      return Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: PrimaryColor,
+                          ),
+                        ),
+                      );
+                    }),
               ),
               SizedBox(
                 height: 50,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttercode/component/colors.dart';
 import 'package:fluttercode/component/texts.dart';
 import 'package:fluttercode/component/thumbposter.dart';
-import 'package:fluttercode/model/posters.dart';
+import 'package:fluttercode/model/posts.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:fluttercode/view/posts/post/postscreen.dart';
 import 'package:http/http.dart' as http;
@@ -45,8 +45,8 @@ class _RenderPosterState extends State<RenderPoster> {
     });
   }
 
-  Future<List<Attributes>> poster() async {
-    List<Attributes> listItens = [];
+  Future<List<PostsAttributes>> poster() async {
+    List<PostsAttributes> listItens = [];
     var response = await client.get(
       Uri.parse(
           'http://localhost:1337/api/posters?filters[title][\$containsi]=${widget.query}&populate=*'),
@@ -58,14 +58,14 @@ class _RenderPosterState extends State<RenderPoster> {
     var body = jsonDecode(response.body);
     var itemCount = body["data"];
     for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(Attributes.fromJson(itemCount[i]));
+      listItens.add(PostsAttributes.fromJson(itemCount[i]));
     }
     return listItens;
   }
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<Attributes>>(
+    return FutureBuilder<List<PostsAttributes>>(
         future: poster(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {

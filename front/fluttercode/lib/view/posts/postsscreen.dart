@@ -13,7 +13,7 @@ import 'package:fluttercode/view/posts/create/createposter.dart';
 import 'package:fluttercode/view/posts/post/postscreen.dart';
 import 'package:http/http.dart' as http;
 
-import '../../model/posters.dart';
+import '../../model/posts.dart';
 
 class PostersScreen extends StatefulWidget {
   const PostersScreen({super.key});
@@ -50,8 +50,8 @@ class _PostersScreenState extends State<PostersScreen> {
     });
   }
 
-  Future<List<Attributes>> posters() async {
-    List<Attributes> listItens = [];
+  Future<List<PostsAttributes>> posters() async {
+    List<PostsAttributes> listItens = [];
     var response = await client.get(
       Uri.parse('http://localhost:1337/api/posters?populate=*'),
       headers: {
@@ -62,7 +62,7 @@ class _PostersScreenState extends State<PostersScreen> {
     var body = jsonDecode(response.body);
     var itemCount = body["data"];
     for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(Attributes.fromJson(itemCount[i]));
+      listItens.add(PostsAttributes.fromJson(itemCount[i]));
     }
     return listItens;
   }
@@ -93,7 +93,7 @@ class _PostersScreenState extends State<PostersScreen> {
         ),
         SizedBox(
           height: 300,
-          child: FutureBuilder<List<Attributes>>(
+          child: FutureBuilder<List<PostsAttributes>>(
               future: posters(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
@@ -102,16 +102,18 @@ class _PostersScreenState extends State<PostersScreen> {
                       itemBuilder: (context, index) {
                         var render = snapshot.data![index];
                         return Padding(
-                            padding: const EdgeInsets.all(12),
-                            child: Posts(
-                                plname: render.plname.toString(),
-                                title: render.title.toString(),
-                                desc: render.desc.toString(),
-                                updatedAt: render.updatedAt
-                                    .toString()
-                                    .replaceAll("-", "/")
-                                    .substring(0, 10),
-                                id: id));
+                          padding: const EdgeInsets.all(12),
+                          child: Posts(
+                            plname: render.plname.toString(),
+                            title: render.title.toString(),
+                            desc: render.desc.toString(),
+                            updatedAt: render.updatedAt
+                                .toString()
+                                .replaceAll("-", "/")
+                                .substring(0, 10),
+                            id: render.id.toString(),
+                          ),
+                        );
                       });
                 } else if (snapshot.hasError) {
                   return Center(
