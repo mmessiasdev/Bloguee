@@ -64,7 +64,8 @@ class _ChunkScreenState extends State<ChunkScreen> {
   Future<List<ProfileAttributes>> chunkProfile() async {
     List<ProfileAttributes> listItens = [];
     var response = await client.get(
-      Uri.parse('http://localhost:1337/api/chunks/$chunkId?populate=profiles'),
+      Uri.parse(
+          'http://localhost:1337/api/chunks/${chunkId}?populate[profiles][populate]=*'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -72,7 +73,6 @@ class _ChunkScreenState extends State<ChunkScreen> {
     );
     var body = jsonDecode(response.body);
     var itemCount = body["data"]["attributes"]["profiles"]["data"];
-    print(itemCount);
     for (var i = 0; i < itemCount.length; i++) {
       listItens.add(ProfileAttributes.fromJson(itemCount[i]));
     }
@@ -90,7 +90,6 @@ class _ChunkScreenState extends State<ChunkScreen> {
     );
     var body = jsonDecode(response.body);
     var itemCount = body["data"]["attributes"]["posters"]["data"];
-    print(itemCount);
     for (var i = 0; i < itemCount.length; i++) {
       listItens.add(PostsAttributes.fromJson(itemCount[i]));
     }
@@ -99,7 +98,6 @@ class _ChunkScreenState extends State<ChunkScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(chunkId);
     return ListView(
       children: [
         MainHeader(title: 'Mais +', onClick: () {}),
@@ -272,30 +270,52 @@ class _ChunkScreenState extends State<ChunkScreen> {
               SizedBox(
                 height: 50,
               ),
-              Column(
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    child: SubText(
-                      text: 'Posters em Destaque',
-                      color: nightColor,
-                      align: TextAlign.center,
-                    ),
-                  ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: CircleAvatar(
-                      radius: 50,
-                      backgroundColor: SixthColor,
-                      child: SubText(
-                        text: "Messias",
-                        color: nightColor,
-                        align: TextAlign.center,
-                      ),
-                    ),
-                  )
-                ],
-              )
+              SizedBox(
+                height: 300,
+                child: FutureBuilder<List<ProfileAttributes>>(
+                    future: chunkProfile(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        return GridView.builder(
+                            gridDelegate:
+                                const SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 150,
+                              mainAxisSpacing: 20,
+                              crossAxisSpacing: 20,
+                              mainAxisExtent: 90,
+                            ),
+                            itemCount: snapshot.data?.length,
+                            itemBuilder: (context, index) {
+                              var render = snapshot.data![index];
+                              return SizedBox(
+                                width: double.infinity,
+                                child: CircleAvatar(
+                                  backgroundColor: SixthColor,
+                                  child: SubText(
+                                    text: render.lname.toString(),
+                                    color: nightColor,
+                                    align: TextAlign.center,
+                                  ),
+                                ),
+                              );
+                            });
+                      } else if (snapshot.hasError) {
+                        return Center(
+                            child: SubText(
+                          text: 'Erro ao pesquisar poster',
+                          color: PrimaryColor,
+                          align: TextAlign.center,
+                        ));
+                      }
+                      return Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(
+                            color: PrimaryColor,
+                          ),
+                        ),
+                      );
+                    }),
+              ),
             ],
           ),
         )

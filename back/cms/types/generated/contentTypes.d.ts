@@ -677,6 +677,46 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiCategoryCategory extends Schema.CollectionType {
+  collectionName: 'categories';
+  info: {
+    singularName: 'category';
+    pluralName: 'categories';
+    displayName: 'postcategory';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    posters: Attribute.Relation<
+      'api::category.category',
+      'oneToMany',
+      'api::poster.poster'
+    >;
+    chunks: Attribute.Relation<
+      'api::category.category',
+      'oneToMany',
+      'api::chunk.chunk'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiChunkChunk extends Schema.CollectionType {
   collectionName: 'chunks';
   info: {
@@ -700,6 +740,12 @@ export interface ApiChunkChunk extends Schema.CollectionType {
       'oneToMany',
       'api::poster.poster'
     >;
+    category: Attribute.Relation<
+      'api::chunk.chunk',
+      'manyToOne',
+      'api::category.category'
+    >;
+    subtitle: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -722,7 +768,7 @@ export interface ApiPosterPoster extends Schema.CollectionType {
   info: {
     singularName: 'poster';
     pluralName: 'posters';
-    displayName: 'poster';
+    displayName: 'post';
     description: '';
   };
   options: {
@@ -736,12 +782,19 @@ export interface ApiPosterPoster extends Schema.CollectionType {
       'manyToOne',
       'api::profile.profile'
     >;
+    content: Attribute.RichText;
     chunk: Attribute.Relation<
       'api::poster.poster',
       'manyToOne',
       'api::chunk.chunk'
     >;
-    content: Attribute.RichText;
+    category: Attribute.Relation<
+      'api::poster.poster',
+      'manyToOne',
+      'api::category.category'
+    >;
+    files: Attribute.Media;
+    chunkfixed: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -822,6 +875,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::category.category': ApiCategoryCategory;
       'api::chunk.chunk': ApiChunkChunk;
       'api::poster.poster': ApiPosterPoster;
       'api::profile.profile': ApiProfileProfile;

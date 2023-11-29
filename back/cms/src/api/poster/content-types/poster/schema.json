@@ -4,7 +4,7 @@
   "info": {
     "singularName": "poster",
     "pluralName": "posters",
-    "displayName": "poster",
+    "displayName": "post",
     "description": ""
   },
   "options": {
@@ -24,14 +24,35 @@
       "target": "api::profile.profile",
       "inversedBy": "posters"
     },
+    "content": {
+      "type": "richtext"
+    },
     "chunk": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::chunk.chunk",
       "inversedBy": "posters"
     },
-    "content": {
-      "type": "richtext"
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "posters"
+    },
+    "files": {
+      "type": "media",
+      "multiple": true,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "chunkfixed": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

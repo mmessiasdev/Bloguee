@@ -1,0 +1,31 @@
+{
+  "kind": "collectionType",
+  "collectionName": "categories",
+  "info": {
+    "singularName": "category",
+    "pluralName": "categories",
+    "displayName": "postcategory",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "posters": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::poster.poster",
+      "mappedBy": "category"
+    },
+    "chunks": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::chunk.chunk",
+      "mappedBy": "category"
+    }
+  }
+}

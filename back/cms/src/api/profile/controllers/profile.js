@@ -42,8 +42,8 @@ module.exports = createCoreController('api::profile.profile', ({Strapi}) => ({
                     }
                 },
                 populate: {
-                    image: true,
-                    post: true
+                    posters: true,
+                    chunk: true,
                 }
             });
             return result;

@@ -26,6 +26,15 @@
       "relation": "oneToMany",
       "target": "api::poster.poster",
       "mappedBy": "chunk"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "chunks"
+    },
+    "subtitle": {
+      "type": "string"
     }
   }
 }
