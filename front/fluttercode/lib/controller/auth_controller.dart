@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:fluttercode/service/remote_service/remote_auth_service.dart';
 import '../model/user.dart';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
@@ -146,21 +148,49 @@ class AuthController extends GetxController {
       required String desc,
       required String content,
       required int profileId,
-      required int chunkId}) async {
+      required int chunkId,
+      List<int>? selectFile}) async {
     try {
       EasyLoading.show(
         status: 'Loading...',
         dismissOnTap: false,
       );
       var token = await LocalAuthService().getSecureToken("token");
-      var userResult = await RemoteAuthService().addPoster(
+      var result = await RemoteAuthService().addPoster(
           token: token.toString(),
           title: title,
           desc: desc,
           content: content,
           profileId: profileId,
           chunkId: chunkId);
-      if (userResult.statusCode == 200) {
+      if (result.statusCode == 200) {
+        String postId = json.decode(result.body)['id'];
+        var url = Uri.parse("http://localhost:1337/api/upload/");
+        var request = http.MultipartRequest("POST", url);
+        request.files.add(await http.MultipartFile.fromBytes(
+          'files',
+          selectFile!,
+          contentType: MediaType('application', 'pdf'),
+          filename: "FileTest",
+        ));
+
+        request.files.add(
+            await http.MultipartFile.fromString("ref", "api::poster.poster"));
+        request.files
+            .add(await http.MultipartFile.fromString("refId", "$postId"));
+
+        request.files
+            .add(await http.MultipartFile.fromString("field", "files"));
+
+        // request.headers.addAll({"Authorization": "Bearer $token"});
+        request.send().then((response) {
+          if (response.statusCode == 200) {
+            print("FileUpload Successfuly");
+          } else {
+            print("FileUpload Error");
+          }
+        });
+
         EasyLoading.showSuccess("Seu relato poster enviado.");
         Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
       } else {

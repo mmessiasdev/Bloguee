@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
 
-import 'package:dio/dio.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercode/component/buttomdefault.dart';
 import 'package:fluttercode/component/colors.dart';
@@ -10,7 +8,6 @@ import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/component/inputdefault.dart';
 import 'package:fluttercode/component/texts.dart';
 import 'package:fluttercode/controller/controllers.dart';
-import 'package:fluttercode/extention/string_extention.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:http/http.dart' as http;
 import 'dart:html' as html;
@@ -62,8 +59,8 @@ class _CreatePosterState extends State<CreatePoster> {
     super.dispose();
   }
 
-  List<int>? _selectFile;
-  Uint8List? _bytesData;
+  List<int>? selectFile;
+  Uint8List? bytesData;
 
   startPicker() async {
     html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
@@ -78,46 +75,37 @@ class _CreatePosterState extends State<CreatePoster> {
 
       reader.onLoadEnd.listen((event) {
         setState(() {
-          _bytesData =
+          bytesData =
               Base64Decoder().convert(reader.result.toString().split(",").last);
-          _selectFile = _bytesData;
+          selectFile = bytesData;
         });
       });
       reader.readAsDataUrl(file);
     });
   }
 
-  Future upload() async {
-    var dio = Dio();
-
-    if (_bytesData != null) {
-      FormData data = FormData.fromMap({
-        "ref": "api::poster.poster",
-        "files": http.MultipartFile.fromBytes('files', _bytesData!,
-            filename: 'documento'),
-        "refId": 2,
-        "field": "files",
-      });
-      var response = dio.post("http://localhost:1337/api/upload/", data: data);
-      print(response.toString());
-    } else {
-      print("Result is Null");
-    }
-  }
-
-  //  Future uploadImage() async {
-  //   var url = Uri.parse('http://localhost:1337/api/upload/');
+  // Future upload() async {
+  //   var url = Uri.parse("http://localhost:1337/api/upload/");
   //   var request = http.MultipartRequest("POST", url);
-  //   request.files.add(
-  //     await http.MultipartFile.fromBytes('files', _selectFile!,
-  //         filename: id.toString()),
-  //   );
-  //   request.send().then((response) => {
-  //         if (response.statusCode == 200)
-  //           {print("Send File")}
-  //         else
-  //           {print('Send Erro')}
-  //       });
+  //   request.files.add(await http.MultipartFile.fromBytes(
+  //     'files',
+  //     selectFile!,
+  //     contentType: MediaType('application', 'pdf'),
+  //     filename: "FileTest",
+  //   ));
+  //   request.files
+  //       .add(await http.MultipartFile.fromString("ref", "api::poster.poster"));
+  //   request.files.add(await http.MultipartFile.fromString("refId", "2"));
+  //   request.files.add(await http.MultipartFile.fromString("field", "files"));
+
+  //   // request.headers.addAll({"Authorization": "Bearer $token"});
+  //   request.send().then((response) {
+  //     if (response.statusCode == 200) {
+  //       print("FileUpload Successfuly");
+  //     } else {
+  //       print("FileUpload Error");
+  //     }
+  //   });
   // }
 
   @override
@@ -170,21 +158,10 @@ class _CreatePosterState extends State<CreatePoster> {
                       onClick: () {
                         startPicker();
                       },
-                      title: 'Add File',
+                      title: 'Add PDF',
                       color: PrimaryColor,
                     )),
-                _bytesData != null
-                    ? Image.memory(
-                        _bytesData!,
-                        width: 200,
-                        height: 200,
-                      )
-                    : Container(),
-                InputTextButton(
-                    title: 'Postar Documento',
-                    onClick: () {
-                      upload();
-                    }),
+                bytesData != null ? Text(bytesData.toString()) : Container(),
                 Padding(
                   padding: const EdgeInsets.only(top: 30, bottom: 20),
                   child: InputTextButton(
@@ -198,6 +175,7 @@ class _CreatePosterState extends State<CreatePoster> {
                           print(chunk);
                           print(id);
                           authController.postering(
+                            selectFile: selectFile,
                             title: title.text,
                             desc: desc.text,
                             content: content.text,

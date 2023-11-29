@@ -222,8 +222,13 @@ class _ChunkScreenState extends State<ChunkScreen> {
               SizedBox(
                 height: 100,
               ),
+              SecundaryText(
+                text: 'Posts Fixados',
+                color: nightColor,
+                align: TextAlign.center,
+              ),
               SizedBox(
-                height: 300,
+                height: 400,
                 child: FutureBuilder<List<PostsAttributes>>(
                     future: chunkPosts(),
                     builder: (context, snapshot) {
@@ -233,18 +238,15 @@ class _ChunkScreenState extends State<ChunkScreen> {
                             itemBuilder: (context, index) {
                               var render = snapshot.data![index];
                               if (render.chunkfixed == true) {
-                                return Padding(
-                                  padding: const EdgeInsets.all(12),
-                                  child: Posts(
-                                    plname: 'Fixado',
-                                    title: render.title.toString(),
-                                    desc: render.desc.toString(),
-                                    updatedAt: render.updatedAt
-                                        .toString()
-                                        .replaceAll("-", "/")
-                                        .substring(0, 10),
-                                    id: render.id.toString(),
-                                  ),
+                                return Posts(
+                                  plname: 'Fixado',
+                                  title: render.title.toString(),
+                                  desc: render.desc.toString(),
+                                  updatedAt: render.updatedAt
+                                      .toString()
+                                      .replaceAll("-", "/")
+                                      .substring(0, 10),
+                                  id: render.id.toString(),
                                 );
                               } else {
                                 return SizedBox();
@@ -280,23 +282,26 @@ class _ChunkScreenState extends State<ChunkScreen> {
                             gridDelegate:
                                 const SliverGridDelegateWithMaxCrossAxisExtent(
                               maxCrossAxisExtent: 150,
-                              mainAxisSpacing: 20,
-                              crossAxisSpacing: 20,
-                              mainAxisExtent: 90,
                             ),
                             itemCount: snapshot.data?.length,
                             itemBuilder: (context, index) {
                               var render = snapshot.data![index];
-                              return SizedBox(
-                                width: double.infinity,
-                                child: CircleAvatar(
-                                  backgroundColor: SixthColor,
-                                  child: SubText(
+                              return Column(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: SixthColor,
+                                    child: Icon(
+                                      Icons.people,
+                                      color: PrimaryColor,
+                                      size: 30,
+                                    ),
+                                  ),
+                                  SubText(
                                     text: render.lname.toString(),
                                     color: nightColor,
                                     align: TextAlign.center,
                                   ),
-                                ),
+                                ],
                               );
                             });
                       } else if (snapshot.hasError) {
