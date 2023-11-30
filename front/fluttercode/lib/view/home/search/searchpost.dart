@@ -5,6 +5,7 @@ import 'package:fluttercode/component/texts.dart';
 import 'package:fluttercode/component/thumbpost.dart';
 import 'package:fluttercode/model/posts.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
+import 'package:fluttercode/service/remote_service/remote_auth_service.dart';
 import 'package:fluttercode/view/posts/post/postscreen.dart';
 import 'package:http/http.dart' as http;
 
@@ -45,28 +46,11 @@ class _RenderPostState extends State<RenderPost> {
     });
   }
 
-  Future<List<PostsAttributes>> post() async {
-    List<PostsAttributes> listItens = [];
-    var response = await client.get(
-      Uri.parse(
-          'http://localhost:1337/api/posts?filters[title][\$containsi]=${widget.query}&populate=*'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      },
-    );
-    var body = jsonDecode(response.body);
-    var itemCount = body["data"];
-    for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(PostsAttributes.fromJson(itemCount[i]));
-    }
-    return listItens;
-  }
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<PostsAttributes>>(
-        future: post(),
+        future: RemoteAuthService()
+            .getPostSearch(token: token, query: widget.query),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(

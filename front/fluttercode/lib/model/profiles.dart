@@ -1,14 +1,14 @@
-class PosterAttributes {
+class ProfileAttributes {
   String? fname;
   String? createdAt;
   String? updatedAt;
   String? lname;
   String? email;
 
-  PosterAttributes(
+  ProfileAttributes(
       {this.fname, this.createdAt, this.updatedAt, this.lname, this.email});
 
-  PosterAttributes.fromJson(Map<String, dynamic> json) {
+  ProfileAttributes.fromJson(Map<String, dynamic> json) {
     fname = json['attributes']['fname'];
     createdAt = json['attributes']['createdAt'];
     updatedAt = json['attributes']['updatedAt'];

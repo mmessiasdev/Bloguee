@@ -18,24 +18,8 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  var email;
-  var lname;
-  var id;
   var token;
-
-  void getString() async {
-    var strEmail = await LocalAuthService().getEmail("email");
-    var strLname = await LocalAuthService().getLname("lname");
-    var strId = await LocalAuthService().getId("id");
-    var strToken = await LocalAuthService().getSecureToken("token");
-
-    setState(() {
-      email = strEmail.toString();
-      lname = strLname.toString();
-      id = strId.toString();
-      token = strToken.toString();
-    });
-  }
+  var chunkId;
 
   @override
   void initState() {
@@ -43,52 +27,69 @@ class _DashboardScreenState extends State<DashboardScreen> {
     getString();
   }
 
+  void getString() async {
+    var strToken = await LocalAuthService().getSecureToken("token");
+    var strChunkId = await LocalAuthService().getChunkId("chunk");
+
+    setState(() {
+      token = strToken.toString();
+      chunkId = strChunkId.toString();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       child: token == "null"
           ? WelcomeScreen()
-          : GetBuilder<DashboardController>(
-              builder: (controller) => Scaffold(
-                backgroundColor: lightColor,
-                body: SafeArea(
-                  child: IndexedStack(
-                    index: controller.tabIndex,
-                    children: [
-                      HomeScreen(),
-                      PostsScreen(),
-                      ChunkScreen(),
-                    ],
-                  ),
-                ),
-                bottomNavigationBar: Container(
-                  height: 70,
-                  decoration: BoxDecoration(
-                    color: SecudaryColor,
-                  ),
-                  child: SnakeNavigationBar.color(
-                    backgroundColor: SecudaryColor,
-                    padding: const EdgeInsets.symmetric(vertical: 5),
-                    unselectedLabelStyle: GoogleFonts.asap(fontSize: 12),
-                    unselectedItemColor: OffColor,
-                    showUnselectedLabels: true,
-                    snakeViewColor: SecudaryColor,
-                    currentIndex: controller.tabIndex,
-                    onTap: (val) {
-                      controller.updateIndex(val);
-                    },
-                    items: const [
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.home_rounded), label: 'Home'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.text_format_rounded), label: 'Posts'),
-                      BottomNavigationBarItem(
-                          icon: Icon(Icons.corporate_fare),
-                          label: 'Informações')
-                    ],
-                  ),
-                ),
-              ),
+          : SizedBox(
+              child: chunkId == "null"
+                  ? SizedBox()
+                  : GetBuilder<DashboardController>(
+                      builder: (controller) => Scaffold(
+                        backgroundColor: lightColor,
+                        body: SafeArea(
+                          child: IndexedStack(
+                            index: controller.tabIndex,
+                            children: [
+                              HomeScreen(),
+                              PostsScreen(),
+                              ChunkScreen(),
+                            ],
+                          ),
+                        ),
+                        bottomNavigationBar: Container(
+                          height: 70,
+                          decoration: BoxDecoration(
+                            color: SecudaryColor,
+                          ),
+                          child: SnakeNavigationBar.color(
+                            backgroundColor: SecudaryColor,
+                            padding: const EdgeInsets.symmetric(vertical: 5),
+                            unselectedLabelStyle:
+                                GoogleFonts.asap(fontSize: 12),
+                            unselectedItemColor: OffColor,
+                            showUnselectedLabels: true,
+                            snakeViewColor: SecudaryColor,
+                            currentIndex: controller.tabIndex,
+                            onTap: (val) {
+                              controller.updateIndex(val);
+                            },
+                            items: const [
+                              BottomNavigationBarItem(
+                                  icon: Icon(Icons.home_rounded),
+                                  label: 'Home'),
+                              BottomNavigationBarItem(
+                                  icon: Icon(Icons.text_format_rounded),
+                                  label: 'Posts'),
+                              BottomNavigationBarItem(
+                                  icon: Icon(Icons.corporate_fare),
+                                  label: 'Informações')
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
             ),
     );
   }

@@ -1,7 +1,6 @@
-import 'dart:convert';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:fluttercode/component/padding.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
+import 'package:fluttercode/service/remote_service/remote_auth_service.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
@@ -32,33 +31,13 @@ class _PostScreenState extends State<PostScreen> {
   }
 
   void getString() async {
-    var strEmail = await LocalAuthService().getEmail("email");
-    var strFull = await LocalAuthService().getLname("lname");
-    var strId = await LocalAuthService().getId("id");
     var strToken = await LocalAuthService().getSecureToken("token");
     var strChunkId = await LocalAuthService().getChunkId("chunk");
 
     setState(() {
-      email = strEmail.toString();
-      lname = strFull.toString();
-      id = strId.toString();
       token = strToken.toString();
       chunkId = strChunkId.toString();
     });
-  }
-
-  Future<Map> post() async {
-    var response = await client.get(
-      Uri.parse('http://localhost:1337/api/posts/${widget.id}?populate=*'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      },
-    );
-    print("Seu id: ${widget.id}");
-    var itens = json.decode(response.body);
-    print(itens);
-    return itens;
   }
 
   @override
@@ -67,7 +46,7 @@ class _PostScreenState extends State<PostScreen> {
       children: [
         MainHeader(title: "Voltar", onClick: () => Navigator.pop(context)),
         FutureBuilder<Map>(
-            future: post(),
+            future: RemoteAuthService().getPost(token: token, id: widget.id),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 var render = snapshot.data!;
