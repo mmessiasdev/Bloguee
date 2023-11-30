@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttercode/model/posts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -23,6 +24,19 @@ class RemoteAuthService {
     return response;
   }
 
+  Future<dynamic> signIn({
+    required String email,
+    required String password,
+  }) async {
+    var body = {"identifier": email, "password": password};
+    var response = await client.post(
+      Uri.parse('http://localhost:1337/api/auth/local'),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(body),
+    );
+    return response;
+  }
+
   Future<dynamic> createProfile({
     required String lname,
     required String token,
@@ -34,19 +48,6 @@ class RemoteAuthService {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
       },
-      body: jsonEncode(body),
-    );
-    return response;
-  }
-
-  Future<dynamic> signIn({
-    required String email,
-    required String password,
-  }) async {
-    var body = {"identifier": email, "password": password};
-    var response = await client.post(
-      Uri.parse('http://localhost:1337/api/auth/local'),
-      headers: {"Content-Type": "application/json"},
       body: jsonEncode(body),
     );
     return response;
@@ -66,40 +67,6 @@ class RemoteAuthService {
   }
 
   Future addPost({
-    required String content,
-    required String token,
-  }) async {
-    final body = {"content": content};
-    var response = await client.post(
-      Uri.parse('${dotenv.get('BASEURL').toString()}/api/post/me'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      },
-      body: jsonEncode(body),
-    );
-    return response;
-  }
-
-  Future addComplaint({
-    required String type,
-    required String nivel,
-    required String desc,
-    required String token,
-  }) async {
-    final body = {"type": type, "nivel": nivel, "desc": desc};
-    var response = await client.post(
-      Uri.parse('${dotenv.get('BASEURL').toString()}/api/complaint/me'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      },
-      body: jsonEncode(body),
-    );
-    return response;
-  }
-
-  Future addPoster({
     required String title,
     required String desc,
     required String content,
@@ -117,7 +84,7 @@ class RemoteAuthService {
       }
     };
     var response = await client.post(
-      Uri.parse('http://localhost:1337/api/posters'),
+      Uri.parse('http://localhost:1337/api/posts'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -125,5 +92,22 @@ class RemoteAuthService {
       body: jsonEncode(body),
     );
     return response;
+  }
+
+  Future<List<PostsAttributes>> getPosts({required String token}) async {
+    List<PostsAttributes> listItens = [];
+    var response = await client.get(
+      Uri.parse('http://localhost:1337/api/posts?populate=*'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body["data"];
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(PostsAttributes.fromJson(itemCount[i]));
+    }
+    return listItens;
   }
 }

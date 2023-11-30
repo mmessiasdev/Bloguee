@@ -82,14 +82,14 @@ class _ChunkScreenState extends State<ChunkScreen> {
   Future<List<PostsAttributes>> chunkPosts() async {
     List<PostsAttributes> listItens = [];
     var response = await client.get(
-      Uri.parse('http://localhost:1337/api/chunks/$chunkId?populate=posters'),
+      Uri.parse('http://localhost:1337/api/chunks/$chunkId?populate=posts'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
       },
     );
     var body = jsonDecode(response.body);
-    var itemCount = body["data"]["attributes"]["posters"]["data"];
+    var itemCount = body["data"]["attributes"]["posts"]["data"];
     for (var i = 0; i < itemCount.length; i++) {
       listItens.add(PostsAttributes.fromJson(itemCount[i]));
     }
@@ -143,7 +143,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
                       return Expanded(
                         child: Center(
                             child: SubText(
-                          text: 'Erro ao pesquisar poster',
+                          text: 'Erro ao pesquisar post',
                           color: PrimaryColor,
                           align: TextAlign.center,
                         )),
@@ -174,7 +174,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
                       return Expanded(
                         child: Center(
                             child: SubText(
-                          text: 'Erro ao pesquisar poster',
+                          text: 'Erro ao pesquisar posters',
                           color: PrimaryColor,
                           align: TextAlign.center,
                         )),
@@ -204,7 +204,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
                       return Expanded(
                         child: Center(
                             child: SubText(
-                          text: 'Erro ao pesquisar poster',
+                          text: 'Erro ao pesquisar posts',
                           color: PrimaryColor,
                           align: TextAlign.center,
                         )),
@@ -255,7 +255,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
                       } else if (snapshot.hasError) {
                         return Center(
                             child: SubText(
-                          text: 'Erro ao pesquisar poster',
+                          text: 'Erro ao pesquisar post',
                           color: PrimaryColor,
                           align: TextAlign.center,
                         ));
@@ -307,7 +307,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
                       } else if (snapshot.hasError) {
                         return Center(
                             child: SubText(
-                          text: 'Erro ao pesquisar poster',
+                          text: 'Erro ao pesquisar post',
                           color: PrimaryColor,
                           align: TextAlign.center,
                         ));

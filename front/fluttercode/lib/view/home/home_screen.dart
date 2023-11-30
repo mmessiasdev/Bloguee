@@ -6,7 +6,7 @@ import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:fluttercode/view/account/account_screen.dart';
 import 'package:fluttercode/view/account/auth/sign_in_screen.dart';
 import 'package:fluttercode/view/posts/post/postscreen.dart';
-import 'package:fluttercode/view/home/search/searchposter.dart';
+import 'package:fluttercode/view/home/search/searchpost.dart';
 import 'package:get/get.dart';
 
 import '../../component/colors.dart';
@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               GestureDetector(
                 onTap: () {
-                  showSearch(context: context, delegate: SearchPosters());
+                  showSearch(context: context, delegate: SearchPosts());
                 },
                 child: Container(
                   width: MediaQuery.of(context).size.width * .8,

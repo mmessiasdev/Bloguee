@@ -9,15 +9,15 @@ import 'package:fluttercode/component/colors.dart';
 import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/component/texts.dart';
 
-class PosterScreen extends StatefulWidget {
-  PosterScreen({super.key, required this.id});
+class PostScreen extends StatefulWidget {
+  PostScreen({super.key, required this.id});
   String id;
 
   @override
-  State<PosterScreen> createState() => _PosterScreenState();
+  State<PostScreen> createState() => _PostScreenState();
 }
 
-class _PosterScreenState extends State<PosterScreen> {
+class _PostScreenState extends State<PostScreen> {
   var client = http.Client();
   var email;
   var lname;
@@ -47,9 +47,9 @@ class _PosterScreenState extends State<PosterScreen> {
     });
   }
 
-  Future<Map> poster() async {
+  Future<Map> post() async {
     var response = await client.get(
-      Uri.parse('http://localhost:1337/api/posters/${widget.id}?populate=*'),
+      Uri.parse('http://localhost:1337/api/posts/${widget.id}?populate=*'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -67,7 +67,7 @@ class _PosterScreenState extends State<PosterScreen> {
       children: [
         MainHeader(title: "Voltar", onClick: () => Navigator.pop(context)),
         FutureBuilder<Map>(
-            future: poster(),
+            future: post(),
             builder: (context, snapshot) {
               if (snapshot.hasData) {
                 var render = snapshot.data!;
@@ -129,7 +129,7 @@ class _PosterScreenState extends State<PosterScreen> {
                 return Expanded(
                   child: Center(
                       child: SubText(
-                    text: 'Erro ao pesquisar poster',
+                    text: 'Erro ao pesquisar post',
                     color: PrimaryColor,
                     align: TextAlign.center,
                   )),

@@ -94,56 +94,8 @@ class AuthController extends GetxController {
     }
   }
 
-  void posting({required String content}) async {
-    try {
-      EasyLoading.show(
-        status: 'Loading...',
-        dismissOnTap: false,
-      );
-      var token = await LocalAuthService().getSecureToken("token");
-      var userResult = await RemoteAuthService()
-          .addPost(token: token.toString(), content: content);
-      if (userResult.statusCode == 200) {
-        EasyLoading.showSuccess("Seu relato foi enviado.");
-        Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
-      } else {
-        EasyLoading.showError('Faça login para realizar um post!');
-      }
-    } catch (e) {
-      print(e);
-      EasyLoading.showError('Alguma coisa deu errado.');
-    } finally {
-      EasyLoading.dismiss();
-    }
-  }
 
-  void complaining(
-      {required String type,
-      required String nivel,
-      required String desc}) async {
-    try {
-      EasyLoading.show(
-        status: 'Loading...',
-        dismissOnTap: false,
-      );
-      var token = await LocalAuthService().getSecureToken("token");
-      var userResult = await RemoteAuthService().addComplaint(
-          token: token.toString(), type: type, nivel: nivel, desc: desc);
-      if (userResult.statusCode == 200) {
-        EasyLoading.showSuccess("Denuncia enviada.");
-        Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
-      } else {
-        EasyLoading.showError('Faça login para realizar uma denúncia.');
-      }
-    } catch (e) {
-      print(e);
-      EasyLoading.showError('Alguma coisa deu errado.');
-    } finally {
-      EasyLoading.dismiss();
-    }
-  }
-
-  void postering(
+  void posting(
       {required String title,
       required String desc,
       required String content,
@@ -156,7 +108,7 @@ class AuthController extends GetxController {
         dismissOnTap: false,
       );
       var token = await LocalAuthService().getSecureToken("token");
-      var result = await RemoteAuthService().addPoster(
+      var result = await RemoteAuthService().addPost(
           token: token.toString(),
           title: title,
           desc: desc,
@@ -164,7 +116,7 @@ class AuthController extends GetxController {
           profileId: profileId,
           chunkId: chunkId);
       if (result.statusCode == 200) {
-        String postId = json.decode(result.body)['id'];
+        int postId = json.decode(result.body)['data']['id'];
         var url = Uri.parse("http://localhost:1337/api/upload/");
         var request = http.MultipartRequest("POST", url);
         request.files.add(await http.MultipartFile.fromBytes(
@@ -177,7 +129,7 @@ class AuthController extends GetxController {
         request.files.add(
             await http.MultipartFile.fromString("ref", "api::poster.poster"));
         request.files
-            .add(await http.MultipartFile.fromString("refId", "$postId"));
+            .add(await http.MultipartFile.fromString("refId", "${postId}"));
 
         request.files
             .add(await http.MultipartFile.fromString("field", "files"));

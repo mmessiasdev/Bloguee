@@ -1,8 +1,6 @@
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:fluttercode/view/account/welcomescreen.dart';
-import 'package:fluttercode/view/blog/blog_screen.dart';
 import 'package:fluttercode/view/chunk/chunkscreen.dart';
-import 'package:fluttercode/view/complaint/complaint.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:fluttercode/view/posts/postsscreen.dart';
@@ -41,6 +39,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
 
   @override
   void initState() {
+    super.initState();
     getString();
   }
 
@@ -57,7 +56,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                     index: controller.tabIndex,
                     children: [
                       HomeScreen(),
-                      PostersScreen(),
+                      PostsScreen(),
                       ChunkScreen(),
                     ],
                   ),
@@ -82,7 +81,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       BottomNavigationBarItem(
                           icon: Icon(Icons.home_rounded), label: 'Home'),
                       BottomNavigationBarItem(
-                          icon: Icon(Icons.text_format_rounded), label: 'Posters'),
+                          icon: Icon(Icons.text_format_rounded), label: 'Posts'),
                       BottomNavigationBarItem(
                           icon: Icon(Icons.corporate_fare),
                           label: 'Informações')

@@ -13,14 +13,14 @@ import 'package:http/http.dart' as http;
 import 'dart:html' as html;
 import 'package:http_parser/http_parser.dart';
 
-class CreatePoster extends StatefulWidget {
-  const CreatePoster({super.key});
+class CreatePost extends StatefulWidget {
+  const CreatePost({super.key});
 
   @override
-  State<CreatePoster> createState() => _CreatePosterState();
+  State<CreatePost> createState() => _CreatePostState();
 }
 
-class _CreatePosterState extends State<CreatePoster> {
+class _CreatePostState extends State<CreatePost> {
   var client = http.Client();
 
   var token;
@@ -60,7 +60,7 @@ class _CreatePosterState extends State<CreatePoster> {
   }
 
   List<int>? selectFile;
-  Uint8List? bytesData;
+  Uint8List? _bytesData;
 
   startPicker() async {
     html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
@@ -75,38 +75,15 @@ class _CreatePosterState extends State<CreatePoster> {
 
       reader.onLoadEnd.listen((event) {
         setState(() {
-          bytesData =
+          _bytesData =
               Base64Decoder().convert(reader.result.toString().split(",").last);
-          selectFile = bytesData;
+          selectFile = _bytesData;
         });
       });
       reader.readAsDataUrl(file);
     });
   }
 
-  // Future upload() async {
-  //   var url = Uri.parse("http://localhost:1337/api/upload/");
-  //   var request = http.MultipartRequest("POST", url);
-  //   request.files.add(await http.MultipartFile.fromBytes(
-  //     'files',
-  //     selectFile!,
-  //     contentType: MediaType('application', 'pdf'),
-  //     filename: "FileTest",
-  //   ));
-  //   request.files
-  //       .add(await http.MultipartFile.fromString("ref", "api::poster.poster"));
-  //   request.files.add(await http.MultipartFile.fromString("refId", "2"));
-  //   request.files.add(await http.MultipartFile.fromString("field", "files"));
-
-  //   // request.headers.addAll({"Authorization": "Bearer $token"});
-  //   request.send().then((response) {
-  //     if (response.statusCode == 200) {
-  //       print("FileUpload Successfuly");
-  //     } else {
-  //       print("FileUpload Error");
-  //     }
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -161,7 +138,7 @@ class _CreatePosterState extends State<CreatePoster> {
                       title: 'Add PDF',
                       color: PrimaryColor,
                     )),
-                bytesData != null ? Text(bytesData.toString()) : Container(),
+                // _bytesData != null ? Text(_bytesData.toString()) : Container(),
                 Padding(
                   padding: const EdgeInsets.only(top: 30, bottom: 20),
                   child: InputTextButton(
@@ -174,7 +151,8 @@ class _CreatePosterState extends State<CreatePoster> {
                           print(content.text);
                           print(chunk);
                           print(id);
-                          authController.postering(
+                          print(selectFile);
+                          authController.posting(
                             selectFile: selectFile,
                             title: title.text,
                             desc: desc.text,

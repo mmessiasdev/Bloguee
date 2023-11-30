@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:fluttercode/component/colors.dart';
 import 'package:fluttercode/component/texts.dart';
 
-class ThumbPoster extends StatelessWidget {
+class ThumbPost extends StatelessWidget {
   String title;
   String desc;
   String data;
 
-  ThumbPoster({
+  ThumbPost({
     super.key,
     required this.title,
     required this.desc,

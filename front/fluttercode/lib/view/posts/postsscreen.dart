@@ -8,26 +8,24 @@ import 'package:fluttercode/component/padding.dart';
 import 'package:fluttercode/component/post.dart';
 import 'package:fluttercode/component/texts.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
+import 'package:fluttercode/service/remote_service/remote_auth_service.dart';
 import 'package:fluttercode/view/home/home_screen.dart';
-import 'package:fluttercode/view/posts/create/createposter.dart';
+import 'package:fluttercode/view/posts/create/createpost.dart';
 import 'package:fluttercode/view/posts/post/postscreen.dart';
 import 'package:http/http.dart' as http;
 
 import '../../model/posts.dart';
 
-class PostersScreen extends StatefulWidget {
-  const PostersScreen({super.key});
+class PostsScreen extends StatefulWidget {
+  const PostsScreen({super.key});
 
   @override
-  State<PostersScreen> createState() => _PostersScreenState();
+  State<PostsScreen> createState() => _PostsScreenState();
 }
 
-class _PostersScreenState extends State<PostersScreen> {
+class _PostsScreenState extends State<PostsScreen> {
   var client = http.Client();
 
-  var email;
-  var lname;
-  var id;
   var token;
 
   @override
@@ -37,34 +35,11 @@ class _PostersScreenState extends State<PostersScreen> {
   }
 
   void getString() async {
-    var strEmail = await LocalAuthService().getEmail("email");
-    var strFull = await LocalAuthService().getLname("lname");
-    var strId = await LocalAuthService().getId("id");
     var strToken = await LocalAuthService().getSecureToken("token");
 
     setState(() {
-      email = strEmail.toString();
-      lname = strFull.toString();
-      id = strId.toString();
       token = strToken.toString();
     });
-  }
-
-  Future<List<PostsAttributes>> posters() async {
-    List<PostsAttributes> listItens = [];
-    var response = await client.get(
-      Uri.parse('http://localhost:1337/api/posters?populate=*'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      },
-    );
-    var body = jsonDecode(response.body);
-    var itemCount = body["data"];
-    for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(PostsAttributes.fromJson(itemCount[i]));
-    }
-    return listItens;
   }
 
   @override
@@ -77,7 +52,7 @@ class _PostersScreenState extends State<PostersScreen> {
               (Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => CreatePoster(),
+                  builder: (context) => CreatePost(),
                 ),
               ));
             }),
@@ -85,7 +60,7 @@ class _PostersScreenState extends State<PostersScreen> {
           padding: defaultPadding,
           child: Center(
             child: PrimaryText(
-              text: 'Ultimos Posters',
+              text: 'Ultimos Posts',
               color: nightColor,
               align: TextAlign.center,
             ),
@@ -94,31 +69,33 @@ class _PostersScreenState extends State<PostersScreen> {
         SizedBox(
           height: 300,
           child: FutureBuilder<List<PostsAttributes>>(
-              future: posters(),
+              future: RemoteAuthService().getPosts(token: token),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return ListView.builder(
-                      itemCount: snapshot.data?.length,
-                      itemBuilder: (context, index) {
-                        var render = snapshot.data![index];
-                        return Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Posts(
-                            plname: render.plname.toString(),
-                            title: render.title.toString(),
-                            desc: render.desc.toString(),
-                            updatedAt: render.updatedAt
-                                .toString()
-                                .replaceAll("-", "/")
-                                .substring(0, 10),
-                            id: render.id.toString(),
-                          ),
-                        );
-                      });
+                  return token == null
+                      ? SizedBox()
+                      : ListView.builder(
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: (context, index) {
+                            var render = snapshot.data![index];
+                            return Padding(
+                              padding: const EdgeInsets.all(12),
+                              child: Posts(
+                                plname: render.plname.toString(),
+                                title: render.title.toString(),
+                                desc: render.desc.toString(),
+                                updatedAt: render.updatedAt
+                                    .toString()
+                                    .replaceAll("-", "/")
+                                    .substring(0, 10),
+                                id: render.id.toString(),
+                              ),
+                            );
+                          });
                 } else if (snapshot.hasError) {
                   return Center(
                       child: SubText(
-                    text: 'Erro ao pesquisar poster',
+                    text: 'Erro ao pesquisar posts',
                     color: PrimaryColor,
                     align: TextAlign.center,
                   ));

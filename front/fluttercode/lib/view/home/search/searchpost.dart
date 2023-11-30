@@ -2,22 +2,22 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttercode/component/colors.dart';
 import 'package:fluttercode/component/texts.dart';
-import 'package:fluttercode/component/thumbposter.dart';
+import 'package:fluttercode/component/thumbpost.dart';
 import 'package:fluttercode/model/posts.dart';
 import 'package:fluttercode/service/local_service/local_auth_service.dart';
 import 'package:fluttercode/view/posts/post/postscreen.dart';
 import 'package:http/http.dart' as http;
 
-class RenderPoster extends StatefulWidget {
-  RenderPoster({super.key, required this.query});
+class RenderPost extends StatefulWidget {
+  RenderPost({super.key, required this.query});
 
   String query;
 
   @override
-  State<RenderPoster> createState() => _RenderPosterState();
+  State<RenderPost> createState() => _RenderPostState();
 }
 
-class _RenderPosterState extends State<RenderPoster> {
+class _RenderPostState extends State<RenderPost> {
   var client = http.Client();
 
   var email;
@@ -45,11 +45,11 @@ class _RenderPosterState extends State<RenderPoster> {
     });
   }
 
-  Future<List<PostsAttributes>> poster() async {
+  Future<List<PostsAttributes>> post() async {
     List<PostsAttributes> listItens = [];
     var response = await client.get(
       Uri.parse(
-          'http://localhost:1337/api/posters?filters[title][\$containsi]=${widget.query}&populate=*'),
+          'http://localhost:1337/api/posts?filters[title][\$containsi]=${widget.query}&populate=*'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -66,7 +66,7 @@ class _RenderPosterState extends State<RenderPoster> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<PostsAttributes>>(
-        future: poster(),
+        future: post(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -77,7 +77,7 @@ class _RenderPosterState extends State<RenderPoster> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 12, vertical: 50),
                     child: GestureDetector(
-                      child: ThumbPoster(
+                      child: ThumbPost(
                           title: render.title.toString(),
                           desc: render.desc.toString(),
                           data: render.updatedAt
@@ -88,7 +88,7 @@ class _RenderPosterState extends State<RenderPoster> {
                         (Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => PosterScreen(
+                            builder: (context) => PostScreen(
                               id: render.id.toString(),
                             ),
                           ),
@@ -100,7 +100,7 @@ class _RenderPosterState extends State<RenderPoster> {
           } else if (snapshot.hasError) {
             return Center(
                 child: SubText(
-              text: 'Erro ao pesquisar poster',
+              text: 'Erro ao pesquisar post',
               color: PrimaryColor,
               align: TextAlign.center,
             ));
@@ -116,7 +116,7 @@ class _RenderPosterState extends State<RenderPoster> {
   }
 }
 
-class SearchPosters extends SearchDelegate<String> {
+class SearchPosts extends SearchDelegate<String> {
   @override
   String get searchFieldLabel => 'Qual sua dúvida?';
 
@@ -147,7 +147,7 @@ class SearchPosters extends SearchDelegate<String> {
     if (query.isEmpty) {
       return Container();
     }
-    return RenderPoster(
+    return RenderPost(
       query: query,
     );
   }
@@ -157,7 +157,7 @@ class SearchPosters extends SearchDelegate<String> {
     if (query.isEmpty) {
       return Container();
     }
-    return RenderPoster(
+    return RenderPost(
       query: query,
     );
   }
