@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercode/component/colors.dart';
 import 'package:fluttercode/component/header.dart';
@@ -9,8 +8,8 @@ import 'package:fluttercode/component/post.dart';
 import 'package:fluttercode/component/texts.dart';
 import 'package:fluttercode/model/posts.dart';
 import 'package:fluttercode/model/profiles.dart';
-import 'package:fluttercode/service/local_service/local_auth_service.dart';
-import 'package:fluttercode/service/remote_service/remote_auth_service.dart';
+import 'package:fluttercode/service/local/auth.dart';
+import 'package:fluttercode/service/remote/auth.dart';
 import 'package:http/http.dart' as http;
 
 class ChunkScreen extends StatefulWidget {
@@ -34,7 +33,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
 
   void getString() async {
     var strToken = await LocalAuthService().getSecureToken("token");
-    var strChunkId = await LocalAuthService().getChunkId("chunk");
+    var strChunkId = await LocalAuthService().getChunkId("chunkId");
 
     setState(() {
       token = strToken.toString();
@@ -57,7 +56,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
   @override
   Widget build(BuildContext context) {
     return chunkId == null
-        ? SizedBox()
+        ? const SizedBox()
         : ListView(
             children: [
               MainHeader(title: 'Mais +', onClick: () {}),
@@ -73,28 +72,25 @@ class _ChunkScreenState extends State<ChunkScreen> {
                             return SizedBox(
                               child: Column(
                                 children: [
-                                  Padding(
-                                    padding: defaultPadding,
-                                    child: Column(
-                                      children: [
-                                        SizedBox(
-                                          width: double.infinity,
-                                          child: PrimaryText(
-                                              text: render["data"]["attributes"]
-                                                  ["title"],
-                                              color: nightColor,
-                                              align: TextAlign.start),
-                                        ),
-                                        SizedBox(
-                                          width: double.infinity,
-                                          child: SubText(
-                                              text: render["data"]["attributes"]
-                                                  ["subtitle"],
-                                              color: nightColor,
-                                              align: TextAlign.start),
-                                        ),
-                                      ],
-                                    ),
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: PrimaryText(
+                                            text: render["data"]["attributes"]
+                                                ["title"],
+                                            color: nightColor,
+                                            align: TextAlign.start),
+                                      ),
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: SubText(
+                                            text: render["data"]["attributes"]
+                                                ["subtitle"],
+                                            color: nightColor,
+                                            align: TextAlign.start),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -235,6 +231,11 @@ class _ChunkScreenState extends State<ChunkScreen> {
                     ),
                     SizedBox(
                       height: 50,
+                    ),
+                    SecundaryText(
+                      text: 'Top Criadores',
+                      color: nightColor,
+                      align: TextAlign.center,
                     ),
                     SizedBox(
                       height: 300,

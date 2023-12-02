@@ -1,6 +1,6 @@
-import 'package:fluttercode/controller/auth_controller.dart';
+import 'package:fluttercode/controller/auth.dart';
 
-import 'dashboard_controller.dart';
+import 'dashboard.dart';
 
 DashboardController dashboardController = DashboardController.instance;
 AuthController authController = AuthController.instance;

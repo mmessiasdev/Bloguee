@@ -7,7 +7,7 @@ import 'package:fluttercode/extention/string_extention.dart';
 
 import '../../../component/buttomdefault.dart';
 import '../../../component/inputdefault.dart';
-import 'sign_in_screen.dart';
+import 'signin.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);

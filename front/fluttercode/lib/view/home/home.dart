@@ -1,13 +1,9 @@
-import 'package:fluttercode/controller/map.dart';
-import 'package:fluttercode/model/locals.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercode/component/header.dart';
-import 'package:fluttercode/service/local_service/local_auth_service.dart';
-import 'package:fluttercode/view/account/account_screen.dart';
-import 'package:fluttercode/view/account/auth/sign_in_screen.dart';
-import 'package:fluttercode/view/posts/post/postscreen.dart';
+import 'package:fluttercode/service/local/auth.dart';
+import 'package:fluttercode/view/account/account.dart';
+import 'package:fluttercode/view/account/auth/signin.dart';
 import 'package:fluttercode/view/home/search/searchpost.dart';
-import 'package:get/get.dart';
 
 import '../../component/colors.dart';
 import '../../component/texts.dart';
@@ -20,13 +16,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final controllerMap = Get.put(MapController());
-  Attributes? data;
-
   var email;
   var lname;
   var id;
   var token;
+  var chunkId;
 
   @override
   void initState() {
@@ -39,19 +33,19 @@ class _HomeScreenState extends State<HomeScreen> {
     var strFull = await LocalAuthService().getLname("lname");
     var strId = await LocalAuthService().getId("id");
     var strToken = await LocalAuthService().getSecureToken("token");
+    var strChunkId = await LocalAuthService().getChunkId("chunkId");
 
     setState(() {
       email = strEmail.toString();
       lname = strFull.toString();
       id = strId.toString();
       token = strToken.toString();
+      chunkId = strChunkId.toString();
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    controllerMap.getPosition();
-
     return SafeArea(
         child: Column(
       children: [

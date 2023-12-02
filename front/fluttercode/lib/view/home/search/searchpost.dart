@@ -1,13 +1,11 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttercode/component/colors.dart';
 import 'package:fluttercode/component/texts.dart';
 import 'package:fluttercode/component/thumbpost.dart';
 import 'package:fluttercode/model/posts.dart';
-import 'package:fluttercode/service/local_service/local_auth_service.dart';
-import 'package:fluttercode/service/remote_service/remote_auth_service.dart';
-import 'package:fluttercode/view/posts/post/postscreen.dart';
-import 'package:http/http.dart' as http;
+import 'package:fluttercode/service/local/auth.dart';
+import 'package:fluttercode/service/remote/auth.dart';
+import 'package:fluttercode/view/posts/post/screen.dart';
 
 class RenderPost extends StatefulWidget {
   RenderPost({super.key, required this.query});
@@ -19,12 +17,9 @@ class RenderPost extends StatefulWidget {
 }
 
 class _RenderPostState extends State<RenderPost> {
-  var client = http.Client();
 
-  var email;
-  var lname;
-  var id;
   var token;
+  var chunkId;
 
   @override
   void initState() {
@@ -33,16 +28,12 @@ class _RenderPostState extends State<RenderPost> {
   }
 
   void getString() async {
-    var strEmail = await LocalAuthService().getEmail("email");
-    var strFull = await LocalAuthService().getLname("lname");
-    var strId = await LocalAuthService().getId("id");
     var strToken = await LocalAuthService().getSecureToken("token");
+    var strChunkId = await LocalAuthService().getChunkId("chunkId");
 
     setState(() {
-      email = strEmail.toString();
-      lname = strFull.toString();
-      id = strId.toString();
       token = strToken.toString();
+      chunkId = strChunkId.toString();
     });
   }
 
@@ -50,7 +41,7 @@ class _RenderPostState extends State<RenderPost> {
   Widget build(BuildContext context) {
     return FutureBuilder<List<PostsAttributes>>(
         future: RemoteAuthService()
-            .getPostSearch(token: token, query: widget.query),
+            .getPostSearch(token: token, query: widget.query, chunkId: chunkId),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
@@ -59,7 +50,7 @@ class _RenderPostState extends State<RenderPost> {
                   var render = snapshot.data![index];
                   return Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 50),
+                        horizontal: 12, vertical: 25),
                     child: GestureDetector(
                       child: ThumbPost(
                           title: render.title.toString(),

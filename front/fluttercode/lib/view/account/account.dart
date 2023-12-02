@@ -1,5 +1,5 @@
 import 'package:fluttercode/component/texts.dart';
-import 'package:fluttercode/service/local_service/local_auth_service.dart';
+import 'package:fluttercode/service/local/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/controller/controllers.dart';
@@ -7,7 +7,7 @@ import 'package:fluttercode/controller/controllers.dart';
 import '../../component/buttomdefault.dart';
 import '../../component/colors.dart';
 import '../../component/infoinputlogin.dart';
-import 'auth/sign_in_screen.dart';
+import 'auth/signin.dart';
 
 class AccountScreen extends StatefulWidget {
   AccountScreen({Key? key}) : super(key: key);

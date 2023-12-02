@@ -2,7 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercode/component/colors.dart';
 import 'package:fluttercode/component/texts.dart';
-import 'package:fluttercode/view/posts/post/postscreen.dart';
+import 'package:fluttercode/view/posts/post/screen.dart';
 
 class Posts extends StatelessWidget {
   Posts(

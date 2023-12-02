@@ -94,7 +94,7 @@ class RemoteAuthService {
   }
 
   Future<List<PostsAttributes>> getPosts(
-      {required String token, required String chunkId}) async {
+      {required String? token, required String? chunkId}) async {
     List<PostsAttributes> listItens = [];
     var response = await client.get(
       Uri.parse(
@@ -125,11 +125,13 @@ class RemoteAuthService {
   }
 
   Future<List<PostsAttributes>> getPostSearch(
-      {required String token, required String query}) async {
+      {required String token,
+      required String query,
+      required String chunkId}) async {
     List<PostsAttributes> listItens = [];
     var response = await client.get(
       Uri.parse(
-          'http://localhost:1337/api/posts?filters[title][\$containsi]=${query}&populate=*'),
+          "http://localhost:1337/api/posts?filters[title][\$containsi]=$query&filters[chunk][id][\$eqi]=$chunkId&populate=*"),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -144,7 +146,7 @@ class RemoteAuthService {
   }
 
   Future<List<ProfileAttributes>> getProfiles(
-      {required String token, required String chunkId}) async {
+      {required String? token, required String? chunkId}) async {
     List<ProfileAttributes> listItens = [];
     var response = await client.get(
       Uri.parse(

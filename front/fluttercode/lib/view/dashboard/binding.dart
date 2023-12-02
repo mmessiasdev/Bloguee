@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
-import 'package:fluttercode/controller/auth_controller.dart';
-import 'package:fluttercode/controller/dashboard_controller.dart';
+import 'package:fluttercode/controller/auth.dart';
+import 'package:fluttercode/controller/dashboard.dart';
 
 class DashboardBinding extends Bindings {
   @override

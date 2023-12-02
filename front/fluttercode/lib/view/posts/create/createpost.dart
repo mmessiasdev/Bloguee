@@ -2,13 +2,14 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
+import 'package:fluttercode/component/buttomborder.dart';
 import 'package:fluttercode/component/buttomdefault.dart';
 import 'package:fluttercode/component/colors.dart';
 import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/component/inputdefault.dart';
 import 'package:fluttercode/component/texts.dart';
 import 'package:fluttercode/controller/controllers.dart';
-import 'package:fluttercode/service/local_service/local_auth_service.dart';
+import 'package:fluttercode/service/local/auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:html' as html;
 import 'package:http_parser/http_parser.dart';
@@ -84,7 +85,6 @@ class _CreatePostState extends State<CreatePost> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -130,15 +130,19 @@ class _CreatePostState extends State<CreatePost> {
                   ),
                 ),
                 Padding(
-                    padding: const EdgeInsets.only(top: 20),
-                    child: InputTextButton(
-                      onClick: () {
-                        startPicker();
-                      },
-                      title: 'Add PDF',
-                      color: PrimaryColor,
+                    padding: const EdgeInsets.only(top: 50),
+                    child: SizedBox(
+                      width: double.infinity,
+                      child: InputOutlineButton(
+                        title: 'Add PDF',
+                        onClick: () {
+                          startPicker();
+                        },
+                      ),
                     )),
-                // _bytesData != null ? Text(_bytesData.toString()) : Container(),
+                SizedBox(
+                  height: 50,
+                ),
                 Padding(
                   padding: const EdgeInsets.only(top: 30, bottom: 20),
                   child: InputTextButton(
