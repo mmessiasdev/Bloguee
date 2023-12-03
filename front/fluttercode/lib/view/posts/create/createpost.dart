@@ -60,6 +60,8 @@ class _CreatePostState extends State<CreatePost> {
     super.dispose();
   }
 
+  bool fixed = false;
+
   List<int>? selectFile;
   Uint8List? _bytesData;
 
@@ -140,6 +142,25 @@ class _CreatePostState extends State<CreatePost> {
                         },
                       ),
                     )),
+                Padding(
+                    padding: const EdgeInsets.only(top: 50),
+                    child: SizedBox(
+                        width: double.infinity,
+                        child: Align(
+                          child: CheckboxListTile(
+                            title: SecundaryText(
+                                text: 'Fixar Post?',
+                                color: nightColor,
+                                align: TextAlign.start),
+                            value: fixed,
+                            onChanged: (value) {
+                              setState(() {
+                                value == false ? fixed = false : fixed = true;
+                              });
+                            },
+                            controlAffinity: ListTileControlAffinity.trailing,
+                          ),
+                        ))),
                 SizedBox(
                   height: 50,
                 ),
@@ -156,7 +177,9 @@ class _CreatePostState extends State<CreatePost> {
                           print(chunk);
                           print(id);
                           print(selectFile);
+                          print(fixed);
                           authController.posting(
+                            fixed: fixed,
                             selectFile: selectFile,
                             title: title.text,
                             desc: desc.text,

@@ -72,6 +72,7 @@ class RemoteAuthService {
     required int profileId,
     required int chunkId,
     required String token,
+    required bool fixedChunk,
   }) async {
     final body = {
       "data": {
@@ -79,7 +80,8 @@ class RemoteAuthService {
         "desc": desc,
         "content": content,
         "profile": profileId,
-        "chunk": chunkId
+        "chunk": chunkId,
+        "fixedChunk": fixedChunk
       }
     };
     var response = await client.post(

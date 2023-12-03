@@ -94,13 +94,13 @@ class AuthController extends GetxController {
     }
   }
 
-
   void posting(
       {required String title,
       required String desc,
       required String content,
       required int profileId,
       required int chunkId,
+      required bool fixed,
       List<int>? selectFile}) async {
     try {
       EasyLoading.show(
@@ -109,6 +109,7 @@ class AuthController extends GetxController {
       );
       var token = await LocalAuthService().getSecureToken("token");
       var result = await RemoteAuthService().addPost(
+          fixedChunk: fixed,
           token: token.toString(),
           title: title,
           desc: desc,

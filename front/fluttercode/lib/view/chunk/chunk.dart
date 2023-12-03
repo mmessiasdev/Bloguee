@@ -230,7 +230,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
                           }),
                     ),
                     SizedBox(
-                      height: 50,
+                      height: 25,
                     ),
                     SecundaryText(
                       text: 'Top Criadores',
