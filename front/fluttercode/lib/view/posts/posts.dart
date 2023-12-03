@@ -66,48 +66,47 @@ class _PostsScreenState extends State<PostsScreen> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: 300,
-                child: FutureBuilder<List<PostsAttributes>>(
-                    future: RemoteAuthService()
-                        .getPosts(token: token, chunkId: chunkId),
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                            itemCount: snapshot.data?.length,
-                            itemBuilder: (context, index) {
-                              var render = snapshot.data![index];
-                              return Padding(
-                                padding: const EdgeInsets.all(12),
-                                child: Posts(
-                                  plname: render.plname.toString(),
-                                  title: render.title.toString(),
-                                  desc: render.desc.toString(),
-                                  updatedAt: render.updatedAt
-                                      .toString()
-                                      .replaceAll("-", "/")
-                                      .substring(0, 10),
-                                  id: render.id.toString(),
-                                ),
-                              );
-                            });
-                      } else if (snapshot.hasError) {
-                        return Center(
-                            child: SubText(
-                          text: 'Erro ao pesquisar posts',
+              FutureBuilder<List<PostsAttributes>>(
+                  future: RemoteAuthService()
+                      .getPosts(token: token, chunkId: chunkId),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (context, index) {
+                            var render = snapshot.data![index];
+                            return Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Posts(
+                                plname: render.plname.toString(),
+                                title: render.title.toString(),
+                                desc: render.desc.toString(),
+                                updatedAt: render.updatedAt
+                                    .toString()
+                                    .replaceAll("-", "/")
+                                    .substring(0, 10),
+                                id: render.id.toString(),
+                              ),
+                            );
+                          });
+                    } else if (snapshot.hasError) {
+                      return Center(
+                          child: SubText(
+                        text: 'Erro ao pesquisar posts',
+                        color: PrimaryColor,
+                        align: TextAlign.center,
+                      ));
+                    }
+                    return SizedBox(
+                      height: 300,
+                      child: Center(
+                        child: CircularProgressIndicator(
                           color: PrimaryColor,
-                          align: TextAlign.center,
-                        ));
-                      }
-                      return Expanded(
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            color: PrimaryColor,
-                          ),
                         ),
-                      );
-                    }),
-              )
+                      ),
+                    );
+                  })
             ],
           );
   }

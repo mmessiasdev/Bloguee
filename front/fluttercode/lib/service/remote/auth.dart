@@ -66,13 +66,13 @@ class RemoteAuthService {
   }
 
   Future addPost({
-    required String title,
-    required String desc,
-    required String content,
-    required int profileId,
-    required int chunkId,
-    required String token,
-    required bool fixedChunk,
+    required String? title,
+    required String? desc,
+    required String? content,
+    required int? profileId,
+    required int? chunkId,
+    required String? token,
+    required bool? fixedChunk,
   }) async {
     final body = {
       "data": {
@@ -81,7 +81,7 @@ class RemoteAuthService {
         "content": content,
         "profile": profileId,
         "chunk": chunkId,
-        "fixedChunk": fixedChunk
+        "chunkfixed": fixedChunk
       }
     };
     var response = await client.post(

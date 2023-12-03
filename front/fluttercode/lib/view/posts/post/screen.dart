@@ -97,18 +97,23 @@ class _PostScreenState extends State<PostScreen> {
                                 ],
                               ),
                             ),
-                            Container(
-                              color: SixthColor,
-                              child: Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 30, right: 30, top: 50, bottom: 50),
-                                  child: SubText(
-                                    text: render["data"]["attributes"]
-                                        ["content"],
-                                    align: TextAlign.start,
-                                    color: nightColor,
-                                  )),
-                            ),
+                            render["data"]["attributes"]["content"] == ""
+                                ? SizedBox()
+                                : Container(
+                                    color: SixthColor,
+                                    child: Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 30,
+                                            right: 30,
+                                            top: 50,
+                                            bottom: 50),
+                                        child: SubText(
+                                          text: render["data"]["attributes"]
+                                              ["content"],
+                                          align: TextAlign.start,
+                                          color: nightColor,
+                                        )),
+                                  ),
                           ],
                         ),
                       );

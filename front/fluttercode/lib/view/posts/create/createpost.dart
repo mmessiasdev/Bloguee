@@ -12,7 +12,6 @@ import 'package:fluttercode/controller/controllers.dart';
 import 'package:fluttercode/service/local/auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:html' as html;
-import 'package:http_parser/http_parser.dart';
 
 class CreatePost extends StatefulWidget {
   const CreatePost({super.key});
