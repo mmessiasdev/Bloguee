@@ -677,6 +677,46 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiCategoryCategory extends Schema.CollectionType {
+  collectionName: 'categories';
+  info: {
+    singularName: 'category';
+    pluralName: 'categories';
+    displayName: 'postcategory';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    name: Attribute.String;
+    chunks: Attribute.Relation<
+      'api::category.category',
+      'oneToMany',
+      'api::chunk.chunk'
+    >;
+    posts: Attribute.Relation<
+      'api::category.category',
+      'oneToMany',
+      'api::post.post'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiChunkChunk extends Schema.CollectionType {
   collectionName: 'chunks';
   info: {
@@ -695,10 +735,16 @@ export interface ApiChunkChunk extends Schema.CollectionType {
       'oneToMany',
       'api::profile.profile'
     >;
-    posters: Attribute.Relation<
+    category: Attribute.Relation<
+      'api::chunk.chunk',
+      'manyToOne',
+      'api::category.category'
+    >;
+    subtitle: Attribute.String;
+    posts: Attribute.Relation<
       'api::chunk.chunk',
       'oneToMany',
-      'api::poster.poster'
+      'api::post.post'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -717,12 +763,12 @@ export interface ApiChunkChunk extends Schema.CollectionType {
   };
 }
 
-export interface ApiPosterPoster extends Schema.CollectionType {
-  collectionName: 'posters';
+export interface ApiPostPost extends Schema.CollectionType {
+  collectionName: 'posts';
   info: {
-    singularName: 'poster';
-    pluralName: 'posters';
-    displayName: 'poster';
+    singularName: 'post';
+    pluralName: 'posts';
+    displayName: 'post';
     description: '';
   };
   options: {
@@ -731,30 +777,29 @@ export interface ApiPosterPoster extends Schema.CollectionType {
   attributes: {
     title: Attribute.String;
     desc: Attribute.String;
-    profile: Attribute.Relation<
-      'api::poster.poster',
-      'manyToOne',
-      'api::profile.profile'
-    >;
+    content: Attribute.RichText;
+    chunkfixed: Attribute.Boolean;
+    files: Attribute.Media;
     chunk: Attribute.Relation<
-      'api::poster.poster',
+      'api::post.post',
       'manyToOne',
       'api::chunk.chunk'
     >;
-    content: Attribute.RichText;
+    profile: Attribute.Relation<
+      'api::post.post',
+      'manyToOne',
+      'api::profile.profile'
+    >;
+    postcategory: Attribute.Relation<
+      'api::post.post',
+      'manyToOne',
+      'api::category.category'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::poster.poster',
-      'oneToOne',
-      'admin::user'
-    > &
+    createdBy: Attribute.Relation<'api::post.post', 'oneToOne', 'admin::user'> &
       Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::poster.poster',
-      'oneToOne',
-      'admin::user'
-    > &
+    updatedBy: Attribute.Relation<'api::post.post', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -784,10 +829,10 @@ export interface ApiProfileProfile extends Schema.CollectionType {
       'api::chunk.chunk'
     >;
     email: Attribute.String;
-    posters: Attribute.Relation<
+    posts: Attribute.Relation<
       'api::profile.profile',
       'oneToMany',
-      'api::poster.poster'
+      'api::post.post'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -822,8 +867,9 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::category.category': ApiCategoryCategory;
       'api::chunk.chunk': ApiChunkChunk;
-      'api::poster.poster': ApiPosterPoster;
+      'api::post.post': ApiPostPost;
       'api::profile.profile': ApiProfileProfile;
     }
   }

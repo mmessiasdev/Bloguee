@@ -32,10 +32,10 @@
     "email": {
       "type": "string"
     },
-    "posters": {
+    "posts": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::poster.poster",
+      "target": "api::post.post",
       "mappedBy": "profile"
     }
   }

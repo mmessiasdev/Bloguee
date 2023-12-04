@@ -21,10 +21,19 @@
       "target": "api::profile.profile",
       "mappedBy": "chunk"
     },
-    "posters": {
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "chunks"
+    },
+    "subtitle": {
+      "type": "string"
+    },
+    "posts": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::poster.poster",
+      "target": "api::post.post",
       "mappedBy": "chunk"
     }
   }
