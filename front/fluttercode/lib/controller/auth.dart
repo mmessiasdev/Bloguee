@@ -116,6 +116,9 @@ class AuthController extends GetxController {
           content: content,
           profileId: profileId,
           chunkId: chunkId);
+      EasyLoading.showSuccess("Seu relato poster enviado.");
+      Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
+
       if (result.statusCode == 200) {
         int postId = json.decode(result.body)['data']['id'];
         var url = Uri.parse("http://localhost:1337/api/upload/");
@@ -128,7 +131,7 @@ class AuthController extends GetxController {
         ));
 
         request.files.add(
-            await http.MultipartFile.fromString("ref", "api::poster.poster"));
+            await http.MultipartFile.fromString("ref", "api::post.post"));
         request.files
             .add(await http.MultipartFile.fromString("refId", "${postId}"));
 
@@ -143,11 +146,6 @@ class AuthController extends GetxController {
             print("FileUpload Error");
           }
         });
-
-        EasyLoading.showSuccess("Seu relato poster enviado.");
-        Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
-      } else {
-        EasyLoading.showError('Faça login para realizar um post!');
       }
     } catch (e) {
       print(e);

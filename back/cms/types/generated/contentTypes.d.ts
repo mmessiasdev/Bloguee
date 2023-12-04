@@ -690,15 +690,15 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
   };
   attributes: {
     name: Attribute.String;
-    posters: Attribute.Relation<
-      'api::category.category',
-      'oneToMany',
-      'api::poster.poster'
-    >;
     chunks: Attribute.Relation<
       'api::category.category',
       'oneToMany',
       'api::chunk.chunk'
+    >;
+    posts: Attribute.Relation<
+      'api::category.category',
+      'oneToMany',
+      'api::post.post'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -735,17 +735,17 @@ export interface ApiChunkChunk extends Schema.CollectionType {
       'oneToMany',
       'api::profile.profile'
     >;
-    posters: Attribute.Relation<
-      'api::chunk.chunk',
-      'oneToMany',
-      'api::poster.poster'
-    >;
     category: Attribute.Relation<
       'api::chunk.chunk',
       'manyToOne',
       'api::category.category'
     >;
     subtitle: Attribute.String;
+    posts: Attribute.Relation<
+      'api::chunk.chunk',
+      'oneToMany',
+      'api::post.post'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -763,11 +763,11 @@ export interface ApiChunkChunk extends Schema.CollectionType {
   };
 }
 
-export interface ApiPosterPoster extends Schema.CollectionType {
-  collectionName: 'posters';
+export interface ApiPostPost extends Schema.CollectionType {
+  collectionName: 'posts';
   info: {
-    singularName: 'poster';
-    pluralName: 'posters';
+    singularName: 'post';
+    pluralName: 'posts';
     displayName: 'post';
     description: '';
   };
@@ -777,37 +777,29 @@ export interface ApiPosterPoster extends Schema.CollectionType {
   attributes: {
     title: Attribute.String;
     desc: Attribute.String;
-    profile: Attribute.Relation<
-      'api::poster.poster',
-      'manyToOne',
-      'api::profile.profile'
-    >;
     content: Attribute.RichText;
+    chunkfixed: Attribute.Boolean;
+    files: Attribute.Media;
     chunk: Attribute.Relation<
-      'api::poster.poster',
+      'api::post.post',
       'manyToOne',
       'api::chunk.chunk'
     >;
-    category: Attribute.Relation<
-      'api::poster.poster',
+    profile: Attribute.Relation<
+      'api::post.post',
+      'manyToOne',
+      'api::profile.profile'
+    >;
+    postcategory: Attribute.Relation<
+      'api::post.post',
       'manyToOne',
       'api::category.category'
     >;
-    files: Attribute.Media;
-    chunkfixed: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::poster.poster',
-      'oneToOne',
-      'admin::user'
-    > &
+    createdBy: Attribute.Relation<'api::post.post', 'oneToOne', 'admin::user'> &
       Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::poster.poster',
-      'oneToOne',
-      'admin::user'
-    > &
+    updatedBy: Attribute.Relation<'api::post.post', 'oneToOne', 'admin::user'> &
       Attribute.Private;
   };
 }
@@ -837,10 +829,10 @@ export interface ApiProfileProfile extends Schema.CollectionType {
       'api::chunk.chunk'
     >;
     email: Attribute.String;
-    posters: Attribute.Relation<
+    posts: Attribute.Relation<
       'api::profile.profile',
       'oneToMany',
-      'api::poster.poster'
+      'api::post.post'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -877,7 +869,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::category.category': ApiCategoryCategory;
       'api::chunk.chunk': ApiChunkChunk;
-      'api::poster.poster': ApiPosterPoster;
+      'api::post.post': ApiPostPost;
       'api::profile.profile': ApiProfileProfile;
     }
   }

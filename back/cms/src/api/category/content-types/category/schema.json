@@ -15,17 +15,17 @@
     "name": {
       "type": "string"
     },
-    "posters": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::poster.poster",
-      "mappedBy": "category"
-    },
     "chunks": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::chunk.chunk",
       "mappedBy": "category"
+    },
+    "posts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::post.post",
+      "mappedBy": "postcategory"
     }
   }
 }

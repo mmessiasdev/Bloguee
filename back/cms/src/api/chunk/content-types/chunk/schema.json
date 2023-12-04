@@ -21,12 +21,6 @@
       "target": "api::profile.profile",
       "mappedBy": "chunk"
     },
-    "posters": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::poster.poster",
-      "mappedBy": "chunk"
-    },
     "category": {
       "type": "relation",
       "relation": "manyToOne",
@@ -35,6 +29,12 @@
     },
     "subtitle": {
       "type": "string"
+    },
+    "posts": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::post.post",
+      "mappedBy": "chunk"
     }
   }
 }

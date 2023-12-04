@@ -9,11 +9,12 @@ class PostsAttributes {
   String? pemail;
   String? cname;
   bool? chunkfixed;
-
+  String? fileUrl;
   String? createdAt;
   String? updatedAt;
 
   PostsAttributes({
+    this.fileUrl,
     this.id,
     this.title,
     this.desc,
@@ -41,6 +42,7 @@ class PostsAttributes {
     createdAt = json['attributes']['createdAt'];
     updatedAt = json['attributes']['updatedAt'];
     chunkfixed = json['attributes']['chunkfixed'];
+    fileUrl = json['attributes']['url'];
   }
 
   Map<String, dynamic> toJson() {
@@ -57,6 +59,7 @@ class PostsAttributes {
     data['email'] = this.pemail;
     data['title'] = this.cname;
     data['chunkfixed'] = this.chunkfixed;
+    data['url'] = this.fileUrl;
 
     return data;
   }

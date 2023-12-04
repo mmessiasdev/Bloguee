@@ -126,6 +126,25 @@ class RemoteAuthService {
     return itens;
   }
 
+  Future<List<PostsAttributes>> getPostsFiles(
+      {required String? token, required String? id}) async {
+    List<PostsAttributes> listItens = [];
+    var response = await client.get(
+      Uri.parse('http://localhost:1337/api/posts/${id}?populate=files'),
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer $token"
+      },
+    );
+    var body = jsonDecode(response.body);
+    var itemCount = body["data"]["attributes"]["files"]["data"];
+    print(itemCount);
+    for (var i = 0; i < itemCount.length; i++) {
+      listItens.add(PostsAttributes.fromJson(itemCount[i]));
+    }
+    return listItens;
+  }
+
   Future<List<PostsAttributes>> getPostSearch(
       {required String token,
       required String query,

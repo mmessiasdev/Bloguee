@@ -64,10 +64,9 @@ class _DashboardScreenState extends State<DashboardScreen> {
                             color: SecudaryColor,
                           ),
                           child: SnakeNavigationBar.color(
+                            snakeShape: SnakeShape.rectangle,
                             backgroundColor: SecudaryColor,
                             padding: const EdgeInsets.symmetric(vertical: 5),
-                            unselectedLabelStyle:
-                                GoogleFonts.asap(fontSize: 12),
                             unselectedItemColor: OffColor,
                             showUnselectedLabels: true,
                             snakeViewColor: SecudaryColor,
