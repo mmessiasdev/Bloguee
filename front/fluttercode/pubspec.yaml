@@ -28,6 +28,8 @@ dependencies:
   flutter_snake_navigationbar: ^0.6.1
   flutter_native_splash: 1.2.0
   syncfusion_flutter_pdfviewer: ^23.2.6
+  advance_pdf_viewer: ^2.0.1
+
 
 
 flutter_native_splash:

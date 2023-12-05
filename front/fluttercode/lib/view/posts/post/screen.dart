@@ -1,5 +1,6 @@
+import 'package:advance_pdf_viewer/advance_pdf_viewer.dart';
 import 'package:fluttercode/component/padding.dart';
-import 'package:fluttercode/model/posts.dart';
+import 'package:fluttercode/model/postFiles.dart';
 import 'package:fluttercode/service/local/auth.dart';
 import 'package:fluttercode/service/remote/auth.dart';
 import 'package:http/http.dart' as http;
@@ -116,7 +117,7 @@ class _PostScreenState extends State<PostScreen> {
                                           color: nightColor,
                                         )),
                                   ),
-                            FutureBuilder<List<PostsAttributes>>(
+                            FutureBuilder<List<PostFiles>>(
                                 future: RemoteAuthService()
                                     .getPostsFiles(token: token, id: widget.id),
                                 builder: (context, snapshot) {
@@ -126,19 +127,14 @@ class _PostScreenState extends State<PostScreen> {
                                         itemCount: snapshot.data!.length,
                                         itemBuilder: (context, index) {
                                           var render = snapshot.data![index];
-                                          print(render.fileUrl.toString());
                                           return Padding(
                                               padding: const EdgeInsets.all(15),
                                               child: SfPdfViewer.network(
-                                                  "https://res.cloudinary.com/mmessiasdev/image/upload/v1701698643/File_Test_a2890af0ec.pdf"));
+                                                render.url.toString(),
+                                              ));
                                         });
                                   } else if (snapshot.hasError) {
-                                    return Center(
-                                        child: SubText(
-                                      text: 'Erro ao pesquisar posts',
-                                      color: PrimaryColor,
-                                      align: TextAlign.center,
-                                    ));
+                                    return SizedBox();
                                   }
                                   return SizedBox(
                                     height: 300,

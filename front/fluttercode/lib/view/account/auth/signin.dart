@@ -104,30 +104,30 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                       ),
                       const SizedBox(height: 10),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 30),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Text("É um novo usário? "),
-                            InkWell(
-                                onTap: () {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const SignUpScreen()));
-                                },
-                                child: const Text(
-                                  "Crie uma conta.",
-                                  style: TextStyle(
-                                    color: Color.fromRGBO(19, 68, 90, 1),
-                                  ),
-                                ))
-                          ],
-                        ),
-                      ),
-                      const SizedBox(height: 10)
+                      // Padding(
+                      //   padding: const EdgeInsets.only(top: 30),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.center,
+                      //     children: [
+                      //       const Text("É um novo usário? "),
+                      //       InkWell(
+                      //           onTap: () {
+                      //             Navigator.pushReplacement(
+                      //                 context,
+                      //                 MaterialPageRoute(
+                      //                     builder: (context) =>
+                      //                         const SignUpScreen()));
+                      //           },
+                      //           child: const Text(
+                      //             "Crie uma conta.",
+                      //             style: TextStyle(
+                      //               color: Color.fromRGBO(19, 68, 90, 1),
+                      //             ),
+                      //           ))
+                      //     ],
+                      //   ),
+                      // ),
+                      // const SizedBox(height: 10)
                     ],
                   ),
                 ),

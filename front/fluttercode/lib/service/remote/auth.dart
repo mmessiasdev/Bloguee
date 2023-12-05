@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttercode/model/postFiles.dart';
 import 'package:fluttercode/model/posts.dart';
 import 'package:fluttercode/model/profiles.dart';
 import 'package:http/http.dart' as http;
@@ -100,14 +101,14 @@ class RemoteAuthService {
     List<PostsAttributes> listItens = [];
     var response = await client.get(
       Uri.parse(
-          'http://localhost:1337/api/chunks/${chunkId}?populate[posts][populate]=*'),
+          'http://localhost:1337/api/posts?sort=id:DESC&filters[chunk][id][\$eqi]=${chunkId}&populate=*'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
       },
     );
     var body = jsonDecode(response.body);
-    var itemCount = body["data"]["attributes"]["posts"]["data"];
+    var itemCount = body["data"];
     for (var i = 0; i < itemCount.length; i++) {
       listItens.add(PostsAttributes.fromJson(itemCount[i]));
     }
@@ -126,9 +127,9 @@ class RemoteAuthService {
     return itens;
   }
 
-  Future<List<PostsAttributes>> getPostsFiles(
+  Future<List<PostFiles>> getPostsFiles(
       {required String? token, required String? id}) async {
-    List<PostsAttributes> listItens = [];
+    List<PostFiles> listItens = [];
     var response = await client.get(
       Uri.parse('http://localhost:1337/api/posts/${id}?populate=files'),
       headers: {
@@ -140,7 +141,7 @@ class RemoteAuthService {
     var itemCount = body["data"]["attributes"]["files"]["data"];
     print(itemCount);
     for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(PostsAttributes.fromJson(itemCount[i]));
+      listItens.add(PostFiles.fromJson(itemCount[i]));
     }
     return listItens;
   }
