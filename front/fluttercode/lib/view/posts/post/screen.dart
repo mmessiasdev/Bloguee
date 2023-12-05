@@ -103,6 +103,7 @@ class _PostScreenState extends State<PostScreen> {
                             render["data"]["attributes"]["content"] == ""
                                 ? SizedBox()
                                 : Container(
+                                  width: double.infinity,
                                     color: SixthColor,
                                     child: Padding(
                                         padding: const EdgeInsets.only(

@@ -141,25 +141,36 @@ class _CreatePostState extends State<CreatePost> {
                         },
                       ),
                     )),
+                SizedBox(
+                  height: 10,
+                ),
+                _bytesData == null
+                    ? SizedBox()
+                    : SubText(
+                        text: 'Documento Adicionado',
+                        color: FourtyColor,
+                        align: TextAlign.center),
                 Padding(
-                    padding: const EdgeInsets.only(top: 50),
-                    child: SizedBox(
-                        width: double.infinity,
-                        child: Align(
-                          child: CheckboxListTile(
-                            title: SecundaryText(
-                                text: 'Fixar Post?',
-                                color: nightColor,
-                                align: TextAlign.start),
-                            value: fixed,
-                            onChanged: (value) {
-                              setState(() {
-                                value == false ? fixed = false : fixed = true;
-                              });
-                            },
-                            controlAffinity: ListTileControlAffinity.trailing,
-                          ),
-                        ))),
+                  padding: const EdgeInsets.only(top: 50),
+                  child: SizedBox(
+                    width: double.infinity,
+                    child: Align(
+                      child: CheckboxListTile(
+                        title: SecundaryText(
+                            text: 'Fixar Post?',
+                            color: nightColor,
+                            align: TextAlign.start),
+                        value: fixed,
+                        onChanged: (value) {
+                          setState(() {
+                            value == false ? fixed = false : fixed = true;
+                          });
+                        },
+                        controlAffinity: ListTileControlAffinity.trailing,
+                      ),
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: 50,
                 ),
