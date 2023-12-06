@@ -45,7 +45,6 @@ class _CreatePostState extends State<CreatePost> {
     });
   }
 
-  final _formKey = GlobalKey<FormState>();
 
   TextEditingController content = TextEditingController();
   TextEditingController title = TextEditingController();

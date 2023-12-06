@@ -3,7 +3,6 @@ import 'package:fluttercode/component/texts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
 
 class InfoInputLogin extends StatelessWidget {
   InfoInputLogin({Key? key, required this.title, required this.info})

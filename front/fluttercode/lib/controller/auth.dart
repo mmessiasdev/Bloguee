@@ -11,7 +11,6 @@ import 'package:http_parser/http_parser.dart';
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   Rxn<User> user = Rxn<User>();
-  final LocalAuthService _localAuthService = LocalAuthService();
 
   @override
   void onInit() async {
@@ -76,7 +75,6 @@ class AuthController extends GetxController {
           await LocalAuthService().storeToken(token);
           await LocalAuthService()
               .storeAccount(email: email, lname: lname, id: id, chunk: chunk);
-          var stringEmail = await LocalAuthService().getEmail("email");
           EasyLoading.showSuccess("Bem vindo ao Bloguee");
           Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
         } else {
@@ -130,8 +128,8 @@ class AuthController extends GetxController {
           filename: "FileTest",
         ));
 
-        request.files.add(
-            await http.MultipartFile.fromString("ref", "api::post.post"));
+        request.files
+            .add(await http.MultipartFile.fromString("ref", "api::post.post"));
         request.files
             .add(await http.MultipartFile.fromString("refId", "${postId}"));
 

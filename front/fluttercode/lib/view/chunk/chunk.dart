@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:fluttercode/component/colors.dart';
+import 'package:fluttercode/component/containersLoading.dart';
 import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/component/padding.dart';
 import 'package:fluttercode/component/post.dart';
@@ -99,39 +100,26 @@ class _ChunkScreenState extends State<ChunkScreen> {
                               )),
                             );
                           }
-                          return SizedBox(
-                            child: Column(
-                              children: [
-                                Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: double.infinity,
-                                          child: PrimaryText(
-                                              text: "Carregando...",
-                                              color: nightColor,
-                                              align: TextAlign.start),
-                                        ),
-                                        CircularProgressIndicator(
-                                          color: PrimaryColor,
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      width: double.infinity,
-                                      child: SubText(
-                                          text: "Aguarde...",
-                                          color: nightColor,
-                                          align: TextAlign.start),
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
+                          return Column(
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                child: PrimaryText(
+                                    text: "Carregando...",
+                                    color: nightColor,
+                                    align: TextAlign.start),
+                              ),
+                              SizedBox(
+                                width: double.infinity,
+                                child: SubText(
+                                    text: "Aguarde.",
+                                    color: nightColor,
+                                    align: TextAlign.start),
+                              ),
+                            ],
                           );
                         }),
-                                            SizedBox(
+                    SizedBox(
                       height: 100,
                     ),
                     SizedBox(
@@ -155,7 +143,8 @@ class _ChunkScreenState extends State<ChunkScreen> {
                                   var render = snapshot.data![index];
                                   if (render.chunkfixed == true) {
                                     return Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 15),
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15),
                                       child: Posts(
                                         plname: 'Fixado',
                                         title: render.title.toString(),
@@ -179,14 +168,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
                               align: TextAlign.center,
                             ));
                           }
-                          return SizedBox(
-                            height: 200,
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                color: PrimaryColor,
-                              ),
-                            ),
-                          );
+                          return PostsLoading();
                         }),
                     SizedBox(
                       height: 35,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttercode/component/colors.dart';
+import 'package:fluttercode/component/containersLoading.dart';
 import 'package:fluttercode/component/header.dart';
 import 'package:fluttercode/component/padding.dart';
 import 'package:fluttercode/component/post.dart';
@@ -58,55 +59,60 @@ class _PostsScreenState extends State<PostsScreen> {
                   }),
               Padding(
                 padding: defaultPadding,
-                child: Center(
-                  child: PrimaryText(
-                    text: 'Ultimos Posts',
-                    color: nightColor,
-                    align: TextAlign.center,
-                  ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 50,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: PrimaryText(
+                        text: 'Ultimos Posts',
+                        color: nightColor,
+                        align: TextAlign.start,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 40,
+                    ),
+                    FutureBuilder<List<PostsAttributes>>(
+                        future: RemoteAuthService()
+                            .getPosts(token: token, chunkId: chunkId),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: snapshot.data!.length,
+                                itemBuilder: (context, index) {
+                                  var render = snapshot.data![index];
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 15),
+                                    child: Posts(
+                                      plname: render.plname.toString(),
+                                      title: render.title.toString(),
+                                      desc: render.desc.toString(),
+                                      updatedAt: render.updatedAt
+                                          .toString()
+                                          .replaceAll("-", "/")
+                                          .substring(0, 10),
+                                      id: render.id.toString(),
+                                    ),
+                                  );
+                                });
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: SubText(
+                              text: 'Erro ao pesquisar posts',
+                              color: PrimaryColor,
+                              align: TextAlign.center,
+                            ));
+                          }
+                          return PostsLoading();
+                        }),
+                  ],
                 ),
               ),
-              FutureBuilder<List<PostsAttributes>>(
-                  future: RemoteAuthService()
-                      .getPosts(token: token, chunkId: chunkId),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            var render = snapshot.data![index];
-                            return Padding(
-                              padding: const EdgeInsets.all(15),
-                              child: Posts(
-                                plname: render.plname.toString(),
-                                title: render.title.toString(),
-                                desc: render.desc.toString(),
-                                updatedAt: render.updatedAt
-                                    .toString()
-                                    .replaceAll("-", "/")
-                                    .substring(0, 10),
-                                id: render.id.toString(),
-                              ),
-                            );
-                          });
-                    } else if (snapshot.hasError) {
-                      return Center(
-                          child: SubText(
-                        text: 'Erro ao pesquisar posts',
-                        color: PrimaryColor,
-                        align: TextAlign.center,
-                      ));
-                    }
-                    return SizedBox(
-                      height: 300,
-                      child: Center(
-                        child: CircularProgressIndicator(
-                          color: PrimaryColor,
-                        ),
-                      ),
-                    );
-                  })
             ],
           );
   }

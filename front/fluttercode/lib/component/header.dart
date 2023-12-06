@@ -1,9 +1,7 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttercode/component/colors.dart';
 import 'package:fluttercode/component/texts.dart';
-import 'package:get/get.dart';
-import 'package:fluttercode/controller/controllers.dart';
+
 
 class MainHeader extends StatelessWidget {
   MainHeader({Key? key, required this.title, required this.onClick})
