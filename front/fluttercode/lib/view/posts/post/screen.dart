@@ -45,7 +45,6 @@ class _PostScreenState extends State<PostScreen> {
   void getString() async {
     var strToken = await LocalAuthService().getSecureToken("token");
     var strChunkId = await LocalAuthService().getChunkId("chunk");
-    print(fileBytes);
 
     setState(() {
       token = strToken.toString();
@@ -201,34 +200,44 @@ class _PostScreenState extends State<PostScreen> {
                                               shrinkWrap: true,
                                               itemCount: snapshot.data!.length,
                                               itemBuilder: (context, index) {
-                                                var render =
+                                                var renderFile =
                                                     snapshot.data![index];
-                                                fileBytes = render.url;
-                                                fileName = render.name;
+                                                fileBytes = renderFile.url;
+                                                fileName = renderFile.name;
                                                 print(fileBytes);
-                                                return Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            15),
-                                                    child: SfPdfViewer.network(
-                                                      render.url.toString(),
-                                                    ));
+                                                return Column(
+                                                  children: [
+                                                    Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .all(15),
+                                                        child:
+                                                            SfPdfViewer.network(
+                                                          renderFile.url
+                                                              .toString(),
+                                                        )),
+                                                    UniversalPlatform.isWeb
+                                                        ? Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                    .only(
+                                                                    top: 50),
+                                                            child: SizedBox(
+                                                              width: double
+                                                                  .infinity,
+                                                              child:
+                                                                  InputOutlineButton(
+                                                                title:
+                                                                    'Baixar Documento \n ${renderFile.name}',
+                                                                onClick: () {
+                                                                  downloadPDFWeb();
+                                                                },
+                                                              ),
+                                                            ))
+                                                        : SizedBox()
+                                                  ],
+                                                );
                                               }),
-                                          UniversalPlatform.isWeb
-                                              ? Padding(
-                                                  padding:
-                                                      const EdgeInsets.only(
-                                                          top: 50),
-                                                  child: SizedBox(
-                                                    width: double.infinity,
-                                                    child: InputOutlineButton(
-                                                      title: 'Baixar Documento',
-                                                      onClick: () {
-                                                        downloadPDFWeb();
-                                                      },
-                                                    ),
-                                                  ))
-                                              : SizedBox()
                                         ],
                                       );
                                     } else if (snapshot.hasError) {

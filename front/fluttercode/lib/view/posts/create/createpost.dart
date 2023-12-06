@@ -45,7 +45,6 @@ class _CreatePostState extends State<CreatePost> {
     });
   }
 
-
   TextEditingController content = TextEditingController();
   TextEditingController title = TextEditingController();
   TextEditingController desc = TextEditingController();
@@ -63,6 +62,8 @@ class _CreatePostState extends State<CreatePost> {
   List<int>? selectFile;
   Uint8List? _bytesData;
 
+  String? selectedFileName;
+
   startPicker() async {
     html.FileUploadInputElement uploadInput = html.FileUploadInputElement();
     uploadInput.multiple = true;
@@ -73,6 +74,10 @@ class _CreatePostState extends State<CreatePost> {
       final files = uploadInput.files;
       final file = files![0];
       final reader = html.FileReader();
+
+      setState(() {
+        selectedFileName = file.name;
+      });
 
       reader.onLoadEnd.listen((event) {
         setState(() {
@@ -145,10 +150,24 @@ class _CreatePostState extends State<CreatePost> {
                 ),
                 _bytesData == null
                     ? SizedBox()
-                    : SubText(
-                        text: 'Documento Adicionado',
-                        color: FourtyColor,
-                        align: TextAlign.center),
+                    : Column(
+                        children: [
+                          SubText(
+                            text: 'Documento Adicionado',
+                            color: FourtyColor,
+                            align: TextAlign.center,
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          SubText(
+                            text: selectedFileName ??
+                                'Nome do arquivo indisponível',
+                            color: PrimaryColor,
+                            align: TextAlign.center,
+                          ),
+                        ],
+                      ),
                 Padding(
                   padding: const EdgeInsets.only(top: 50),
                   child: SizedBox(
@@ -188,6 +207,7 @@ class _CreatePostState extends State<CreatePost> {
                           print(selectFile);
                           print(fixed);
                           authController.posting(
+                            fileName: selectedFileName,
                             fixed: fixed,
                             selectFile: selectFile,
                             title: title.text,

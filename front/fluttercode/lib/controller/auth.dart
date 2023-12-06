@@ -99,6 +99,7 @@ class AuthController extends GetxController {
       required int profileId,
       required int chunkId,
       required bool fixed,
+      String? fileName,
       List<int>? selectFile}) async {
     try {
       EasyLoading.show(
@@ -125,7 +126,7 @@ class AuthController extends GetxController {
           'files',
           selectFile!,
           contentType: MediaType('application', 'pdf'),
-          filename: "FileTest",
+          filename: fileName ?? "Bloguee File",
         ));
 
         request.files
