@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fluttercode/component/colors.dart';
-import 'package:fluttercode/component/header.dart';
-import 'package:fluttercode/component/texts.dart';
-import 'package:fluttercode/controller/controllers.dart';
-import 'package:fluttercode/extention/string_extention.dart';
+import 'package:Bloguee/component/colors.dart';
+import 'package:Bloguee/component/header.dart';
+import 'package:Bloguee/component/texts.dart';
+import 'package:Bloguee/controller/controllers.dart';
+import 'package:Bloguee/extention/string_extention.dart';
 
 import '../../../component/buttomdefault.dart';
 import '../../../component/inputdefault.dart';

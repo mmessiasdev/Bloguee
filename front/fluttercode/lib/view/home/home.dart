@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:fluttercode/component/header.dart';
-import 'package:fluttercode/service/local/auth.dart';
-import 'package:fluttercode/view/account/account.dart';
-import 'package:fluttercode/view/account/auth/signin.dart';
-import 'package:fluttercode/view/home/search/searchpost.dart';
+import 'package:Bloguee/component/header.dart';
+import 'package:Bloguee/service/local/auth.dart';
+import 'package:Bloguee/view/account/account.dart';
+import 'package:Bloguee/view/account/auth/signin.dart';
+import 'package:Bloguee/view/home/search/searchpost.dart';
 
 import '../../component/colors.dart';
 import '../../component/texts.dart';

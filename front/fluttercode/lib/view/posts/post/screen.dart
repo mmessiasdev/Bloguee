@@ -1,14 +1,14 @@
-import 'package:fluttercode/component/buttomborder.dart';
-import 'package:fluttercode/component/padding.dart';
-import 'package:fluttercode/model/postFiles.dart';
-import 'package:fluttercode/service/local/auth.dart';
-import 'package:fluttercode/service/remote/auth.dart';
+import 'package:Bloguee/component/buttomborder.dart';
+import 'package:Bloguee/component/padding.dart';
+import 'package:Bloguee/model/postFiles.dart';
+import 'package:Bloguee/service/local/auth.dart';
+import 'package:Bloguee/service/remote/auth.dart';
 import 'package:http/http.dart' as http;
 
 import 'package:flutter/material.dart';
-import 'package:fluttercode/component/colors.dart';
-import 'package:fluttercode/component/header.dart';
-import 'package:fluttercode/component/texts.dart';
+import 'package:Bloguee/component/colors.dart';
+import 'package:Bloguee/component/header.dart';
+import 'package:Bloguee/component/texts.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'dart:io';
@@ -204,7 +204,6 @@ class _PostScreenState extends State<PostScreen> {
                                                     snapshot.data![index];
                                                 fileBytes = renderFile.url;
                                                 fileName = renderFile.name;
-                                                print(fileBytes);
                                                 return Column(
                                                   children: [
                                                     Padding(

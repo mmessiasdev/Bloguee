@@ -1,13 +1,13 @@
-import 'package:fluttercode/service/local/auth.dart';
-import 'package:fluttercode/view/account/welcome.dart';
-import 'package:fluttercode/view/chunk/chunk.dart';
+import 'package:Bloguee/service/local/auth.dart';
+import 'package:Bloguee/view/account/welcome.dart';
+import 'package:Bloguee/view/chunk/chunk.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-import 'package:fluttercode/view/posts/posts.dart';
+import 'package:Bloguee/view/posts/posts.dart';
 import 'package:get/get.dart';
-import 'package:fluttercode/component/colors.dart';
-import 'package:fluttercode/controller/dashboard.dart';
-import 'package:fluttercode/view/home/home.dart';
+import 'package:Bloguee/component/colors.dart';
+import 'package:Bloguee/controller/dashboard.dart';
+import 'package:Bloguee/view/home/home.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);

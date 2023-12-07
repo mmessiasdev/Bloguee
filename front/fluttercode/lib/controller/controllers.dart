@@ -1,4 +1,4 @@
-import 'package:fluttercode/controller/auth.dart';
+import 'package:Bloguee/controller/auth.dart';
 
 import 'dashboard.dart';
 

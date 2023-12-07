@@ -1,5 +1,5 @@
-import 'package:fluttercode/component/colors.dart';
-import 'package:fluttercode/component/texts.dart';
+import 'package:Bloguee/component/colors.dart';
+import 'package:Bloguee/component/texts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';

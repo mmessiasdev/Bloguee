@@ -1,8 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttercode/component/colors.dart';
-import 'package:fluttercode/component/texts.dart';
-import 'package:fluttercode/view/posts/post/screen.dart';
+import 'package:Bloguee/component/colors.dart';
+import 'package:Bloguee/component/texts.dart';
+import 'package:Bloguee/view/posts/post/screen.dart';
 
 class Posts extends StatelessWidget {
   Posts(
@@ -23,6 +22,7 @@ class Posts extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       child: Container(
+        // constraints: BoxConstraints(maxWidth: 400),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: PrimaryColor,

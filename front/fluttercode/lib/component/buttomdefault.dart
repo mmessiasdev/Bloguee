@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:fluttercode/component/colors.dart';
-import 'package:fluttercode/component/texts.dart';
+import 'package:Bloguee/component/colors.dart';
+import 'package:Bloguee/component/texts.dart';
 
 class InputTextButton extends StatelessWidget {
   final String title;

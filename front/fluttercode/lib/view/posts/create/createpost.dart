@@ -2,14 +2,14 @@ import 'dart:convert';
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:fluttercode/component/buttomborder.dart';
-import 'package:fluttercode/component/buttomdefault.dart';
-import 'package:fluttercode/component/colors.dart';
-import 'package:fluttercode/component/header.dart';
-import 'package:fluttercode/component/inputdefault.dart';
-import 'package:fluttercode/component/texts.dart';
-import 'package:fluttercode/controller/controllers.dart';
-import 'package:fluttercode/service/local/auth.dart';
+import 'package:Bloguee/component/buttomborder.dart';
+import 'package:Bloguee/component/buttomdefault.dart';
+import 'package:Bloguee/component/colors.dart';
+import 'package:Bloguee/component/header.dart';
+import 'package:Bloguee/component/inputdefault.dart';
+import 'package:Bloguee/component/texts.dart';
+import 'package:Bloguee/controller/controllers.dart';
+import 'package:Bloguee/service/local/auth.dart';
 import 'package:http/http.dart' as http;
 import 'dart:html' as html;
 

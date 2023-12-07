@@ -1,16 +1,16 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:fluttercode/component/colors.dart';
-import 'package:fluttercode/component/containersLoading.dart';
-import 'package:fluttercode/component/header.dart';
-import 'package:fluttercode/component/padding.dart';
-import 'package:fluttercode/component/post.dart';
-import 'package:fluttercode/component/texts.dart';
-import 'package:fluttercode/model/posts.dart';
-import 'package:fluttercode/model/profiles.dart';
-import 'package:fluttercode/service/local/auth.dart';
-import 'package:fluttercode/service/remote/auth.dart';
+import 'package:Bloguee/component/colors.dart';
+import 'package:Bloguee/component/containersLoading.dart';
+import 'package:Bloguee/component/header.dart';
+import 'package:Bloguee/component/padding.dart';
+import 'package:Bloguee/component/post.dart';
+import 'package:Bloguee/component/texts.dart';
+import 'package:Bloguee/model/posts.dart';
+import 'package:Bloguee/model/profiles.dart';
+import 'package:Bloguee/service/local/auth.dart';
+import 'package:Bloguee/service/remote/auth.dart';
 import 'package:http/http.dart' as http;
 
 class ChunkScreen extends StatefulWidget {

@@ -1,8 +1,8 @@
-import 'package:fluttercode/view/account/auth/signin.dart';
+import 'package:Bloguee/view/account/auth/signin.dart';
 import 'package:get/get.dart';
-import 'package:fluttercode/route/route.dart';
-import 'package:fluttercode/view/dashboard/binding.dart';
-import 'package:fluttercode/view/dashboard/screen.dart';
+import 'package:Bloguee/route/route.dart';
+import 'package:Bloguee/view/dashboard/binding.dart';
+import 'package:Bloguee/view/dashboard/screen.dart';
 
 class AppPage {
   static var list = [

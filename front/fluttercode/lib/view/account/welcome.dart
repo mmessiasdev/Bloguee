@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:fluttercode/component/buttomdefault.dart';
-import 'package:fluttercode/component/texts.dart';
-import 'package:fluttercode/view/account/auth/signin.dart';
+import 'package:Bloguee/component/buttomdefault.dart';
+import 'package:Bloguee/component/texts.dart';
+import 'package:Bloguee/view/account/auth/signin.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});

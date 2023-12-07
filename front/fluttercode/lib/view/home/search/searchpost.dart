@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:fluttercode/component/colors.dart';
-import 'package:fluttercode/component/texts.dart';
-import 'package:fluttercode/component/thumbpost.dart';
-import 'package:fluttercode/model/posts.dart';
-import 'package:fluttercode/service/local/auth.dart';
-import 'package:fluttercode/service/remote/auth.dart';
-import 'package:fluttercode/view/posts/post/screen.dart';
+import 'package:Bloguee/component/colors.dart';
+import 'package:Bloguee/component/texts.dart';
+import 'package:Bloguee/component/thumbpost.dart';
+import 'package:Bloguee/model/posts.dart';
+import 'package:Bloguee/service/local/auth.dart';
+import 'package:Bloguee/service/remote/auth.dart';
+import 'package:Bloguee/view/posts/post/screen.dart';
 
 class RenderPost extends StatefulWidget {
   RenderPost({super.key, required this.query});
