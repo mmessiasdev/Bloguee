@@ -42,23 +42,12 @@ class _ChunkScreenState extends State<ChunkScreen> {
     });
   }
 
-  Future<Map> chunk() async {
-    var response = await client.get(
-      Uri.parse('http://localhost:1337/api/chunks/$chunkId?populate=*'),
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
-      },
-    );
-    var itens = json.decode(response.body);
-    return itens;
-  }
-
   @override
   Widget build(BuildContext context) {
     return chunkId == null
         ? const SizedBox()
         : ListView(
+            shrinkWrap: true,
             children: [
               MainHeader(title: '', onClick: () {}),
               Padding(
@@ -66,7 +55,8 @@ class _ChunkScreenState extends State<ChunkScreen> {
                 child: Column(
                   children: [
                     FutureBuilder<Map>(
-                        future: chunk(),
+                        future: RemoteAuthService()
+                            .chunk(chunkId: chunkId, token: token),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             var render = snapshot.data!;
