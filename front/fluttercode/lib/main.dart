@@ -1,6 +1,5 @@
 import 'package:Bloguee/component/colors.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:Bloguee/route/route.dart';
@@ -9,7 +8,7 @@ import 'package:flutter/services.dart';
 
 
 Future main() async {
-  await dotenv.load(fileName: ".env");
+  // await dotenv.load(fileName: ".env");
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: TerciaryColor, // cor da barra superior
     statusBarIconBrightness: Brightness.dark, // ícones da barra superior
