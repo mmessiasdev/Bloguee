@@ -10,6 +10,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 class RemoteAuthService {
   var client = http.Client();
   final storage = FlutterSecureStorage();
+  String? url = dotenv.env['BASEURL'];
 
   Future<dynamic> signUp({
     required String email,
@@ -17,7 +18,7 @@ class RemoteAuthService {
   }) async {
     var body = {"username": email, "email": email, "password": password};
     var response = await client.post(
-      Uri.parse('${dotenv.get('BASEURL').toString()}/api/auth/local/register'),
+      Uri.parse('$url/api/auth/local/register'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(body),
     );
@@ -30,7 +31,7 @@ class RemoteAuthService {
   }) async {
     var body = {"identifier": email, "password": password};
     var response = await client.post(
-      Uri.parse('${dotenv.get('BASEURL').toString()}/api/auth/local'),
+      Uri.parse('$url/api/auth/local'),
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(body),
     );
@@ -43,7 +44,7 @@ class RemoteAuthService {
   }) async {
     var body = {"lname": lname};
     var response = await client.post(
-      Uri.parse('${dotenv.get('BASEURL').toString()}/api/profile/me'),
+      Uri.parse('$url/api/profile/me'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -57,8 +58,7 @@ class RemoteAuthService {
     required String token,
   }) async {
     var response = await client.get(
-      Uri.parse(
-          '${dotenv.get('BASEURL').toString()}/api/profile/me?populate=*'),
+      Uri.parse('$url/api/profile/me?populate=*'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -87,7 +87,7 @@ class RemoteAuthService {
       }
     };
     var response = await client.post(
-      Uri.parse('${dotenv.get('BASEURL').toString()}/api/posts'),
+      Uri.parse('$url/api/posts'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -102,7 +102,7 @@ class RemoteAuthService {
     List<PostsAttributes> listItens = [];
     var response = await client.get(
       Uri.parse(
-          '${dotenv.get('BASEURL').toString()}/api/posts?sort=id:DESC&filters[chunk][id][\$eqi]=${chunkId}&populate=*'),
+          '$url/api/posts?sort=id:DESC&filters[chunk][id][\$eqi]=${chunkId}&populate=*'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -118,8 +118,7 @@ class RemoteAuthService {
 
   Future<Map> getPost({required String token, required String id}) async {
     var response = await client.get(
-      Uri.parse(
-          '${dotenv.get('BASEURL').toString()}/api/posts/${id}?populate=*'),
+      Uri.parse('$url/api/posts/${id}?populate=*'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -133,8 +132,7 @@ class RemoteAuthService {
       {required String? token, required String? id}) async {
     List<PostFiles> listItens = [];
     var response = await client.get(
-      Uri.parse(
-          '${dotenv.get('BASEURL').toString()}/api/posts/${id}?populate=files'),
+      Uri.parse('$url/api/posts/${id}?populate=files'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -156,7 +154,7 @@ class RemoteAuthService {
     List<PostsAttributes> listItens = [];
     var response = await client.get(
       Uri.parse(
-          "${dotenv.get('BASEURL').toString()}/api/posts?filters[title][\$containsi]=$query&filters[chunk][id][\$eqi]=$chunkId&populate=*"),
+          "$url/api/posts?filters[title][\$containsi]=$query&filters[chunk][id][\$eqi]=$chunkId&populate=*"),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -174,8 +172,7 @@ class RemoteAuthService {
       {required String? token, required String? chunkId}) async {
     List<ProfileAttributes> listItens = [];
     var response = await client.get(
-      Uri.parse(
-          '${dotenv.get('BASEURL').toString()}/api/chunks/${chunkId}?populate[profiles][populate]=*'),
+      Uri.parse('$url/api/chunks/${chunkId}?populate[profiles][populate]=*'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
