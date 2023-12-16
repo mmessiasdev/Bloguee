@@ -1,17 +1,22 @@
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:Bloguee/model/postFiles.dart';
 import 'package:Bloguee/model/posts.dart';
 import 'package:Bloguee/model/profiles.dart';
 import 'package:http/http.dart' as http;
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-const url = String.fromEnvironment('BASEURL', defaultValue: '');
+// const url = String.fromEnvironment('BASEURL', defaultValue: '');
 
 class RemoteAuthService {
   var client = http.Client();
   final storage = FlutterSecureStorage();
+
+  // String url =
+  //     String.fromEnvironment('BASEURL', defaultValue: 'localhost:1337');
+
+  String? url = dotenv.env["BASEURL"];
 
   Future<dynamic> signUp({
     required String email,
