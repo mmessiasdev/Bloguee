@@ -18,21 +18,21 @@ class PostFiles {
 	PostFiles({this.name, this.alternativeText, this.caption, this.width, this.height, this.formats, this.hash, this.ext, this.mime, this.size, this.url, this.previewUrl, this.provider, this.createdAt, this.updatedAt});
 
 	PostFiles.fromJson(Map<String, dynamic> json) {
-		name = json['attributes']['name'];
-		alternativeText = json['attributes']['alternativeText'];
-		caption = json['attributes']['caption'];
-		width = json['attributes']['width'];
-		height = json['attributes']['height'];
-		formats = json['attributes']['formats'];
-		hash = json['attributes']['hash'];
-		ext = json['attributes']['ext'];
-		mime = json['attributes']['mime'];
-		size = json['attributes']['size'];
-		url = json['attributes']['url'];
-		previewUrl = json['attributes']['previewUrl'];
-		provider = json['attributes']['provider'];
-		createdAt = json['attributes']['createdAt'];
-		updatedAt = json['attributes']['updatedAt'];
+		name = json['name'];
+		alternativeText = json['alternativeText'];
+		caption = json['caption'];
+		width = json['width'];
+		height = json['height'];
+		formats = json['formats'];
+		hash = json['hash'];
+		ext = json['ext'];
+		mime = json['mime'];
+		size = json['size'];
+		url = json['url'];
+		previewUrl = json['previewUrl'];
+		provider = json['provider'];
+		createdAt = json['createdAt'];
+		updatedAt = json['updatedAt'];
 	}
 
 	Map<String, dynamic> toJson() {

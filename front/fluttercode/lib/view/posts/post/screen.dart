@@ -136,8 +136,7 @@ class _PostScreenState extends State<PostScreen> {
                                   SizedBox(
                                     width: double.infinity,
                                     child: PrimaryText(
-                                      text: render["data"]["attributes"]
-                                          ["title"],
+                                      text: render["title"],
                                       color: nightColor,
                                       align: TextAlign.start,
                                     ),
@@ -145,27 +144,27 @@ class _PostScreenState extends State<PostScreen> {
                                   SizedBox(
                                     height: 25,
                                   ),
-                                  SizedBox(
-                                    width:
-                                        MediaQuery.of(context).size.width * 1,
-                                    child: SubText(
-                                      text:
-                                          "Por ${render["data"]["attributes"]["profile"]["data"]["attributes"]["lname"]}",
-                                      color: nightColor,
-                                      align: TextAlign.end,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 50,
-                                  ),
-                                  SubText(
-                                      text: render["data"]["attributes"]
-                                          ["desc"],
-                                      color: SecudaryColor,
-                                      align: TextAlign.justify),
-                                  SizedBox(
-                                    height: 100,
-                                  ),
+                                  // SizedBox(
+                                  //   width:
+                                  //       MediaQuery.of(context).size.width * 1,
+                                  //   child: SubText(
+                                  //     text:
+                                  //         "Por ${render["data"]["attributes"]["profile"]["data"]["attributes"]["lname"]}",
+                                  //     color: nightColor,
+                                  //     align: TextAlign.end,
+                                  //   ),
+                                  // ),
+                                  // SizedBox(
+                                  //   height: 50,
+                                  // ),
+                                  // SubText(
+                                  //     text: render["data"]["attributes"]
+                                  //         ["desc"],
+                                  //     color: SecudaryColor,
+                                  //     align: TextAlign.justify),
+                                  // SizedBox(
+                                  //   height: 100,
+                                  // ),
                                 ],
                               ),
                             ),

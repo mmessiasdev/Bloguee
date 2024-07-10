@@ -65,16 +65,14 @@ class _ChunkScreenState extends State<ChunkScreen> {
                                 SizedBox(
                                   width: double.infinity,
                                   child: PrimaryText(
-                                      text: render["data"]["attributes"]
-                                          ["title"],
+                                      text: render["data"]["title"],
                                       color: nightColor,
                                       align: TextAlign.start),
                                 ),
                                 SizedBox(
                                   width: double.infinity,
                                   child: SubText(
-                                      text: render["data"]["attributes"]
-                                          ["subtitle"],
+                                      text: render["data"]["subtitle"],
                                       color: nightColor,
                                       align: TextAlign.start),
                                 ),

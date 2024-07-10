@@ -1,3 +1,4 @@
+import 'package:Bloguee/model/postSearch.dart';
 import 'package:flutter/material.dart';
 import 'package:Bloguee/component/colors.dart';
 import 'package:Bloguee/component/texts.dart';
@@ -17,7 +18,6 @@ class RenderPost extends StatefulWidget {
 }
 
 class _RenderPostState extends State<RenderPost> {
-
   var token;
   var chunkId;
 
@@ -39,7 +39,10 @@ class _RenderPostState extends State<RenderPost> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<PostsAttributes>>(
+    print(widget.query);
+    print(token);
+    print(chunkId);
+    return FutureBuilder<List<PostSearch>>(
         future: RemoteAuthService()
             .getPostSearch(token: token, query: widget.query, chunkId: chunkId),
         builder: (context, snapshot) {
@@ -73,6 +76,7 @@ class _RenderPostState extends State<RenderPost> {
                   );
                 });
           } else if (snapshot.hasError) {
+            print(snapshot.hasError);
             return Center(
                 child: SubText(
               text: 'Erro ao pesquisar post',

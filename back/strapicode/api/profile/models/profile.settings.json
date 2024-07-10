@@ -1,0 +1,37 @@
+{
+  "kind": "collectionType",
+  "collectionName": "profile",
+  "info": {
+    "name": "profile",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "fname": {
+      "type": "string"
+    },
+    "lname": {
+      "type": "string"
+    },
+    "email": {
+      "type": "string"
+    },
+    "user": {
+      "plugin": "users-permissions",
+      "model": "user"
+    },
+    "posts": {
+      "via": "profile",
+      "collection": "post"
+    },
+    "chunk": {
+      "via": "profiles",
+      "model": "chunk"
+    }
+  }
+}

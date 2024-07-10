@@ -7,10 +7,10 @@ class ChunksAttributes {
   ChunksAttributes({this.title, this.createdAt, this.updatedAt, this.subtitle});
 
   ChunksAttributes.fromJson(Map<String, dynamic> json) {
-    title = json['attributes']['title'];
-    createdAt = json['attributes']['createdAt'];
-    updatedAt = json['attributes']['updatedAt'];
-    subtitle = json['attributes']['subtitle'];
+    title = json['title'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    subtitle = json['subtitle'];
   }
 
   Map<String, dynamic> toJson() {

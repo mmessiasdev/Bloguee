@@ -9,11 +9,11 @@ class ProfileAttributes {
       {this.fname, this.createdAt, this.updatedAt, this.lname, this.email});
 
   ProfileAttributes.fromJson(Map<String, dynamic> json) {
-    fname = json['attributes']['fname'];
-    createdAt = json['attributes']['createdAt'];
-    updatedAt = json['attributes']['updatedAt'];
-    lname = json['attributes']['lname'];
-    email = json['attributes']['email'];
+    fname = json['fname'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    lname = json['lname'];
+    email = json['email'];
   }
 
   Map<String, dynamic> toJson() {

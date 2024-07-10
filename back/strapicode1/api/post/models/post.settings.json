@@ -1,0 +1,52 @@
+{
+  "kind": "collectionType",
+  "collectionName": "posts",
+  "info": {
+    "name": "post",
+    "description": ""
+  },
+  "options": {
+    "increments": true,
+    "timestamps": true,
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string"
+    },
+    "desc": {
+      "type": "string"
+    },
+    "content": {
+      "type": "richtext"
+    },
+    "chunkfixed": {
+      "type": "boolean"
+    },
+    "files": {
+      "collection": "file",
+      "via": "related",
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos"
+      ],
+      "plugin": "upload",
+      "required": false,
+      "pluginOptions": {}
+    },
+    "chunk": {
+      "via": "posts",
+      "model": "chunk"
+    },
+    "profile": {
+      "via": "posts",
+      "model": "profile"
+    },
+    "category": {
+      "via": "posts",
+      "model": "category"
+    }
+  }
+}

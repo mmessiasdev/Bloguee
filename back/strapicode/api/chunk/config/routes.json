@@ -1,0 +1,52 @@
+{
+  "routes": [
+    {
+      "method": "GET",
+      "path": "/chunks",
+      "handler": "chunk.find",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/chunks/count",
+      "handler": "chunk.count",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "GET",
+      "path": "/chunks/:id",
+      "handler": "chunk.findOne",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "POST",
+      "path": "/chunks",
+      "handler": "chunk.create",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "PUT",
+      "path": "/chunks/:id",
+      "handler": "chunk.update",
+      "config": {
+        "policies": []
+      }
+    },
+    {
+      "method": "DELETE",
+      "path": "/chunks/:id",
+      "handler": "chunk.delete",
+      "config": {
+        "policies": []
+      }
+    }
+  ]
+}
