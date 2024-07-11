@@ -5,7 +5,6 @@ import 'package:Bloguee/component/colors.dart';
 import 'package:Bloguee/component/containersLoading.dart';
 import 'package:Bloguee/component/header.dart';
 import 'package:Bloguee/component/padding.dart';
-import 'package:Bloguee/component/post.dart';
 import 'package:Bloguee/component/texts.dart';
 import 'package:Bloguee/model/posts.dart';
 import 'package:Bloguee/model/profiles.dart';
@@ -65,14 +64,14 @@ class _ChunkScreenState extends State<ChunkScreen> {
                                 SizedBox(
                                   width: double.infinity,
                                   child: PrimaryText(
-                                      text: render["data"]["title"],
+                                      text: render["title"],
                                       color: nightColor,
                                       align: TextAlign.start),
                                 ),
                                 SizedBox(
                                   width: double.infinity,
                                   child: SubText(
-                                      text: render["data"]["subtitle"],
+                                      text: render["subtitle"],
                                       color: nightColor,
                                       align: TextAlign.start),
                                 ),
@@ -117,47 +116,46 @@ class _ChunkScreenState extends State<ChunkScreen> {
                           color: nightColor,
                           align: TextAlign.start),
                     ),
-                    FutureBuilder<List<PostsAttributes>>(
-                        future: RemoteAuthService()
-                            .getPosts(token: token, chunkId: chunkId),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return ListView.builder(
-                                itemCount: 5,
-                                scrollDirection: Axis.vertical,
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  var render = snapshot.data![index];
-                                  if (render.chunkfixed == true) {
-                                    return Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          vertical: 15),
-                                      child: Posts(
-                                        plname: 'Fixado',
-                                        title: render.title.toString(),
-                                        desc: render.desc.toString(),
-                                        updatedAt: render.updatedAt
-                                            .toString()
-                                            .replaceAll("-", "/")
-                                            .substring(0, 10),
-                                        id: render.id.toString(),
-                                      ),
-                                    );
-                                  } else {
-                                    return SizedBox();
-                                  }
-                                });
-                          } else if (snapshot.hasError) {
-                            return Center(
-                                child: SubText(
-                              text: 'Erro ao pesquisar post',
-                              color: PrimaryColor,
-                              align: TextAlign.center,
-                            ));
-                          }
-                          return PostsLoading();
-                        }),
+                    // FutureBuilder<List<PostsModel>>(
+                    //     future: RemoteAuthService()
+                    //         .getPosts(token: token, chunkId: chunkId),
+                    //     builder: (context, snapshot) {
+                    //       if (snapshot.hasData) {
+                    //         return ListView.builder(
+                    //             itemCount: 5,
+                    //             scrollDirection: Axis.vertical,
+                    //             physics: const NeverScrollableScrollPhysics(),
+                    //             shrinkWrap: true,
+                    //             itemBuilder: (context, index) {
+                    //               var render = snapshot.data![index];
+                    //               if (render.chunkfixed == true) {
+                    //                 return Padding(
+                    //                   padding: const EdgeInsets.symmetric(
+                    //                       vertical: 15),
+                    //                   child: Posts(
+                    //                     plname: 'Fixado',
+                    //                     title: render.title.toString(),
+                    //                     desc: render.desc.toString(),
+                    //                     updatedAt: render.updatedAt
+                    //                         .toString()
+                    //                         .replaceAll("-", "/")
+                    //                         .substring(0, 10),
+                    //                     id: render.id.toString(),
+                    //                   );
+                    //               } else {
+                    //                 return SizedBox();
+                    //               }
+                    //             });
+                    //       } else if (snapshot.hasError) {
+                    //         return Center(
+                    //             child: SubText(
+                    //           text: 'Erro ao pesquisar post',
+                    //           color: PrimaryColor,
+                    //           align: TextAlign.center,
+                    //         ));
+                    //       }
+                    //       return PostsLoading();
+                    //     }),
                     SizedBox(
                       height: 35,
                     ),
@@ -168,7 +166,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
                           color: nightColor,
                           align: TextAlign.start),
                     ),
-                    FutureBuilder<List<ProfileAttributes>>(
+                    FutureBuilder<List<ProfilesModel>>(
                         future: RemoteAuthService()
                             .getProfiles(token: token, chunkId: chunkId),
                         builder: (context, snapshot) {
@@ -223,7 +221,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
                             ),
                           );
                         }),
-                    FutureBuilder<List<ProfileAttributes>>(
+                    FutureBuilder<List<ProfilesModel>>(
                         future: RemoteAuthService()
                             .getProfiles(token: token, chunkId: chunkId),
                         builder: (context, snapshot) {
@@ -254,7 +252,7 @@ class _ChunkScreenState extends State<ChunkScreen> {
                                 align: TextAlign.end),
                           );
                         }),
-                    FutureBuilder<List<PostsAttributes>>(
+                    FutureBuilder<List<PostsModel>>(
                         future: RemoteAuthService()
                             .getPosts(token: token, chunkId: chunkId),
                         builder: (context, snapshot) {

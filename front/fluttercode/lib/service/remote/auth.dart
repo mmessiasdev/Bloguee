@@ -78,7 +78,7 @@ class RemoteAuthService {
     required String? token,
   }) async {
     var response = await client.get(
-      Uri.parse('$url/chunks/$chunkId?populate=*'),
+      Uri.parse('$url/chunks/$chunkId'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -118,9 +118,9 @@ class RemoteAuthService {
     return response;
   }
 
-  Future<List<PostsAttributes>> getPosts(
+  Future<List<PostsModel>> getPosts(
       {required String? token, required String? chunkId}) async {
-    List<PostsAttributes> listItens = [];
+    List<PostsModel> listItens = [];
     var response = await client.get(
       Uri.parse('$url/posts?chunk.id_eq=$chunkId'),
       headers: {
@@ -130,8 +130,9 @@ class RemoteAuthService {
     );
     var body = jsonDecode(response.body);
     var itemCount = body;
+    print(itemCount);
     for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(PostsAttributes.fromJson(itemCount[i]));
+      listItens.add(PostsModel.fromJson(itemCount[i]));
     }
     return listItens;
   }
@@ -160,7 +161,6 @@ class RemoteAuthService {
     );
     var body = jsonDecode(response.body);
     var itemCount = body["data"]["files"];
-    print(itemCount);
     for (var i = 0; i < itemCount.length; i++) {
       listItens.add(PostFiles.fromJson(itemCount[i]));
     }
@@ -187,11 +187,11 @@ class RemoteAuthService {
     return listItens;
   }
 
-  Future<List<ProfileAttributes>> getProfiles(
+  Future<List<ProfilesModel>> getProfiles(
       {required String? token, required String? chunkId}) async {
-    List<ProfileAttributes> listItens = [];
+    List<ProfilesModel> listItens = [];
     var response = await client.get(
-      Uri.parse('$url/chunks/${chunkId}?populate[profiles][populate]=*'),
+      Uri.parse('$url/profiles/me?chunk.id_eq=$chunkId'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -200,7 +200,7 @@ class RemoteAuthService {
     var body = jsonDecode(response.body);
     var itemCount = body;
     for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(ProfileAttributes.fromJson(itemCount[i]));
+      listItens.add(ProfilesModel.fromJson(itemCount[i]));
     }
     return listItens;
   }

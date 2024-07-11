@@ -75,7 +75,7 @@ class _PostsScreenState extends State<PostsScreen> {
                     SizedBox(
                       height: 40,
                     ),
-                    FutureBuilder<List<PostsAttributes>>(
+                    FutureBuilder<List<PostsModel>>(
                         future: RemoteAuthService()
                             .getPosts(token: token, chunkId: chunkId),
                         builder: (context, snapshot) {
