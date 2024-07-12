@@ -1,7 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:Bloguee/component/colors.dart';
+import 'package:Bloguee/component/post.dart';
 import 'package:Bloguee/component/containersLoading.dart';
 import 'package:Bloguee/component/header.dart';
 import 'package:Bloguee/component/padding.dart';
@@ -116,46 +115,47 @@ class _ChunkScreenState extends State<ChunkScreen> {
                           color: nightColor,
                           align: TextAlign.start),
                     ),
-                    // FutureBuilder<List<PostsModel>>(
-                    //     future: RemoteAuthService()
-                    //         .getPosts(token: token, chunkId: chunkId),
-                    //     builder: (context, snapshot) {
-                    //       if (snapshot.hasData) {
-                    //         return ListView.builder(
-                    //             itemCount: 5,
-                    //             scrollDirection: Axis.vertical,
-                    //             physics: const NeverScrollableScrollPhysics(),
-                    //             shrinkWrap: true,
-                    //             itemBuilder: (context, index) {
-                    //               var render = snapshot.data![index];
-                    //               if (render.chunkfixed == true) {
-                    //                 return Padding(
-                    //                   padding: const EdgeInsets.symmetric(
-                    //                       vertical: 15),
-                    //                   child: Posts(
-                    //                     plname: 'Fixado',
-                    //                     title: render.title.toString(),
-                    //                     desc: render.desc.toString(),
-                    //                     updatedAt: render.updatedAt
-                    //                         .toString()
-                    //                         .replaceAll("-", "/")
-                    //                         .substring(0, 10),
-                    //                     id: render.id.toString(),
-                    //                   );
-                    //               } else {
-                    //                 return SizedBox();
-                    //               }
-                    //             });
-                    //       } else if (snapshot.hasError) {
-                    //         return Center(
-                    //             child: SubText(
-                    //           text: 'Erro ao pesquisar post',
-                    //           color: PrimaryColor,
-                    //           align: TextAlign.center,
-                    //         ));
-                    //       }
-                    //       return PostsLoading();
-                    //     }),
+                    FutureBuilder<List<PostsModel>>(
+                        future: RemoteAuthService()
+                            .getPosts(token: token, chunkId: chunkId),
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return ListView.builder(
+                                itemCount: 5,
+                                scrollDirection: Axis.vertical,
+                                physics: const NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  var render = snapshot.data![index];
+                                  if (render.chunkfixed == true) {
+                                    return Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15),
+                                      child: WidgetPosts(
+                                        plname: 'Fixado',
+                                        title: render.title.toString(),
+                                        desc: render.desc.toString(),
+                                        updatedAt: render.updatedAt
+                                            .toString()
+                                            .replaceAll("-", "/")
+                                            .substring(0, 10),
+                                        id: render.id.toString(),
+                                      ),
+                                    );
+                                  } else {
+                                    return SizedBox();
+                                  }
+                                });
+                          } else if (snapshot.hasError) {
+                            return Center(
+                                child: SubText(
+                              text: 'Erro ao pesquisar post',
+                              color: PrimaryColor,
+                              align: TextAlign.center,
+                            ));
+                          }
+                          return PostsLoading();
+                        }),
                     SizedBox(
                       height: 35,
                     ),

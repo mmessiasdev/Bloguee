@@ -88,7 +88,7 @@ class _PostsScreenState extends State<PostsScreen> {
                                   return Padding(
                                     padding: const EdgeInsets.symmetric(
                                         vertical: 15),
-                                    child: Posts(
+                                    child: WidgetPosts(
                                       plname: render.plname.toString(),
                                       title: render.title.toString(),
                                       desc: render.desc.toString(),

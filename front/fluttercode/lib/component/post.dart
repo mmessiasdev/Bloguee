@@ -3,8 +3,8 @@ import 'package:Bloguee/component/colors.dart';
 import 'package:Bloguee/component/texts.dart';
 import 'package:Bloguee/view/posts/post/screen.dart';
 
-class Posts extends StatelessWidget {
-  Posts(
+class WidgetPosts extends StatelessWidget {
+  WidgetPosts(
       {super.key,
       required this.plname,
       required this.title,

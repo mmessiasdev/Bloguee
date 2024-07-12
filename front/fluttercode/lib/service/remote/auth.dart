@@ -191,7 +191,7 @@ class RemoteAuthService {
       {required String? token, required String? chunkId}) async {
     List<ProfilesModel> listItens = [];
     var response = await client.get(
-      Uri.parse('$url/profiles/me?chunk.id_eq=$chunkId'),
+      Uri.parse('$url/profiles?chunk.id_eq=$chunkId'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"

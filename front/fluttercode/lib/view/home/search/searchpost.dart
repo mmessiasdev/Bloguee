@@ -39,9 +39,6 @@ class _RenderPostState extends State<RenderPost> {
 
   @override
   Widget build(BuildContext context) {
-    print(widget.query);
-    print(token);
-    print(chunkId);
     return FutureBuilder<List<PostSearch>>(
         future: RemoteAuthService()
             .getPostSearch(token: token, query: widget.query, chunkId: chunkId),
