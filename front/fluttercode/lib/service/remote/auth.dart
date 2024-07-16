@@ -130,7 +130,6 @@ class RemoteAuthService {
     );
     var body = jsonDecode(response.body);
     var itemCount = body;
-    print(itemCount);
     for (var i = 0; i < itemCount.length; i++) {
       listItens.add(PostsModel.fromJson(itemCount[i]));
     }

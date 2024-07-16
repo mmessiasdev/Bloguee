@@ -18,8 +18,8 @@ class RenderPost extends StatefulWidget {
 }
 
 class _RenderPostState extends State<RenderPost> {
-  var token;
-  var chunkId;
+  String? token;
+  String? chunkId;
 
   @override
   void initState() {
@@ -30,44 +30,43 @@ class _RenderPostState extends State<RenderPost> {
   void getString() async {
     var strToken = await LocalAuthService().getSecureToken("token");
     var strChunkId = await LocalAuthService().getChunkId("chunkId");
-
     setState(() {
-      token = strToken.toString();
-      chunkId = strChunkId.toString();
+      token = strToken;
+      chunkId = strChunkId;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    if (token == null || chunkId == null) {
+      return Center(child: CircularProgressIndicator(backgroundColor: PrimaryColor,));
+    }
+
     return FutureBuilder<List<PostSearch>>(
-        future: RemoteAuthService()
-            .getPostSearch(token: token, query: widget.query, chunkId: chunkId),
+        future: RemoteAuthService().getPostSearch(token: token!, query: widget.query, chunkId: chunkId!),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   var render = snapshot.data![index];
+
                   return Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 25),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 25),
                     child: GestureDetector(
                       child: ThumbPost(
                           title: render.title.toString(),
                           desc: render.desc.toString(),
-                          data: render.updatedAt
-                              .toString()
-                              .replaceAll("-", "/")
-                              .substring(0, 10)),
+                          data: render.updatedAt.toString().replaceAll("-", "/").substring(0, 10)),
                       onTap: () {
-                        (Navigator.push(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => PostScreen(
                               id: render.id.toString(),
                             ),
                           ),
-                        ));
+                        );
                       },
                     ),
                   );
@@ -91,6 +90,7 @@ class _RenderPostState extends State<RenderPost> {
         });
   }
 }
+
 
 class SearchPosts extends SearchDelegate<String> {
   @override

@@ -120,7 +120,7 @@ class AuthController extends GetxController {
 
       if (result.statusCode == 200) {
         int postId = json.decode(result.body)['data']['id'];
-        var url = Uri.parse("http://localhost:1337/api/upload/");
+        var url = Uri.parse("http://localhost:1337/upload/");
         var request = http.MultipartRequest("POST", url);
         request.files.add(await http.MultipartFile.fromBytes(
           'files',

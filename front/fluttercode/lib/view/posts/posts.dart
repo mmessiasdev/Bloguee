@@ -22,8 +22,8 @@ class PostsScreen extends StatefulWidget {
 class _PostsScreenState extends State<PostsScreen> {
   var client = http.Client();
 
-  var token;
-  var chunkId;
+  String? token;
+  String? chunkId;
 
   @override
   void initState() {
@@ -36,84 +36,95 @@ class _PostsScreenState extends State<PostsScreen> {
     var strChunkId = await LocalAuthService().getChunkId("chunkId");
 
     setState(() {
-      token = strToken.toString();
-      chunkId = strChunkId.toString();
+      token = strToken;
+      chunkId = strChunkId;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return chunkId == null
-        ? SizedBox()
-        : ListView(
+    if (token == null || chunkId == null) {
+      return Center(child: CircularProgressIndicator());
+    }
+
+    return ListView(
+      children: [
+        MainHeader(
+          title: 'Criar',
+          onClick: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => CreatePost(),
+              ),
+            );
+          },
+        ),
+        Padding(
+          padding: defaultPadding,
+          child: Column(
             children: [
-              MainHeader(
-                  title: 'Criar',
-                  onClick: () {
-                    (Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CreatePost(),
-                      ),
-                    ));
-                  }),
-              Padding(
-                padding: defaultPadding,
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 50,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: PrimaryText(
-                        text: 'Ultimos Posts',
-                        color: nightColor,
-                        align: TextAlign.start,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 40,
-                    ),
-                    FutureBuilder<List<PostsModel>>(
-                        future: RemoteAuthService()
-                            .getPosts(token: token, chunkId: chunkId),
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (context, index) {
-                                  var render = snapshot.data![index];
-                                  return Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 15),
-                                    child: WidgetPosts(
-                                      plname: render.plname.toString(),
-                                      title: render.title.toString(),
-                                      desc: render.desc.toString(),
-                                      updatedAt: render.updatedAt
-                                          .toString()
-                                          .replaceAll("-", "/")
-                                          .substring(0, 10),
-                                      id: render.id.toString(),
-                                    ),
-                                  );
-                                });
-                          } else if (snapshot.hasError) {
-                            return Center(
-                                child: SubText(
-                              text: 'Erro ao pesquisar posts',
-                              color: PrimaryColor,
-                              align: TextAlign.center,
-                            ));
-                          }
-                          return PostsLoading();
-                        }),
-                  ],
+              SizedBox(height: 50),
+              SizedBox(
+                width: double.infinity,
+                child: PrimaryText(
+                  text: 'Últimos Posts',
+                  color: nightColor,
+                  align: TextAlign.start,
                 ),
               ),
+              SizedBox(height: 40),
+              FutureBuilder<List<PostsModel>>(
+                future: RemoteAuthService().getPosts(token: token!, chunkId: chunkId!),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return PostsLoading();
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: SubText(
+                        text: 'Erro ao buscar posts',
+                        color: PrimaryColor,
+                        align: TextAlign.center,
+                      ),
+                    );
+                  } else if (snapshot.hasData) {
+                    var posts = snapshot.data!;
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: posts.length,
+                      physics: NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        var render = posts[index];
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 15),
+                          child: WidgetPosts(
+                            plname: render.plname.toString(),
+                            title: render.title.toString(),
+                            desc: render.desc.toString(),
+                            updatedAt: render.updatedAt
+                                .toString()
+                                .replaceAll("-", "/")
+                                .substring(0, 10),
+                            id: render.id.toString(),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return Center(
+                      child: SubText(
+                        text: 'Nenhum post encontrado',
+                        color: PrimaryColor,
+                        align: TextAlign.center,
+                      ),
+                    );
+                  }
+                },
+              ),
             ],
-          );
+          ),
+        ),
+      ],
+    );
   }
 }
