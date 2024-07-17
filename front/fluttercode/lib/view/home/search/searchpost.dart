@@ -1,9 +1,8 @@
-import 'package:Bloguee/model/postSearch.dart';
+import 'package:Bloguee/model/postModel.dart';
 import 'package:flutter/material.dart';
 import 'package:Bloguee/component/colors.dart';
 import 'package:Bloguee/component/texts.dart';
 import 'package:Bloguee/component/thumbpost.dart';
-import 'package:Bloguee/model/posts.dart';
 import 'package:Bloguee/service/local/auth.dart';
 import 'package:Bloguee/service/remote/auth.dart';
 import 'package:Bloguee/view/posts/post/screen.dart';
@@ -42,7 +41,7 @@ class _RenderPostState extends State<RenderPost> {
       return Center(child: CircularProgressIndicator(backgroundColor: PrimaryColor,));
     }
 
-    return FutureBuilder<List<PostSearch>>(
+    return FutureBuilder<List<PostsModel>>(
         future: RemoteAuthService().getPostSearch(token: token!, query: widget.query, chunkId: chunkId!),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
@@ -50,7 +49,6 @@ class _RenderPostState extends State<RenderPost> {
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   var render = snapshot.data![index];
-
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 25),
                     child: GestureDetector(

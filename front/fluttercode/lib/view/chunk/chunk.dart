@@ -1,3 +1,4 @@
+import 'package:Bloguee/model/postModel.dart';
 import 'package:flutter/material.dart';
 import 'package:Bloguee/component/colors.dart';
 import 'package:Bloguee/component/post.dart';
@@ -5,7 +6,6 @@ import 'package:Bloguee/component/containersLoading.dart';
 import 'package:Bloguee/component/header.dart';
 import 'package:Bloguee/component/padding.dart';
 import 'package:Bloguee/component/texts.dart';
-import 'package:Bloguee/model/posts.dart';
 import 'package:Bloguee/model/profiles.dart';
 import 'package:Bloguee/service/local/auth.dart';
 import 'package:Bloguee/service/remote/auth.dart';

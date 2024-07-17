@@ -14,7 +14,6 @@ import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart' as http;
 import 'dart:html' as html;
 import 'package:universal_platform/universal_platform.dart';
 

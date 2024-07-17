@@ -11,7 +11,6 @@ class PostsModel {
   String? createdAt;
   String? updatedAt;
   List<Files>? files;
-  String? plname;
 
   PostsModel(
       {this.id,
@@ -25,8 +24,7 @@ class PostsModel {
       this.publishedAt,
       this.createdAt,
       this.updatedAt,
-      this.files,
-      this.plname});
+      this.files});
 
   PostsModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -34,7 +32,6 @@ class PostsModel {
     desc = json['desc'];
     content = json['content'];
     chunkfixed = json['chunkfixed'];
-    plname = json['profile']['lname'];
     chunk = json['chunk'] != null ? new Chunk.fromJson(json['chunk']) : null;
     profile =
         json['profile'] != null ? new Profile.fromJson(json['profile']) : null;
@@ -71,8 +68,6 @@ class PostsModel {
     data['published_at'] = this.publishedAt;
     data['created_at'] = this.createdAt;
     data['updated_at'] = this.updatedAt;
-    data['profile']['lname'] = this.plname;
-
     if (this.files != null) {
       data['files'] = this.files!.map((v) => v.toJson()).toList();
     }

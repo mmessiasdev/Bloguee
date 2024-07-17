@@ -1,10 +1,9 @@
 import 'dart:convert';
 
-import 'package:Bloguee/model/postSearch.dart';
+import 'package:Bloguee/model/postModel.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:Bloguee/model/postFiles.dart';
-import 'package:Bloguee/model/posts.dart';
 import 'package:Bloguee/model/profiles.dart';
 import 'package:http/http.dart' as http;
 
@@ -166,11 +165,11 @@ class RemoteAuthService {
     return listItens;
   }
 
-  Future<List<PostSearch>> getPostSearch(
+  Future<List<PostsModel>> getPostSearch(
       {required String token,
       required String query,
       required String chunkId}) async {
-    List<PostSearch> listItens = [];
+    List<PostsModel> listItens = [];
     var response = await client.get(
       Uri.parse("$url/posts?title_contains=$query&chunk.id_eq=$chunkId"),
       headers: {
@@ -181,7 +180,7 @@ class RemoteAuthService {
     var body = jsonDecode(response.body);
     var itemCount = body;
     for (var i = 0; i < itemCount.length; i++) {
-      listItens.add(PostSearch.fromJson(itemCount[i]));
+      listItens.add(PostsModel.fromJson(itemCount[i]));
     }
     return listItens;
   }
