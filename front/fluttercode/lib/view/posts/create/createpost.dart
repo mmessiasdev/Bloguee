@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:Bloguee/component/buttomborder.dart';
 import 'package:Bloguee/component/buttomdefault.dart';
@@ -209,7 +208,7 @@ class _CreatePostState extends State<CreatePost> {
                           authController.posting(
                             fileName: selectedFileName,
                             fixed: fixed,
-                            selectFile: selectFile,
+                            selectFile: selectFile!,
                             title: title.text,
                             desc: desc.text,
                             content: content.text,

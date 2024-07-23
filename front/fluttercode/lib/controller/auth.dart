@@ -119,7 +119,7 @@ class AuthController extends GetxController {
       Navigator.of(Get.overlayContext!).pushReplacementNamed('/');
 
       if (result.statusCode == 200) {
-        int postId = json.decode(result.body)['data']['id'];
+        int postId = json.decode(result.body)['id'];
         var url = Uri.parse("http://localhost:1337/upload/");
         var request = http.MultipartRequest("POST", url);
         request.files.add(await http.MultipartFile.fromBytes(

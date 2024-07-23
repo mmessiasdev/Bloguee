@@ -97,7 +97,7 @@ class RemoteAuthService {
     required bool? fixedChunk,
   }) async {
     final body = {
-      "data": {
+      {
         "title": title,
         "desc": desc,
         "content": content,
@@ -135,9 +135,9 @@ class RemoteAuthService {
     return listItens;
   }
 
-  Future<Map> getPost({required String token, required String id}) async {
+  Future<Map> getPost({required String token, required String id, required String? chunkId}) async {
     var response = await client.get(
-      Uri.parse('$url/posts/${id}?populate=*'),
+      Uri.parse('$url/posts/$id?chunk.id_eq=$chunkId'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"

@@ -120,8 +120,8 @@ class _PostScreenState extends State<PostScreen> {
               MainHeader(
                   title: "Voltar", onClick: () => Navigator.pop(context)),
               FutureBuilder<Map>(
-                  future:
-                      RemoteAuthService().getPost(token: token, id: widget.id),
+                  future: RemoteAuthService()
+                      .getPost(token: token, id: widget.id, chunkId: chunkId),
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       var render = snapshot.data!;
@@ -143,31 +143,30 @@ class _PostScreenState extends State<PostScreen> {
                                   SizedBox(
                                     height: 25,
                                   ),
-                                  // SizedBox(
-                                  //   width:
-                                  //       MediaQuery.of(context).size.width * 1,
-                                  //   child: SubText(
-                                  //     text:
-                                  //         "Por ${render["data"]["attributes"]["profile"]["data"]["attributes"]["lname"]}",
-                                  //     color: nightColor,
-                                  //     align: TextAlign.end,
-                                  //   ),
-                                  // ),
-                                  // SizedBox(
-                                  //   height: 50,
-                                  // ),
-                                  // SubText(
-                                  //     text: render["data"]["attributes"]
-                                  //         ["desc"],
-                                  //     color: SecudaryColor,
-                                  //     align: TextAlign.justify),
-                                  // SizedBox(
-                                  //   height: 100,
-                                  // ),
+                                  SizedBox(
+                                    width:
+                                        MediaQuery.of(context).size.width * 1,
+                                    child: SubText(
+                                      text:
+                                          "Por ${render["profile"]["fname"]}",
+                                      color: nightColor,
+                                      align: TextAlign.end,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 50,
+                                  ),
+                                  SubText(
+                                      text: render["desc"],
+                                      color: SecudaryColor,
+                                      align: TextAlign.justify),
+                                  SizedBox(
+                                    height: 100,
+                                  ),
                                 ],
                               ),
                             ),
-                            render["data"]["attributes"]["content"] == ""
+                            render["content"] == ""
                                 ? SizedBox()
                                 : Container(
                                     width: double.infinity,
@@ -179,8 +178,7 @@ class _PostScreenState extends State<PostScreen> {
                                             top: 50,
                                             bottom: 50),
                                         child: SubText(
-                                          text: render["data"]["attributes"]
-                                              ["content"],
+                                          text: render["content"],
                                           align: TextAlign.start,
                                           color: nightColor,
                                         )),
