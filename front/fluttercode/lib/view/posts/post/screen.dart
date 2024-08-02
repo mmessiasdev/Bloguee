@@ -76,7 +76,7 @@ class _PostScreenState extends State<PostScreen> {
 
       // Salvar o arquivo temporariamente
       final tempDir = await getTemporaryDirectory();
-      final tempPath = '${tempDir.path}/${fileName}.pdf';
+      final tempPath = '${tempDir.path}/${fileName}';
       File tempFile = File(tempPath);
       await tempFile.writeAsBytes(bytesConverted);
 
@@ -98,7 +98,7 @@ class _PostScreenState extends State<PostScreen> {
       final url = html.Url.createObjectUrlFromBlob(blob);
       final anchor = html.AnchorElement(href: url)
         ..target = 'webbrowser'
-        ..download = '${fileName}.pdf';
+        ..download = '${fileName}';
 
       html.document.body!.children.add(anchor);
       anchor.click();
@@ -147,8 +147,7 @@ class _PostScreenState extends State<PostScreen> {
                                     width:
                                         MediaQuery.of(context).size.width * 1,
                                     child: SubText(
-                                      text:
-                                          "Por ${render["profile"]["fname"]}",
+                                      text: "Por ${render["profile"]["fname"]}",
                                       color: nightColor,
                                       align: TextAlign.end,
                                     ),

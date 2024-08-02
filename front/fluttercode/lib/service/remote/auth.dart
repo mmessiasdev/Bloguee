@@ -63,7 +63,7 @@ class RemoteAuthService {
     required String token,
   }) async {
     var response = await client.get(
-      Uri.parse('$url/profiles/me?populate=*'),
+      Uri.parse('$url/profiles/me'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
@@ -97,14 +97,12 @@ class RemoteAuthService {
     required bool? fixedChunk,
   }) async {
     final body = {
-      {
-        "title": title,
-        "desc": desc,
-        "content": content,
-        "profile": profileId,
-        "chunk": chunkId,
-        "chunkfixed": fixedChunk
-      }
+      "title": title.toString(),
+      "desc": desc.toString(),
+      "content": content.toString(),
+      "profile": profileId.toString(),
+      "chunk": chunkId.toString(),
+      "chunkfixed": fixedChunk.toString()
     };
     var response = await client.post(
       Uri.parse('$url/posts'),
@@ -135,7 +133,10 @@ class RemoteAuthService {
     return listItens;
   }
 
-  Future<Map> getPost({required String token, required String id, required String? chunkId}) async {
+  Future<Map> getPost(
+      {required String token,
+      required String id,
+      required String? chunkId}) async {
     var response = await client.get(
       Uri.parse('$url/posts/$id?chunk.id_eq=$chunkId'),
       headers: {
@@ -151,14 +152,14 @@ class RemoteAuthService {
       {required String? token, required String? id}) async {
     List<PostFiles> listItens = [];
     var response = await client.get(
-      Uri.parse('$url/posts/${id}?populate=files'),
+      Uri.parse('$url/posts/${id}'),
       headers: {
         "Content-Type": "application/json",
         "Authorization": "Bearer $token"
       },
     );
     var body = jsonDecode(response.body);
-    var itemCount = body["data"]["files"];
+    var itemCount = body["files"];
     for (var i = 0; i < itemCount.length; i++) {
       listItens.add(PostFiles.fromJson(itemCount[i]));
     }

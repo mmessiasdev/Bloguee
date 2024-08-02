@@ -7,10 +7,12 @@ import 'package:Bloguee/service/remote/auth.dart';
 import '../model/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class AuthController extends GetxController {
   static AuthController instance = Get.find();
   Rxn<User> user = Rxn<User>();
+  String? urlEnv = dotenv.env["BASEURL"];
 
   @override
   void onInit() async {
@@ -120,7 +122,7 @@ class AuthController extends GetxController {
 
       if (result.statusCode == 200) {
         int postId = json.decode(result.body)['id'];
-        var url = Uri.parse("http://localhost:1337/upload/");
+        var url = Uri.parse('$urlEnv/upload');
         var request = http.MultipartRequest("POST", url);
         request.files.add(await http.MultipartFile.fromBytes(
           'files',
@@ -129,15 +131,14 @@ class AuthController extends GetxController {
           filename: fileName ?? "Bloguee File",
         ));
 
-        request.files
-            .add(await http.MultipartFile.fromString("ref", "api::post.post"));
+        request.files.add(await http.MultipartFile.fromString("ref", "post"));
         request.files
             .add(await http.MultipartFile.fromString("refId", "${postId}"));
 
         request.files
             .add(await http.MultipartFile.fromString("field", "files"));
 
-        // request.headers.addAll({"Authorization": "Bearer $token"});
+        request.headers.addAll({"Authorization": "Bearer $token"});
         request.send().then((response) {
           if (response.statusCode == 200) {
             print("FileUpload Successfuly");
