@@ -1,4 +1,5 @@
 import 'package:Bloguee/component/colors.dart';
+import 'package:Bloguee/controller/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -10,6 +11,7 @@ import 'package:flutter/services.dart';
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized(); // Required by FlutterConfig
   await dotenv.load(fileName: ".env");
+
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
     statusBarColor: TerciaryColor, // cor da barra superior
     statusBarIconBrightness: Brightness.dark, // ícones da barra superior

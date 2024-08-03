@@ -16,7 +16,7 @@ class RemoteAuthService {
   // String url =
   //     String.fromEnvironment('BASEURL', defaultValue: 'localhost:1337');
 
-  String? url = dotenv.env["BASEURL"];
+  final url = dotenv.env["BASEURL"];
   Future<dynamic> signUp({
     required String email,
     required String password,
@@ -24,7 +24,10 @@ class RemoteAuthService {
     var body = {"username": email, "email": email, "password": password};
     var response = await client.post(
       Uri.parse('$url/auth/local/register'),
-      headers: {"Content-Type": "application/json"},
+      headers: {
+        "Content-Type": "application/json",
+        "ngrok-skip-browser-warning": "true"
+      },
       body: jsonEncode(body),
     );
     return response;
@@ -37,9 +40,13 @@ class RemoteAuthService {
     var body = {"identifier": email, "password": password};
     var response = await client.post(
       Uri.parse('$url/auth/local'),
-      headers: {"Content-Type": "application/json"},
+      headers: {
+        "Content-Type": "application/json",
+        'ngrok-skip-browser-warning': "true"
+      },
       body: jsonEncode(body),
     );
+    print('Resposta HTML: ${response.body}');
     return response;
   }
 
@@ -52,7 +59,8 @@ class RemoteAuthService {
       Uri.parse('$url/profiles/me'),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
       },
       body: jsonEncode(body),
     );
@@ -66,7 +74,8 @@ class RemoteAuthService {
       Uri.parse('$url/profiles/me'),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
       },
     );
     return response;
@@ -80,7 +89,8 @@ class RemoteAuthService {
       Uri.parse('$url/chunks/$chunkId'),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
       },
     );
     var itens = json.decode(response.body);
@@ -108,7 +118,8 @@ class RemoteAuthService {
       Uri.parse('$url/posts'),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
       },
       body: jsonEncode(body),
     );
@@ -122,7 +133,8 @@ class RemoteAuthService {
       Uri.parse('$url/posts?chunk.id_eq=$chunkId'),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
       },
     );
     var body = jsonDecode(response.body);
@@ -141,7 +153,8 @@ class RemoteAuthService {
       Uri.parse('$url/posts/$id?chunk.id_eq=$chunkId'),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
       },
     );
     var itens = json.decode(response.body);
@@ -155,7 +168,8 @@ class RemoteAuthService {
       Uri.parse('$url/posts/${id}'),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
       },
     );
     var body = jsonDecode(response.body);
@@ -175,7 +189,8 @@ class RemoteAuthService {
       Uri.parse("$url/posts?title_contains=$query&chunk.id_eq=$chunkId"),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
       },
     );
     var body = jsonDecode(response.body);
@@ -193,7 +208,8 @@ class RemoteAuthService {
       Uri.parse('$url/profiles?chunk.id_eq=$chunkId'),
       headers: {
         "Content-Type": "application/json",
-        "Authorization": "Bearer $token"
+        "Authorization": "Bearer $token",
+        'ngrok-skip-browser-warning': "true"
       },
     );
     var body = jsonDecode(response.body);
